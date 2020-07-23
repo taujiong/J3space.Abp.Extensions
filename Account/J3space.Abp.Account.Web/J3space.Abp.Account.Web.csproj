@@ -11,21 +11,10 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <RootNamespace />
+    <RootNamespace>J3space.Abp.Account.Web</RootNamespace>
     <IsPackable>true</IsPackable>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Modules\**\*.js" />
-    <EmbeddedResource Include="Modules\**\*.css" />
-    <EmbeddedResource Include="Pages\**\*.js" />
-    <EmbeddedResource Include="Pages\**\*.css" />
-    <Content Remove="Modules\**\*.js" />
-    <Content Remove="Modules\**\*.css" />
-    <Content Remove="Pages\**\*.js" />
-    <Content Remove="Pages\**\*.css" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AutoMapper" Version="3.0.4" />

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using J3space.Abp.IdentityServer;
+using J3space.Abp.IdentityServer.Web;
 using J3space.AuthServer.MongoDb;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;

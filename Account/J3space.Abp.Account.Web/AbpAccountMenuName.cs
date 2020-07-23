@@ -1,4 +1,4 @@
-﻿namespace J3space.Abp.Account
+﻿namespace J3space.Abp.Account.Web
 {
     public class AbpAccountMenuName
     {

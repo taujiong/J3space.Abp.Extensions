@@ -11,7 +11,7 @@
         <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
         <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
         <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-        <RootNamespace/>
+        <RootNamespace>J3space.Abp.IdentityServer.Web</RootNamespace>
         <IsPackable>true</IsPackable>
         <OutputType>Library</OutputType>
     </PropertyGroup>

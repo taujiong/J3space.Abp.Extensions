@@ -7,7 +7,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 
-namespace J3space.Abp.Account
+namespace J3space.Abp.Account.Web
 {
     [DependsOn(
         typeof(AbpAccountHttpApiModule),

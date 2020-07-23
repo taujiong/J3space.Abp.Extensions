@@ -3,7 +3,7 @@ using J3space.Abp.Account.Localization;
 using Localization.Resources.AbpUi;
 using Volo.Abp.UI.Navigation;
 
-namespace J3space.Abp.Account
+namespace J3space.Abp.Account.Web
 {
     public class AbpAccountUserMenuContributor : IMenuContributor
     {
@@ -18,8 +18,7 @@ namespace J3space.Abp.Account
                 AbpAccountMenuName.Manage,
                 accountResource["ManageYourProfile"],
                 "~/Account/Manage",
-                "fa fa-cog",
-                1000));
+                "fa fa-cog"));
             context.Menu.AddItem(new ApplicationMenuItem(
                 AbpAccountMenuName.Logout,
                 uiResource["Logout"],

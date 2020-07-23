@@ -2,7 +2,7 @@
 using Volo.Abp.IdentityServer.Localization;
 using Volo.Abp.UI.Navigation;
 
-namespace J3space.Abp.IdentityServer
+namespace J3space.Abp.IdentityServer.Web
 {
     public class AbpIdentityServerMainMenuContributor : IMenuContributor
     {

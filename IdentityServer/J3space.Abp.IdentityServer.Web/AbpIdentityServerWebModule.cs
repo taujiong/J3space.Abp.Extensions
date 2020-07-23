@@ -1,11 +1,11 @@
-﻿using J3space.Abp.Account;
+﻿using J3space.Abp.Account.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.IdentityServer;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 
-namespace J3space.Abp.IdentityServer
+namespace J3space.Abp.IdentityServer.Web
 {
     [DependsOn(
         typeof(AbpAccountWebModule),
