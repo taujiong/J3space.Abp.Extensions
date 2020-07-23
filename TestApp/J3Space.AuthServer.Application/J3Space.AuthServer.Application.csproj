@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Account\J3space.Abp.Account.Application\J3space.Abp.Account.Application.csproj" />
         <ProjectReference Include="..\..\IdentityServer\J3space.Abp.IdentityServer.Application\J3space.Abp.IdentityServer.Application.csproj" />
         <ProjectReference Include="..\J3space.AuthServer.Application.Contracts\J3space.AuthServer.Application.Contracts.csproj" />
         <ProjectReference Include="..\J3space.AuthServer.Domain\J3space.AuthServer.Domain.csproj" />

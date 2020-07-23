@@ -1,7 +1,7 @@
-﻿using J3space.Abp.IdentityServer;
+﻿using J3space.Abp.Account;
+using J3space.Abp.IdentityServer;
 using J3space.AuthServer.Constants;
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;

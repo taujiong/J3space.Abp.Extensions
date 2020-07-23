@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using J3space.Abp.Account.Localization;
 using J3space.AuthServer.Localization;
-using Volo.Abp.Account.Localization;
 using Volo.Abp.UI.Navigation;
 
 namespace J3space.AuthServer.UserInterface
@@ -15,7 +15,7 @@ namespace J3space.AuthServer.UserInterface
             }
 
             var localizer = context.GetLocalizer<AuthServerResource>();
-            var accountLocalizer = context.GetLocalizer<AccountResource>();
+            var accountLocalizer = context.GetLocalizer<AbpAccountResource>();
 
             context.Menu.AddItem(new ApplicationMenuItem(
                 "Account.Manage",

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\configureawait.props" />
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>J3space.Abp.Account.Application</AssemblyName>
+    <PackageId>J3space.Abp.Account.Application</PackageId>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
+    <PackageReference Include="Volo.Abp.Identity.Application" Version="3.0.4" />
+    <PackageReference Include="Volo.Abp.Identity.AspNetCore" Version="3.0.4" />
+    <PackageReference Include="Volo.Abp.UI.Navigation" Version="3.0.4" />
+    <ProjectReference Include="..\J3space.Abp.Account.Application.Contracts\J3space.Abp.Account.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

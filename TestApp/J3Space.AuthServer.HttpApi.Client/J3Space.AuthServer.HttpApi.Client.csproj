@@ -8,13 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Volo.Abp.Account.HttpApi.Client" Version="3.0.4" />
         <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" Version="3.0.4" />
         <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" Version="3.0.4" />
         <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi.Client" Version="3.0.4" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Account\J3space.Abp.Account.HttpApi.Client\J3space.Abp.Account.HttpApi.Client.csproj" />
       <ProjectReference Include="..\..\IdentityServer\J3space.Abp.IdentityServer.HttpApi.Client\J3space.Abp.IdentityServer.HttpApi.Client.csproj" />
       <ProjectReference Include="..\J3space.AuthServer.Application.Contracts\J3space.AuthServer.Application.Contracts.csproj" />
     </ItemGroup>

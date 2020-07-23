@@ -1,4 +1,4 @@
-﻿namespace J3space.AuthServer.Constants
+﻿﻿namespace J3space.AuthServer.Constants
 {
     public class AuthServerRemoteServiceConstants
     {

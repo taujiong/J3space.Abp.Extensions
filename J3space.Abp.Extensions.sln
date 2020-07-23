@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.HttpApi.Client", "IdentityServer\J3space.Abp.IdentityServer.HttpApi.Client\J3space.Abp.IdentityServer.HttpApi.Client.csproj", "{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{ED7A8E1B-DEA6-45ED-BD76-7996B76EF3BC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{ED7A8E1B-DEA6-45ED-BD76-7996B76EF3BC}"
 ProjectSection(SolutionItems) = preProject
 	.gitignore = .gitignore
 	common.props = common.props
@@ -39,6 +39,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.AuthServer.HttpApi.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.AuthServer.MongoDB", "TestApp\J3Space.AuthServer.MongoDB\J3Space.AuthServer.MongoDB.csproj", "{00F179DC-3D34-4FFB-9509-BBE73EA2C128}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Account", "Account", "{A4270970-075D-4D69-8066-53925E224779}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Application", "Account\J3space.Abp.Account.Application\J3space.Abp.Account.Application.csproj", "{A1EE7EFC-EE74-4327-8417-4B594E3EE039}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Application.Contracts", "Account\J3space.Abp.Account.Application.Contracts\J3space.Abp.Account.Application.Contracts.csproj", "{4E6F7B80-76B1-41A9-ABE1-67E43981EBA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.HttpApi", "Account\J3space.Abp.Account.HttpApi\J3space.Abp.Account.HttpApi.csproj", "{A12AAFBD-4009-4CB6-8AD8-EE5C2939A5F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.HttpApi.Client", "Account\J3space.Abp.Account.HttpApi.Client\J3space.Abp.Account.HttpApi.Client.csproj", "{1F65EF8E-5A7A-4FE1-929E-3710784D6C07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Web", "Account\J3space.Abp.Account.Web\J3space.Abp.Account.Web.csproj", "{BF63DB8C-AF23-44FD-B613-639184C77C8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +70,11 @@ Global
 		{E13879C6-838D-4DAE-AC72-7E7E774BF5CA} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
 		{0858F99A-6872-4250-A6D1-DD4857626B6D} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
 		{00F179DC-3D34-4FFB-9509-BBE73EA2C128} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
+		{A1EE7EFC-EE74-4327-8417-4B594E3EE039} = {A4270970-075D-4D69-8066-53925E224779}
+		{4E6F7B80-76B1-41A9-ABE1-67E43981EBA8} = {A4270970-075D-4D69-8066-53925E224779}
+		{A12AAFBD-4009-4CB6-8AD8-EE5C2939A5F6} = {A4270970-075D-4D69-8066-53925E224779}
+		{1F65EF8E-5A7A-4FE1-929E-3710784D6C07} = {A4270970-075D-4D69-8066-53925E224779}
+		{BF63DB8C-AF23-44FD-B613-639184C77C8B} = {A4270970-075D-4D69-8066-53925E224779}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -112,5 +129,25 @@ Global
 		{00F179DC-3D34-4FFB-9509-BBE73EA2C128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00F179DC-3D34-4FFB-9509-BBE73EA2C128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00F179DC-3D34-4FFB-9509-BBE73EA2C128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1EE7EFC-EE74-4327-8417-4B594E3EE039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1EE7EFC-EE74-4327-8417-4B594E3EE039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1EE7EFC-EE74-4327-8417-4B594E3EE039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1EE7EFC-EE74-4327-8417-4B594E3EE039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E6F7B80-76B1-41A9-ABE1-67E43981EBA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E6F7B80-76B1-41A9-ABE1-67E43981EBA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E6F7B80-76B1-41A9-ABE1-67E43981EBA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E6F7B80-76B1-41A9-ABE1-67E43981EBA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12AAFBD-4009-4CB6-8AD8-EE5C2939A5F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12AAFBD-4009-4CB6-8AD8-EE5C2939A5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12AAFBD-4009-4CB6-8AD8-EE5C2939A5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12AAFBD-4009-4CB6-8AD8-EE5C2939A5F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F65EF8E-5A7A-4FE1-929E-3710784D6C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F65EF8E-5A7A-4FE1-929E-3710784D6C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F65EF8E-5A7A-4FE1-929E-3710784D6C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F65EF8E-5A7A-4FE1-929E-3710784D6C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF63DB8C-AF23-44FD-B613-639184C77C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF63DB8C-AF23-44FD-B613-639184C77C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF63DB8C-AF23-44FD-B613-639184C77C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF63DB8C-AF23-44FD-B613-639184C77C8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

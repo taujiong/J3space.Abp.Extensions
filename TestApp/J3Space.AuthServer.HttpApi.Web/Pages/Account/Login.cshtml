@@ -1,6 +1,6 @@
 @page
-@using Volo.Abp.Account.Localization
-@inject IStringLocalizer<AccountResource> Localizer
+@using J3space.Abp.Account.Localization
+@inject IStringLocalizer<AbpAccountResource> Localizer
 @{
   Layout = "Shared/Empty";
   ViewBag.Title = Localizer["Login"];
@@ -59,7 +59,7 @@
         },
     methods: {
       login() {
-        j3space.authServer.controllers.account.login(this.loginForm).then(
+        j3space.abp.account.account.login(this.loginForm).then(
                 response => {
                   if (response.result !== 0)
                   {
