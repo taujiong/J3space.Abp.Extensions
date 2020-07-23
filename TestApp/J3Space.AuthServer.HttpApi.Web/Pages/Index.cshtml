@@ -1,0 +1,18 @@
+@page
+@{
+  ViewData["Title"] = "Home page";
+}
+
+<div id="vue">
+  <h1>@L["LongWelcomeMessage"]</h1>
+
+  <a asp-page="/Account/Login">
+    <el-button type="primary">@L["Login"]</el-button>
+  </a>
+</div>
+
+<script>
+  new Vue({
+    el: "#vue"
+  })
+</script>

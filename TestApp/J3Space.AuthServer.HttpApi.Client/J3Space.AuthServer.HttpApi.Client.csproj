@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\common.props" />
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>J3space.AuthServer</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.Account.HttpApi.Client" Version="3.0.4" />
+        <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" Version="3.0.4" />
+        <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" Version="3.0.4" />
+        <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi.Client" Version="3.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\IdentityServer\J3space.Abp.IdentityServer.HttpApi.Client\J3space.Abp.IdentityServer.HttpApi.Client.csproj" />
+      <ProjectReference Include="..\J3space.AuthServer.Application.Contracts\J3space.AuthServer.Application.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>
