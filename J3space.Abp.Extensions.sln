@@ -1,8 +1,51 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{6EFD3F6A-B303-4D6A-BF79-6D9764759F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Application", "IdentityServer\J3space.Abp.IdentityServer.Application\J3space.Abp.IdentityServer.Application.csproj", "{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Application.Contracts", "IdentityServer\J3space.Abp.IdentityServer.Application.Contracts\J3space.Abp.IdentityServer.Application.Contracts.csproj", "{F1CFF32F-D671-4320-B7DB-E965E35DB36E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.HttpApi", "IdentityServer\J3space.Abp.IdentityServer.HttpApi\J3space.Abp.IdentityServer.HttpApi.csproj", "{1487C639-8B3C-4E02-B125-0D6D9C2844A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.HttpApi.Client", "IdentityServer\J3space.Abp.IdentityServer.HttpApi.Client\J3space.Abp.IdentityServer.HttpApi.Client.csproj", "{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{ED7A8E1B-DEA6-45ED-BD76-7996B76EF3BC}"
+ProjectSection(SolutionItems) = preProject
+	.gitignore = .gitignore
+	common.props = common.props
+	configureawait.props = configureawait.props
+	README.md = README.md
+	LICENSE = LICENSE
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB} = {6EFD3F6A-B303-4D6A-BF79-6D9764759F47}
+		{F1CFF32F-D671-4320-B7DB-E965E35DB36E} = {6EFD3F6A-B303-4D6A-BF79-6D9764759F47}
+		{1487C639-8B3C-4E02-B125-0D6D9C2844A3} = {6EFD3F6A-B303-4D6A-BF79-6D9764759F47}
+		{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE} = {6EFD3F6A-B303-4D6A-BF79-6D9764759F47}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1CFF32F-D671-4320-B7DB-E965E35DB36E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1CFF32F-D671-4320-B7DB-E965E35DB36E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1CFF32F-D671-4320-B7DB-E965E35DB36E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1CFF32F-D671-4320-B7DB-E965E35DB36E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1487C639-8B3C-4E02-B125-0D6D9C2844A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1487C639-8B3C-4E02-B125-0D6D9C2844A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1487C639-8B3C-4E02-B125-0D6D9C2844A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1487C639-8B3C-4E02-B125-0D6D9C2844A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
