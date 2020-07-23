@@ -24,6 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\IdentityServer\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj"/>
         <ProjectReference Include="..\J3space.AuthServer.Application\J3space.AuthServer.Application.csproj" />
         <ProjectReference Include="..\J3space.AuthServer.HttpApi\J3space.AuthServer.HttpApi.csproj" />
         <ProjectReference Include="..\J3space.AuthServer.MongoDB\J3space.AuthServer.MongoDB.csproj" />

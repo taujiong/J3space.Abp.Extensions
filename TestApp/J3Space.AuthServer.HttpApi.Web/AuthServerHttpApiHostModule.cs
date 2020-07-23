@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using J3space.Abp.IdentityServer;
 using J3space.AuthServer.MongoDb;
-using J3space.AuthServer.UserInterface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,7 +18,6 @@ using Volo.Abp.Autofac;
 using Volo.Abp.Identity.AspNetCore;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
-using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 
@@ -30,6 +28,7 @@ namespace J3space.AuthServer
         typeof(AbpAutofacModule),
         typeof(AuthServerApplicationModule),
         typeof(AuthServerMongoDbModule),
+        typeof(AbpIdentityServerWebModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(AbpIdentityAspNetCoreModule),
         typeof(AbpAspNetCoreSerilogModule)
@@ -45,19 +44,9 @@ namespace J3space.AuthServer
             ConfigureAuthentication(context, configuration);
             ConfigureCors(context, configuration);
             ConfigureLocalization();
-            ConfigureNavigation();
             ConfigureSwaggerServices(context);
             ConfigureUrls(configuration);
             ConfigureVirtualFileSystem(context);
-        }
-
-        private void ConfigureNavigation()
-        {
-            Configure<AbpNavigationOptions>(options =>
-            {
-                options.MenuContributors.Add(new UserMenuContributor());
-                options.MenuContributors.Add(new MainMenuContributor());
-            });
         }
 
         private void ConfigureUrls(IConfiguration configuration)
@@ -73,7 +62,6 @@ namespace J3space.AuthServer
             var hostingEnvironment = context.Services.GetHostingEnvironment();
 
             if (hostingEnvironment.IsDevelopment())
-            {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
                     options.FileSets.ReplaceEmbeddedByPhysical<AuthServerDomainSharedModule>(
@@ -82,14 +70,14 @@ namespace J3space.AuthServer
                     options.FileSets.ReplaceEmbeddedByPhysical<AuthServerDomainModule>(
                         Path.Combine(hostingEnvironment.ContentRootPath,
                             $"..{Path.DirectorySeparatorChar}J3space.AuthServer.Domain"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<AuthServerApplicationContractsModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}J3space.AuthServer.Application.Contracts"));
+                    options.FileSets
+                        .ReplaceEmbeddedByPhysical<AuthServerApplicationContractsModule>(
+                            Path.Combine(hostingEnvironment.ContentRootPath,
+                                $"..{Path.DirectorySeparatorChar}J3space.AuthServer.Application.Contracts"));
                     options.FileSets.ReplaceEmbeddedByPhysical<AuthServerApplicationModule>(
                         Path.Combine(hostingEnvironment.ContentRootPath,
                             $"..{Path.DirectorySeparatorChar}J3space.AuthServer.Application"));
                 });
-            }
         }
 
         private void ConfigureAuthentication(ServiceConfigurationContext context,
@@ -101,7 +89,7 @@ namespace J3space.AuthServer
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "AuthServer";
-                    options.JwtBackChannelHandler = new HttpClientHandler()
+                    options.JwtBackChannelHandler = new HttpClientHandler
                     {
                         ServerCertificateCustomValidationCallback = HttpClientHandler
                             .DangerousAcceptAnyServerCertificateValidator
@@ -125,7 +113,8 @@ namespace J3space.AuthServer
             context.Services.AddSwaggerGen(
                 options =>
                 {
-                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthServer API", Version = "v1" });
+                    options.SwaggerDoc("v1",
+                        new OpenApiInfo {Title = "AuthServer API", Version = "v1"});
                     options.DocInclusionPredicate((docName, description) => true);
                 });
         }
@@ -167,10 +156,7 @@ namespace J3space.AuthServer
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();
             app.UseCorrelationId();
