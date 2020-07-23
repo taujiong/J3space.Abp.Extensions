@@ -6,24 +6,31 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>J3space.Abp.Account.Web</AssemblyName>
-    <PackageId>J3space.Abp.Account.Web</PackageId>
-    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <RootNamespace>J3space.Abp.Account.Web</RootNamespace>
-    <IsPackable>true</IsPackable>
-    <OutputType>Library</OutputType>
+      <PackageId>J3space.Abp.Account.Web</PackageId>
+      <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+      <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+      <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+      <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+      <RootNamespace>J3space.Abp.Account.Web</RootNamespace>
+      <IsPackable>true</IsPackable>
+      <OutputType>Library</OutputType>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.AutoMapper" Version="3.0.4" />
-    <PackageReference Include="Volo.Abp.Identity.Application" Version="3.0.4" />
-    <PackageReference Include="Volo.Abp.UI.Navigation" Version="3.0.4" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Pages\**\*.js"/>
+        <EmbeddedResource Include="Pages\**\*.css"/>
+        <Content Remove="Pages\**\*.js"/>
+        <Content Remove="Pages\**\*.css"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\J3space.Abp.Account.HttpApi\J3space.Abp.Account.HttpApi.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.AutoMapper" Version="3.0.4"/>
+        <PackageReference Include="Volo.Abp.Identity.Application" Version="3.0.4"/>
+        <PackageReference Include="Volo.Abp.UI.Navigation" Version="3.0.4"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\J3space.Abp.Account.HttpApi\J3space.Abp.Account.HttpApi.csproj"/>
+    </ItemGroup>
     
 </Project>
