@@ -21,8 +21,5 @@ namespace J3space.Abp.Account
         [DataType(DataType.Password)]
         [DisableAuditing]
         public string Password { get; set; }
-
-        [Required]
-        public string AppName { get; set; }
     }
 }

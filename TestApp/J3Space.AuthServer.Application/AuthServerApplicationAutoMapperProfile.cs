@@ -10,12 +10,6 @@ namespace J3space.AuthServer
     {
         public AuthServerApplicationAutoMapperProfile()
         {
-            #region Identity Server
-
-            // 查看源码后发现 abp 内部已经实现了诸如 ClientScope 类和 string 的映射配置
-            // https://github.com/abpframework/abp/blob/dev/modules/identityserver/src/Volo.Abp.IdentityServer.Domain/Volo/Abp/IdentityServer/IdentityServerAutoMapperProfile.cs
-
-            #endregion
         }
     }
 }

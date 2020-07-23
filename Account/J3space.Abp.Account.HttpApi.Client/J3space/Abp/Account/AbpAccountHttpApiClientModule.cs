@@ -11,8 +11,8 @@ namespace J3space.Abp.Account
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddHttpClientProxies(typeof(AbpAccountApplicationContractsModule).Assembly, 
-                AccountRemoteServiceConstants.RemoteServiceName);
+            context.Services.AddHttpClientProxies(typeof(AbpAccountApplicationContractsModule).Assembly,
+                AbpAccountRemoteServiceConstants.RemoteServiceName);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace J3space.Abp.Account.Settings
 {
-    public class AccountSettingNames
+    public class AbpAccountSettingNames
     {
         public const string IsSelfRegistrationEnabled = "Abp.Account.IsSelfRegistrationEnabled";
 

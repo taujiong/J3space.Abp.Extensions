@@ -10,7 +10,7 @@ namespace J3space.Abp.IdentityServer
     [RemoteService(Name = IdentityServerRemoteServiceConstants.RemoteServiceName)]
     [Area("identityServer")]
     [Route("api/ids/clients")]
-    public class ClientController : IdentityServerController, IClientAppService
+    public class ClientController : IdentityServerControllerBase, IClientAppService
     {
         private readonly IClientAppService _clientAppService;
 

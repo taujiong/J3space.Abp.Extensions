@@ -15,11 +15,11 @@ namespace J3space.AuthServer.UserInterface
             }
 
             var localizer = context.GetLocalizer<AuthServerResource>();
-            var hasClientPermission = await context.IsGrantedAsync(IdentityServerPermissions.Clients.Default);
+            var hasClientPermission = await context.IsGrantedAsync(IdentityServerPermissions.Client.Default);
             var hasApiResourcePermission =
-                await context.IsGrantedAsync(IdentityServerPermissions.ApiResources.Default);
+                await context.IsGrantedAsync(IdentityServerPermissions.ApiResource.Default);
             var hasIdentityResourcePermission =
-                await context.IsGrantedAsync(IdentityServerPermissions.IdentityResources.Default);
+                await context.IsGrantedAsync(IdentityServerPermissions.IdentityResource.Default);
 
             if (hasClientPermission || hasApiResourcePermission || hasIdentityResourcePermission)
             {

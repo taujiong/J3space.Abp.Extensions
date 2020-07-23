@@ -112,11 +112,11 @@ namespace J3space.AuthServer
             {
                 options.Conventions.AuthorizePage("/Account/Manage");
                 options.Conventions.AuthorizePage("/Ids/Client",
-                    IdentityServerPermissions.Clients.Delete);
+                    IdentityServerPermissions.Client.Delete);
                 options.Conventions.AuthorizePage("/Ids/ApiResource",
-                    IdentityServerPermissions.ApiResources.Default);
+                    IdentityServerPermissions.ApiResource.Default);
                 options.Conventions.AuthorizePage("/Ids/IdentityResource",
-                    IdentityServerPermissions.IdentityResources.Default);
+                    IdentityServerPermissions.IdentityResource.Default);
             });
         }
 

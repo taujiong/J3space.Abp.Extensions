@@ -13,8 +13,8 @@ using Volo.Abp.IdentityServer.IdentityResources;
 
 namespace J3space.Abp.IdentityServer
 {
-    [Authorize(IdentityServerPermissions.IdentityResources.Default)]
-    public class IdentityResourceAppService : IdentityServerAppService, IIdentityResourceAppService
+    [Authorize(IdentityServerPermissions.IdentityResource.Default)]
+    public class IdentityResourceAppService : IdentityServerAppServiceBase, IIdentityResourceAppService
     {
         private readonly IIdentityResourceRepository _resourceRepository;
         private readonly IGuidGenerator _guidGenerator;
@@ -61,7 +61,7 @@ namespace J3space.Abp.IdentityServer
             return ObjectMapper.Map<IdentityResource, IdentityResourceDto>(identityResource);
         }
 
-        [Authorize(IdentityServerPermissions.IdentityResources.Create)]
+        [Authorize(IdentityServerPermissions.IdentityResource.Create)]
         public async Task<IdentityResourceDto> CreateAsync(IdentityResourceCreateUpdateDto input)
         {
             var identityResource = await _resourceRepository.FindByNameAsync(input.Name);
@@ -74,7 +74,7 @@ namespace J3space.Abp.IdentityServer
             return await UpdateAsync(identityResource.Id, input);
         }
 
-        [Authorize(IdentityServerPermissions.IdentityResources.Update)]
+        [Authorize(IdentityServerPermissions.IdentityResource.Update)]
         public async Task<IdentityResourceDto> UpdateAsync(Guid id,
             IdentityResourceCreateUpdateDto input)
         {
@@ -119,7 +119,7 @@ namespace J3space.Abp.IdentityServer
             return ObjectMapper.Map<IdentityResource, IdentityResourceDto>(identityResource);
         }
 
-        [Authorize(IdentityServerPermissions.IdentityResources.Delete)]
+        [Authorize(IdentityServerPermissions.IdentityResource.Delete)]
         public async Task<JsonResult> DeleteAsync(Guid id)
         {
             var client = _resourceRepository.FindAsync(id);

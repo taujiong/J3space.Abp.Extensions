@@ -9,9 +9,9 @@ using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
 
 namespace J3space.Abp.IdentityServer
 {
-    public class IdentityServerAutoMapperProfile : Profile
+    public class AbpIdentityServerAutoMapperProfile : Profile
     {
-        public IdentityServerAutoMapperProfile()
+        public AbpIdentityServerAutoMapperProfile()
         {
             CreateMap<Client, ClientDto>();
             CreateMap<ApiScope, string>().ConstructUsing(src => src.Name);

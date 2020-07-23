@@ -10,7 +10,7 @@ namespace J3space.Abp.IdentityServer
     [RemoteService(Name = IdentityServerRemoteServiceConstants.RemoteServiceName)]
     [Area("identityServer")]
     [Route("api/ids/identity-resources")]
-    public class IdentityResourceController : IdentityServerController, IIdentityResourceAppService
+    public class IdentityResourceController : IdentityServerControllerBase, IIdentityResourceAppService
     {
         private readonly IIdentityResourceAppService _identityResourceAppService;
 

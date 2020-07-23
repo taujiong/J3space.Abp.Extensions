@@ -15,8 +15,8 @@ using Volo.Abp.PermissionManagement;
 
 namespace J3space.Abp.IdentityServer
 {
-    [Authorize(IdentityServerPermissions.Clients.Default)]
-    public class ClientAppService : IdentityServerAppService, IClientAppService
+    [Authorize(IdentityServerPermissions.Client.Default)]
+    public class ClientAppService : IdentityServerAppServiceBase, IClientAppService
     {
         private readonly IClientRepository _clientRepository;
         private readonly IGuidGenerator _guidGenerator;
@@ -65,7 +65,7 @@ namespace J3space.Abp.IdentityServer
             return ObjectMapper.Map<Client, ClientDto>(client);
         }
 
-        [Authorize(IdentityServerPermissions.Clients.Create)]
+        [Authorize(IdentityServerPermissions.Client.Create)]
         public async Task<ClientDto> CreateAsync(ClientCreateUpdateDto input)
         {
             var client = await _clientRepository.FindByCliendIdAsync(input.ClientId);
@@ -82,7 +82,7 @@ namespace J3space.Abp.IdentityServer
             return await UpdateAsync(client.Id, input);
         }
 
-        [Authorize(IdentityServerPermissions.Clients.Update)]
+        [Authorize(IdentityServerPermissions.Client.Update)]
         public async Task<ClientDto> UpdateAsync(Guid id, ClientCreateUpdateDto input)
         {
             var client = await _clientRepository.FindAsync(id);
@@ -242,7 +242,7 @@ namespace J3space.Abp.IdentityServer
             return ObjectMapper.Map<Client, ClientDto>(client);
         }
 
-        [Authorize(IdentityServerPermissions.Clients.Delete)]
+        [Authorize(IdentityServerPermissions.Client.Delete)]
         public async Task<JsonResult> DeleteAsync(Guid id)
         {
             var client = _clientRepository.FindAsync(id);

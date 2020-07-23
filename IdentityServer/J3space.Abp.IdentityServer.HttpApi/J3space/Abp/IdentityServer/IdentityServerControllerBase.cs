@@ -1,11 +1,11 @@
-﻿using Volo.Abp.Application.Services;
+﻿using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.IdentityServer.Localization;
 
 namespace J3space.Abp.IdentityServer
 {
-    public abstract class IdentityServerAppService : ApplicationService
+    public abstract class IdentityServerControllerBase : AbpController
     {
-        protected IdentityServerAppService()
+        protected IdentityServerControllerBase()
         {
             LocalizationResource = typeof(AbpIdentityServerResource);
         }

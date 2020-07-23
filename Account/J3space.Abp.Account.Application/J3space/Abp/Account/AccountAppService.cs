@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using J3space.Abp.Account.Settings;
 using Microsoft.AspNetCore.Identity;
 using Volo.Abp;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Identity;
 using Volo.Abp.Settings;
 using Volo.Abp.Validation;
@@ -11,23 +10,20 @@ using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace J3space.Abp.Account
 {
-    public class AccountAppService : ApplicationService, IAccountAppService
+    public class AccountAppService : AccountAppServiceBase, IAccountAppService
     {
-        protected IIdentityRoleRepository RoleRepository { get; }
-        protected IdentityUserManager UserManager { get; }
-        protected SignInManager<IdentityUser> SignInManager { get; }
-        protected ISettingProvider SettingProvider { get; }
+        private readonly IdentityUserManager _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ISettingProvider _settingProvider;
 
         public AccountAppService(
             IdentityUserManager userManager,
-            IIdentityRoleRepository roleRepository,
             ISettingProvider settingProvider,
             SignInManager<IdentityUser> signInManager)
         {
-            RoleRepository = roleRepository;
-            UserManager = userManager;
-            SignInManager = signInManager;
-            SettingProvider = settingProvider;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _settingProvider = settingProvider;
         }
 
         public virtual async Task<IdentityUserDto> RegisterAsync(RegisterDto input)
@@ -36,10 +32,10 @@ namespace J3space.Abp.Account
 
             var user = new IdentityUser(GuidGenerator.Create(), input.UserName, input.EmailAddress, CurrentTenant.Id);
 
-            (await UserManager.CreateAsync(user, input.Password)).CheckErrors();
+            (await _userManager.CreateAsync(user, input.Password)).CheckErrors();
 
-            await UserManager.SetEmailAsync(user,input.EmailAddress);
-            await UserManager.AddDefaultRolesAsync(user);
+            await _userManager.SetEmailAsync(user,input.EmailAddress);
+            await _userManager.AddDefaultRolesAsync(user);
 
             return ObjectMapper.Map<IdentityUser, IdentityUserDto>(user);
         }
@@ -52,7 +48,7 @@ namespace J3space.Abp.Account
 
             await ReplaceEmailToUsernameOfInputIfNeeds(login);
 
-            return GetAbpLoginResult(await SignInManager.PasswordSignInAsync(
+            return GetAbpLoginResult(await _signInManager.PasswordSignInAsync(
                 login.UserNameOrEmailAddress,
                 login.Password,
                 login.RememberMe,
@@ -62,7 +58,7 @@ namespace J3space.Abp.Account
 
         public async Task Logout()
         {
-            await SignInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
         }
 
         public async Task<AbpLoginResult> CheckPassword(UserLoginInfo login)
@@ -71,19 +67,19 @@ namespace J3space.Abp.Account
 
             await ReplaceEmailToUsernameOfInputIfNeeds(login);
 
-            var identityUser = await UserManager.FindByNameAsync(login.UserNameOrEmailAddress);
+            var identityUser = await _userManager.FindByNameAsync(login.UserNameOrEmailAddress);
 
             if (identityUser == null)
             {
                 return new AbpLoginResult(LoginResultType.InvalidUserNameOrPassword);
             }
 
-            return GetAbpLoginResult(await SignInManager.CheckPasswordSignInAsync(identityUser, login.Password, true));
+            return GetAbpLoginResult(await _signInManager.CheckPasswordSignInAsync(identityUser, login.Password, true));
         }
 
         protected virtual async Task CheckSelfRegistrationAsync()
         {
-            if (!await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled))
+            if (!await _settingProvider.IsTrueAsync(AbpAccountSettingNames.IsSelfRegistrationEnabled))
             {
                 throw new UserFriendlyException(L["SelfRegistrationDisabledMessage"]);
             }
@@ -96,13 +92,13 @@ namespace J3space.Abp.Account
                 return;
             }
 
-            var userByUsername = await UserManager.FindByNameAsync(login.UserNameOrEmailAddress);
+            var userByUsername = await _userManager.FindByNameAsync(login.UserNameOrEmailAddress);
             if (userByUsername != null)
             {
                 return;
             }
 
-            var userByEmail = await UserManager.FindByEmailAsync(login.UserNameOrEmailAddress);
+            var userByEmail = await _userManager.FindByEmailAsync(login.UserNameOrEmailAddress);
             if (userByEmail == null)
             {
                 return;
@@ -156,7 +152,7 @@ namespace J3space.Abp.Account
 
         protected virtual async Task CheckLocalLoginAsync()
         {
-            if (!await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin))
+            if (!await _settingProvider.IsTrueAsync(AbpAccountSettingNames.EnableLocalLogin))
             {
                 throw new UserFriendlyException(L["LocalLoginDisabledMessage"]);
             }

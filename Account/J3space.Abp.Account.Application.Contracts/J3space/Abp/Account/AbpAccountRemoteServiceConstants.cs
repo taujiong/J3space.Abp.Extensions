@@ -1,6 +1,6 @@
 ﻿namespace J3space.Abp.Account
 {
-    public static class AccountRemoteServiceConstants
+    public static class AbpAccountRemoteServiceConstants
     {
         public const string RemoteServiceName = "AbpAccount";
     }

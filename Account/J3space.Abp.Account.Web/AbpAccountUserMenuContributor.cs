@@ -5,7 +5,7 @@ using Volo.Abp.UI.Navigation;
 
 public class AbpAccountUserMenuContributor : IMenuContributor
 {
-    public virtual Task ConfigureMenuAsync(MenuConfigurationContext context)
+    public Task ConfigureMenuAsync(MenuConfigurationContext context)
     {
         if (context.Menu.Name != StandardMenus.User)
         {

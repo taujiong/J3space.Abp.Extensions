@@ -12,32 +12,32 @@ namespace J3space.Abp.IdentityServer
             var identityServerGroup = context.AddGroup(IdentityServerPermissions.GroupName,
                 L("Permission:IdentityServerManagement"));
 
-            var clientsPermission = identityServerGroup.AddPermission(IdentityServerPermissions.Clients.Default,
+            var clientsPermission = identityServerGroup.AddPermission(IdentityServerPermissions.Client.Default,
                 L("Permission:ClientManagement"));
-            clientsPermission.AddChild(IdentityServerPermissions.Clients.Create, L("Permission:Create"));
-            clientsPermission.AddChild(IdentityServerPermissions.Clients.Update, L("Permission:Edit"));
-            clientsPermission.AddChild(IdentityServerPermissions.Clients.Delete, L("Permission:Delete"));
-            clientsPermission.AddChild(IdentityServerPermissions.Clients.ManagePermissions,
+            clientsPermission.AddChild(IdentityServerPermissions.Client.Create, L("Permission:Create"));
+            clientsPermission.AddChild(IdentityServerPermissions.Client.Update, L("Permission:Edit"));
+            clientsPermission.AddChild(IdentityServerPermissions.Client.Delete, L("Permission:Delete"));
+            clientsPermission.AddChild(IdentityServerPermissions.Client.ManagePermissions,
                 L("Permission:ChangePermissions"),
                 MultiTenancySides.Host);
 
-            var apiResourcesPermission = identityServerGroup.AddPermission(IdentityServerPermissions.ApiResources.Default,
-                L("Permission:ApiResourcesManagement"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.ApiResources.Create,
+            var apiResourcesPermission = identityServerGroup.AddPermission(IdentityServerPermissions.ApiResource.Default,
+                L("Permission:ApiResourceManagement"));
+            apiResourcesPermission.AddChild(IdentityServerPermissions.ApiResource.Create,
                 L("Permission:Create"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.ApiResources.Update,
+            apiResourcesPermission.AddChild(IdentityServerPermissions.ApiResource.Update,
                 L("Permission:Edit"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.ApiResources.Delete,
+            apiResourcesPermission.AddChild(IdentityServerPermissions.ApiResource.Delete,
                 L("Permission:Delete"));
 
             var identityResourcesPermission = identityServerGroup.AddPermission(
-                IdentityServerPermissions.IdentityResources.Default,
-                L("Permission:IdentityResourcesManagement"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResources.Create,
+                IdentityServerPermissions.IdentityResource.Default,
+                L("Permission:IdentityResourceManagement"));
+            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Create,
                 L("Permission:Create"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResources.Update,
+            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Update,
                 L("Permission:Edit"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResources.Delete,
+            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Delete,
                 L("Permission:Delete"));
 
         }

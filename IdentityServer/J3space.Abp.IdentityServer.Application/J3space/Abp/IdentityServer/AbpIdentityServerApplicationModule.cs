@@ -1,11 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
+using Volo.Abp.PermissionManagement;
 
 namespace J3space.Abp.IdentityServer
 {
     [DependsOn(
-        typeof(AbpAutoMapperModule)
+        typeof(AbpIdentityServerApplicationContractsModule),
+        typeof(AbpAutoMapperModule),
+        typeof(AbpPermissionManagementApplicationModule)
         )]
     public class AbpIdentityServerApplicationModule : AbpModule
     {
@@ -15,7 +18,7 @@ namespace J3space.Abp.IdentityServer
 
             Configure<AbpAutoMapperOptions>(options =>
             {
-                options.AddProfile<IdentityServerAutoMapperProfile>(validate: true);
+                options.AddProfile<AbpIdentityServerAutoMapperProfile>(validate: true);
             });
         }
     }
