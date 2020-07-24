@@ -3,14 +3,14 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  background: #f6f5f7;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: -20px 0 50px;
+    font-family: 'Montserrat', sans-serif;
+    background: #f6f5f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 h1 {
@@ -19,14 +19,15 @@ h1 {
 }
 
 p {
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: .5px;
-  margin: 20px 0 30px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1px;
+    margin: 20px 0 30px;
 }
 
 span {
-  font-size: 12px;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 a {
@@ -204,10 +205,22 @@ button.ghost {
 
 /* Bring back the text to center */
 .container.right-panel-active .overlay-left {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 /* Same effect for right */
 .container.right-panel-active .overlay-right {
-  transform: translateY(20%);
+    transform: translateY(20%);
+}
+
+.remember-label {
+    align-self: start;
+    display: flex;
+    align-items: center;
+}
+
+input[type="checkbox"] {
+    height: 18px;
+    width: 18px;
+    margin-right: 5px;
 }

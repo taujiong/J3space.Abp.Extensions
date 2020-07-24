@@ -30,8 +30,6 @@
         </a>
       </div>
       <span>@L["EmailForRegistration"]</span>
-      <input asp-for="ReturnUrl" />
-      <input asp-for="ReturnUrlHash" />
       <input asp-for="RegisterInput.UserName"
              placeholder="@L["UserName"]">
       <input asp-for="RegisterInput.EmailAddress"
@@ -66,15 +64,17 @@
       <input asp-for="ReturnUrl" />
       <input asp-for="ReturnUrlHash" />
       <input asp-for="LoginInput.UserNameOrEmailAddress"
-             placeholder="@L["UserNameOrEmailAddress"]">
+             placeholder="@L["UserNameOrEmailAddress"]" />
       <input asp-for="LoginInput.Password"
              placeholder="@L["Password"]"
-             type="password">
-      <span asp-validation-for="LoginInput.Password"
-            class="text-danger">
-      </span>
-      <input asp-for="LoginInput.RememberMe"
-             type="checkbox">@L["RememberMe"]
+             type="password" />
+      <label class="remember-label"
+             for="remember-input">
+        <input asp-for="LoginInput.RememberMe"
+               id="remember-input"
+               type="checkbox" />
+        <span>@L["RememberMe"]</span>
+      </label>
       <!-- TODO: 忘记密码 -->
       <button name="Action"
               type="submit"
@@ -104,5 +104,17 @@
     </div>
   </div>
 </div>
-<script src="/Pages/Account/login.js"
-        asp-append-version="true"></script>
+
+<script>
+  const signUpButton = document.getElementById('signUp');
+  const signInButton = document.getElementById('signIn');
+  const container = document.getElementById('container');
+
+  signUpButton.addEventListener('click', function () {
+    container.classList.add('right-panel-active')
+  })
+
+  signInButton.addEventListener('click', function () {
+    container.classList.remove('right-panel-active')
+  });
+</script>
