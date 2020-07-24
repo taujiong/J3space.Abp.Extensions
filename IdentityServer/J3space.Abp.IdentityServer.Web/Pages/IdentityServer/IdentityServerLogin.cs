@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using IdentityServer4.Models;
 using IdentityServer4.Services;
-using IdentityServer4.Stores;
 using J3space.Abp.Account;
 using J3space.Abp.Account.Pages.Account;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Volo.Abp.DependencyInjection;
 
 namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
@@ -11,20 +12,14 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
     [ExposeServices(typeof(Login))]
     public class IdentityServerLogin : Login
     {
-        private readonly IClientStore _clientStore;
-        private readonly IEventService _identityServerEvents;
         private readonly IIdentityServerInteractionService _interaction;
 
         public IdentityServerLogin(
             IAccountAppService accountAppService,
-            IIdentityServerInteractionService interaction,
-            IClientStore clientStore,
-            IEventService identityServerEvents
+            IIdentityServerInteractionService interaction
         ) : base(accountAppService)
         {
             _interaction = interaction;
-            _clientStore = clientStore;
-            _identityServerEvents = identityServerEvents;
         }
 
         public override async Task<IActionResult> OnGetAsync()
@@ -40,7 +35,44 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
 
         public override async Task<IActionResult> OnPostAsync(string action)
         {
-            await AccountAppService.Logout();
+            if (action == "Cancel")
+            {
+                var context = await _interaction.GetAuthorizationContextAsync(ReturnUrl);
+                if (context == null)
+                {
+                    return Redirect("~/");
+                }
+
+                await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
+
+                return Redirect(ReturnUrl);
+            }
+
+            if (action == "Register")
+            {
+                if (ModelState.GetFieldValidationState(nameof(RegisterInput)) !=
+                    ModelValidationState.Valid)
+                    return Page();
+
+                await AccountAppService.RegisterAsync(RegisterInput);
+                LoginInput = new LoginDto
+                {
+                    Password = RegisterInput.Password,
+                    RememberMe = false,
+                    UserNameOrEmailAddress = RegisterInput.UserName
+                };
+            }
+            else if (action == "Login")
+            {
+                if (ModelState.GetFieldValidationState(nameof(LoginInput)) !=
+                    ModelValidationState.Valid)
+                    return Page();
+            }
+
+            var loginResult = await AccountAppService.Login(LoginInput);
+
+            if (loginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
+
             return Page();
         }
     }

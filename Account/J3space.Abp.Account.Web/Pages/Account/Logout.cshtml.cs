@@ -15,7 +15,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             AccountAppService = accountAppService;
         }
 
-        [BindProperty] protected string ReturnUrl { get; } = "/";
+        [BindProperty] protected string ReturnUrl { get; set; } = "/";
 
         public virtual async Task<IActionResult> OnGetAsync()
         {
