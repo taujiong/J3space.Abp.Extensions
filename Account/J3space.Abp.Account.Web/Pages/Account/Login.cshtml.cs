@@ -7,13 +7,13 @@ namespace J3space.Abp.Account.Pages.Account
 {
     public class Login : PageModel
     {
-        private readonly IAccountAppService _accountAppService;
+        protected readonly IAccountAppService AccountAppService;
 
-        public Login(
+        protected Login(
             IAccountAppService accountAppService
         )
         {
-            _accountAppService = accountAppService;
+            AccountAppService = accountAppService;
         }
 
         [HiddenInput]
@@ -28,7 +28,7 @@ namespace J3space.Abp.Account.Pages.Account
 
         [BindProperty] public RegisterDto RegisterInput { get; set; }
 
-        public virtual IActionResult OnGetAsync()
+        public virtual async Task<IActionResult> OnGetAsync()
         {
             LoginInput = new LoginDto();
             return Page();
@@ -42,7 +42,7 @@ namespace J3space.Abp.Account.Pages.Account
                     ModelValidationState.Valid)
                     return Page();
 
-                await _accountAppService.RegisterAsync(RegisterInput);
+                await AccountAppService.RegisterAsync(RegisterInput);
                 LoginInput = new LoginDto
                 {
                     Password = RegisterInput.Password,
@@ -57,7 +57,7 @@ namespace J3space.Abp.Account.Pages.Account
                     return Page();
             }
 
-            var loginResult = await _accountAppService.Login(LoginInput);
+            var loginResult = await AccountAppService.Login(LoginInput);
 
             if (loginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
 
