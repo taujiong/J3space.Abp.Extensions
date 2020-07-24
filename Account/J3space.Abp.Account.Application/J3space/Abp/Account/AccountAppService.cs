@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using J3space.Abp.Account.Settings;
 using Microsoft.AspNetCore.Identity;
-using Volo.Abp;
 using Volo.Abp.Identity;
 using Volo.Abp.Settings;
 using Volo.Abp.Validation;
@@ -12,9 +10,9 @@ namespace J3space.Abp.Account
 {
     public class AccountAppService : AccountAppServiceBase, IAccountAppService
     {
-        private readonly IdentityUserManager _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ISettingProvider _settingProvider;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IdentityUserManager _userManager;
 
         public AccountAppService(
             IdentityUserManager userManager,
@@ -28,13 +26,12 @@ namespace J3space.Abp.Account
 
         public virtual async Task<IdentityUserDto> RegisterAsync(RegisterDto input)
         {
-            await CheckSelfRegistrationAsync();
-
-            var user = new IdentityUser(GuidGenerator.Create(), input.UserName, input.EmailAddress, CurrentTenant.Id);
+            var user = new IdentityUser(GuidGenerator.Create(), input.UserName, input.EmailAddress,
+                CurrentTenant.Id);
 
             (await _userManager.CreateAsync(user, input.Password)).CheckErrors();
 
-            await _userManager.SetEmailAsync(user,input.EmailAddress);
+            await _userManager.SetEmailAsync(user, input.EmailAddress);
             await _userManager.AddDefaultRolesAsync(user);
 
             return ObjectMapper.Map<IdentityUser, IdentityUserDto>(user);
@@ -42,8 +39,6 @@ namespace J3space.Abp.Account
 
         public async Task<AbpLoginResult> Login(UserLoginInfo login)
         {
-            await CheckLocalLoginAsync();
-
             ValidateLoginInfo(login);
 
             await ReplaceEmailToUsernameOfInputIfNeeds(login);
@@ -70,93 +65,49 @@ namespace J3space.Abp.Account
             var identityUser = await _userManager.FindByNameAsync(login.UserNameOrEmailAddress);
 
             if (identityUser == null)
-            {
                 return new AbpLoginResult(LoginResultType.InvalidUserNameOrPassword);
-            }
 
-            return GetAbpLoginResult(await _signInManager.CheckPasswordSignInAsync(identityUser, login.Password, true));
+            return GetAbpLoginResult(
+                await _signInManager.CheckPasswordSignInAsync(identityUser, login.Password, true));
         }
 
-        protected virtual async Task CheckSelfRegistrationAsync()
+        protected virtual async Task ReplaceEmailToUsernameOfInputIfNeeds(UserLoginInfo login)
         {
-            if (!await _settingProvider.IsTrueAsync(AbpAccountSettingNames.IsSelfRegistrationEnabled))
-            {
-                throw new UserFriendlyException(L["SelfRegistrationDisabledMessage"]);
-            }
-        }
-
-                protected virtual async Task ReplaceEmailToUsernameOfInputIfNeeds(UserLoginInfo login)
-        {
-            if (!ValidationHelper.IsValidEmailAddress(login.UserNameOrEmailAddress))
-            {
-                return;
-            }
+            if (!ValidationHelper.IsValidEmailAddress(login.UserNameOrEmailAddress)) return;
 
             var userByUsername = await _userManager.FindByNameAsync(login.UserNameOrEmailAddress);
-            if (userByUsername != null)
-            {
-                return;
-            }
+            if (userByUsername != null) return;
 
             var userByEmail = await _userManager.FindByEmailAsync(login.UserNameOrEmailAddress);
-            if (userByEmail == null)
-            {
-                return;
-            }
+            if (userByEmail == null) return;
 
             login.UserNameOrEmailAddress = userByEmail.UserName;
         }
 
         private static AbpLoginResult GetAbpLoginResult(SignInResult result)
         {
-            if (result.IsLockedOut)
-            {
-                return new AbpLoginResult(LoginResultType.LockedOut);
-            }
+            if (result.IsLockedOut) return new AbpLoginResult(LoginResultType.LockedOut);
 
             if (result.RequiresTwoFactor)
-            {
                 return new AbpLoginResult(LoginResultType.RequiresTwoFactor);
-            }
 
-            if (result.IsNotAllowed)
-            {
-                return new AbpLoginResult(LoginResultType.NotAllowed);
-            }
+            if (result.IsNotAllowed) return new AbpLoginResult(LoginResultType.NotAllowed);
 
             if (!result.Succeeded)
-            {
                 return new AbpLoginResult(LoginResultType.InvalidUserNameOrPassword);
-            }
 
             return new AbpLoginResult(LoginResultType.Success);
         }
 
         protected virtual void ValidateLoginInfo(UserLoginInfo login)
         {
-            if (login == null)
-            {
-                throw new ArgumentException(nameof(login));
-            }
+            if (login == null) throw new ArgumentException(nameof(login));
 
             if (login.UserNameOrEmailAddress.IsNullOrEmpty())
-            {
                 throw new ArgumentNullException(nameof(login.UserNameOrEmailAddress));
-            }
 
             if (login.Password.IsNullOrEmpty())
-            {
                 throw new ArgumentNullException(nameof(login.Password));
-            }
         }
-
-        protected virtual async Task CheckLocalLoginAsync()
-        {
-            if (!await _settingProvider.IsTrueAsync(AbpAccountSettingNames.EnableLocalLogin))
-            {
-                throw new UserFriendlyException(L["LocalLoginDisabledMessage"]);
-            }
-        }
-
     }
 }
