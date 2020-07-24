@@ -1,34 +1,21 @@
 ﻿@page
 @model J3space.Abp.Account.Pages.Account.Login
 
-@{
-  Layout = null;
-}
-
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-  <meta charset="utf-8">
-  <title>高性能滑动的登录注册页面静态模板 - 代码库</title>
+@section style
+{
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
         rel="stylesheet">
   <link href="/Pages/Account/login.css"
         rel="stylesheet">
-</head>
-<!--/************************************************************
-*																*
-* 						      代码库							*
-*                        www.dmaku.com							*
-*       		  努力创建完善、持续更新插件以及模板			*
-* 																*
-**************************************************************-->
-<body>
+}
+
 <div class="dowebok"
      id="dowebok">
   <div class="form-container sign-up-container">
-    <form action="#">
-      <h1>注册</h1>
+    <form asp-action="RegisterAsync"
+          asp-controller="Account"
+          method="post">
+      <h1>@L["Register"]</h1>
       <div class="social-container">
         <a class="social"
            href="#">
@@ -43,19 +30,25 @@
           <i class="fab fa-linkedin-in"></i>
         </a>
       </div>
-      <span>或使用邮箱注册</span>
-      <input placeholder="姓名"
+      <span>@L["EmailForRegistration"]</span>
+      <input asp-for="ReturnUrl" />
+      <input asp-for="ReturnUrlHash" />
+      <input asp-for="RegisterInput.UserName"
+             placeholder="@L["UserName"]"
              type="text">
-      <input placeholder="电子邮箱"
+      <input asp-for="RegisterInput.EmailAddress"
+             placeholder="@L["EmailAddress"]"
              type="email">
-      <input placeholder="密码"
+      <input asp-for="RegisterInput.Password"
+             placeholder="@L["Password"]"
              type="password">
-      <button>注册</button>
+      <button>@L["Register"]</button>
     </form>
   </div>
   <div class="form-container sign-in-container">
-    <form action="#">
-      <h1>登录</h1>
+    <form asp-action="Login"
+          asp-controller="Account">
+      <h1>@L["Login"]</h1>
       <div class="social-container">
         <a class="social"
            href="#">
@@ -70,37 +63,45 @@
           <i class="fab fa-linkedin-in"></i>
         </a>
       </div>
-      <span>或使用您的帐号</span>
-      <input placeholder="电子邮箱"
-             type="email">
-      <input placeholder="密码"
+      <span>@L["LocalAccountForLogin"]</span>
+      <input asp-for="LoginInput.UserNameOrEmailAddress"
+             placeholder="@L["UserNameOrEmailAddress"]"
+             type="text">
+      <span asp-validation-for="LoginInput.UserNameOrEmailAddress"
+            class="text-danger">
+      </span>
+      <input asp-for="LoginInput.Password"
+             placeholder="@L["Password"]"
              type="password">
-      <a href="#">忘记密码？</a>
-      <button>登录</button>
+      <span asp-validation-for="LoginInput.Password"
+            class="text-danger">
+      </span>
+      <input asp-for="LoginInput.RememberMe"
+             type="checkbox">@L["RememberMe"]
+      <!-- TODO: 忘记密码 -->
+      <a href="#">@L["ForgetPassword"]</a>
+      <button>@L["Login"]</button>
     </form>
   </div>
   <div class="overlay-container">
     <div class="overlay">
       <div class="overlay-left overlay-panel">
-        <h1>已有帐号？</h1>
-        <p>请使用您的帐号进行登录</p>
+        <h1>@L["AlreadyRegistered"]</h1>
+        <p>@L["LoginWithYourAccount"]</p>
         <button class="ghost"
                 id="signIn">
-          登录
+          @L["Login"]
         </button>
       </div>
       <div class="overlay-panel overlay-right">
-        <h1>没有帐号？</h1>
-        <p>立即注册加入我们，和我们一起开始旅程吧</p>
+        <h1>@L["AreYouANewUser"]</h1>
+        <p>@L["LoginInvitation"]</p>
         <button class="ghost"
                 id="signUp">
-          注册
+          @L["Register"]
         </button>
       </div>
     </div>
   </div>
 </div>
 <script src="/Pages/Account/login.js"></script>
-</body>
-
-</html>

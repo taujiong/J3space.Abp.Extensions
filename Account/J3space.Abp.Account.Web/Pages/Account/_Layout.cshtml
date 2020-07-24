@@ -1,0 +1,31 @@
+﻿@using Volo.Abp.AspNetCore.Mvc.AntiForgery
+@using Volo.Abp.Localization
+@using System.Globalization
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@{
+  AbpAntiForgeryManager.SetCookie();
+  const string appName = "MyApplication"; // TODO: 引入配置文件内容
+  var pageTitle = string.IsNullOrEmpty(ViewBag.Title) ? appName : ViewBag.Title;
+  var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+}
+
+<!DOCTYPE html>
+
+<html lang="@CultureInfo.CurrentCulture.Name"
+      dir="@rtl">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="viewport">
+  <meta content="ie=edge"
+        http-equiv="X-UA-Compatible">
+
+  <title>@pageTitle</title>
+
+  @await RenderSectionAsync("style", false)
+</head>
+
+<body>
+@RenderBody()
+</body>
+</html>
