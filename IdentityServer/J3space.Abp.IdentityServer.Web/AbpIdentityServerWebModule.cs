@@ -1,5 +1,7 @@
 ﻿using J3space.Abp.Account.Web;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.Identity.AspNetCore;
 using Volo.Abp.IdentityServer;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
@@ -15,6 +17,11 @@ namespace J3space.Abp.IdentityServer.Web
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
+            context.Services.PreConfigure<AbpIdentityAspNetCoreOptions>(options =>
+            {
+                options.ConfigureAuthentication = false;
+            });
+
             PreConfigure<IMvcBuilder>(mvcBuilder =>
             {
                 mvcBuilder.AddApplicationPartIfNotExists(typeof(AbpIdentityServerWebModule)
@@ -34,6 +41,14 @@ namespace J3space.Abp.IdentityServer.Web
             {
                 options.MenuContributors.Add(new AbpIdentityServerMainMenuContributor());
             });
+
+            context.Services
+                .AddAuthentication(o =>
+                {
+                    o.DefaultScheme = IdentityConstants.ApplicationScheme;
+                    o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+                })
+                .AddIdentityCookies();
         }
     }
 }
