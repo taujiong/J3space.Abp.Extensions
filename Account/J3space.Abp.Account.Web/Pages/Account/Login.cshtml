@@ -5,12 +5,13 @@
 {
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
         rel="stylesheet">
-  <link href="/Pages/Account/login.css"
+  <link asp-append-version="true"
+        href="/Pages/Account/login.css"
         rel="stylesheet">
 }
 
-<div class="dowebok"
-     id="dowebok">
+<div class="container"
+     id="container">
   <div class="form-container sign-up-container">
     <form asp-action="RegisterAsync"
           asp-controller="Account"
@@ -104,4 +105,5 @@
     </div>
   </div>
 </div>
-<script src="/Pages/Account/login.js"></script>
+<script src="/Pages/Account/login.js"
+        asp-append-version="true"></script>

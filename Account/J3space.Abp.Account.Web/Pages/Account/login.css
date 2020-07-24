@@ -36,7 +36,7 @@ a {
   margin: 15px 0;
 }
 
-.dowebok {
+.container {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
@@ -181,33 +181,33 @@ button.ghost {
 }
 
 /* Move signin to right */
-.dowebok.right-panel-active .sign-in-container {
+.container.right-panel-active .sign-in-container {
   transform: translateY(100%);
 }
 
 /* Move overlay to left */
-.dowebok.right-panel-active .overlay-container {
+.container.right-panel-active .overlay-container {
   transform: translateX(-100%);
 }
 
 /* Bring signup over signin */
-.dowebok.right-panel-active .sign-up-container {
+.container.right-panel-active .sign-up-container {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
 }
 
 /* Move overlay back to right */
-.dowebok.right-panel-active .overlay {
+.container.right-panel-active .overlay {
   transform: translateX(50%);
 }
 
 /* Bring back the text to center */
-.dowebok.right-panel-active .overlay-left {
+.container.right-panel-active .overlay-left {
   transform: translateY(0);
 }
 
 /* Same effect for right */
-.dowebok.right-panel-active .overlay-right {
+.container.right-panel-active .overlay-right {
   transform: translateY(20%);
 }

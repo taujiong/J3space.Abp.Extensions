@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Volo.Abp.Identity;
-using Volo.Abp.Settings;
 using Volo.Abp.Validation;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
@@ -10,18 +9,15 @@ namespace J3space.Abp.Account
 {
     public class AccountAppService : AccountAppServiceBase, IAccountAppService
     {
-        private readonly ISettingProvider _settingProvider;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IdentityUserManager _userManager;
 
         public AccountAppService(
             IdentityUserManager userManager,
-            ISettingProvider settingProvider,
             SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _settingProvider = settingProvider;
         }
 
         public virtual async Task<IdentityUserDto> RegisterAsync(RegisterDto input)
@@ -37,7 +33,7 @@ namespace J3space.Abp.Account
             return ObjectMapper.Map<IdentityUser, IdentityUserDto>(user);
         }
 
-        public async Task<AbpLoginResult> Login(UserLoginInfo login)
+        public async Task<AbpLoginResult> Login(LoginDto login)
         {
             ValidateLoginInfo(login);
 
@@ -56,7 +52,7 @@ namespace J3space.Abp.Account
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<AbpLoginResult> CheckPassword(UserLoginInfo login)
+        public async Task<AbpLoginResult> CheckPassword(LoginDto login)
         {
             ValidateLoginInfo(login);
 
@@ -71,7 +67,7 @@ namespace J3space.Abp.Account
                 await _signInManager.CheckPasswordSignInAsync(identityUser, login.Password, true));
         }
 
-        protected virtual async Task ReplaceEmailToUsernameOfInputIfNeeds(UserLoginInfo login)
+        protected virtual async Task ReplaceEmailToUsernameOfInputIfNeeds(LoginDto login)
         {
             if (!ValidationHelper.IsValidEmailAddress(login.UserNameOrEmailAddress)) return;
 
@@ -99,7 +95,7 @@ namespace J3space.Abp.Account
             return new AbpLoginResult(LoginResultType.Success);
         }
 
-        protected virtual void ValidateLoginInfo(UserLoginInfo login)
+        protected virtual void ValidateLoginInfo(LoginDto login)
         {
             if (login == null) throw new ArgumentException(nameof(login));
 

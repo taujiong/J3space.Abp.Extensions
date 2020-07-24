@@ -7,8 +7,8 @@ namespace J3space.Abp.Account
     public interface IAccountAppService : IApplicationService
     {
         public Task<IdentityUserDto> RegisterAsync(RegisterDto input);
-        public Task<AbpLoginResult> Login(UserLoginInfo login);
+        public Task<AbpLoginResult> Login(LoginDto login);
         public Task Logout();
-        public Task<AbpLoginResult> CheckPassword(UserLoginInfo login);
+        public Task<AbpLoginResult> CheckPassword(LoginDto login);
     }
 }

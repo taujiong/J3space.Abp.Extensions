@@ -1,6 +1,6 @@
-﻿var signUpButton = document.getElementById('signUp')
-var signInButton = document.getElementById('signIn')
-var container = document.getElementById('dowebok')
+﻿const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
 
 signUpButton.addEventListener('click', function () {
   container.classList.add('right-panel-active')

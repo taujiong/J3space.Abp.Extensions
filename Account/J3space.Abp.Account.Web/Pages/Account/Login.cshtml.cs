@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Volo.Abp.Auditing;
 using Volo.Abp.Identity;
 using Volo.Abp.Validation;
 
@@ -26,7 +24,7 @@ namespace J3space.Abp.Account.Pages.Account
         [BindProperty(SupportsGet = true)]
         public string ReturnUrlHash { get; set; }
 
-        [BindProperty] public LoginInputModel LoginInput { get; set; }
+        [BindProperty] public LoginDto LoginInput { get; set; }
 
         [BindProperty] public RegisterDto RegisterInput { get; set; }
 
@@ -35,7 +33,7 @@ namespace J3space.Abp.Account.Pages.Account
 
         public virtual IActionResult OnGetAsync()
         {
-            LoginInput = new LoginInputModel();
+            LoginInput = new LoginDto();
             return Page();
         }
 
@@ -79,23 +77,6 @@ namespace J3space.Abp.Account.Pages.Account
             if (userByEmail == null) return;
 
             LoginInput.UserNameOrEmailAddress = userByEmail.UserName;
-        }
-
-        public class LoginInputModel
-        {
-            [Required]
-            [DynamicStringLength(typeof(IdentityUserConsts),
-                nameof(IdentityUserConsts.MaxEmailLength))]
-            public string UserNameOrEmailAddress { get; set; }
-
-            [Required]
-            [DynamicStringLength(typeof(IdentityUserConsts),
-                nameof(IdentityUserConsts.MaxPasswordLength))]
-            [DataType(DataType.Password)]
-            [DisableAuditing]
-            public string Password { get; set; }
-
-            public bool RememberMe { get; set; }
         }
     }
 }
