@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Identity;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.Identity;
 using Volo.Abp.Identity.AspNetCore;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
@@ -20,6 +21,8 @@ namespace J3space.Abp.Account
             {
                 options.FileSets.AddEmbedded<AbpAccountApplicationModule>();
             });
+
+            context.Services.AddAutoMapperObjectMapper<AbpAccountApplicationModule>();
         }
     }
 }

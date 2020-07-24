@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model J3space.Abp.Account.Pages.Account.Login
 
 @section style
@@ -13,9 +13,7 @@
 <div class="container"
      id="container">
   <div class="form-container sign-up-container">
-    <form asp-action="RegisterAsync"
-          asp-controller="Account"
-          method="post">
+    <form method="post">
       <h1>@L["Register"]</h1>
       <div class="social-container">
         <a class="social"
@@ -35,15 +33,16 @@
       <input asp-for="ReturnUrl" />
       <input asp-for="ReturnUrlHash" />
       <input asp-for="RegisterInput.UserName"
-             placeholder="@L["UserName"]"
-             type="text">
+             placeholder="@L["UserName"]">
       <input asp-for="RegisterInput.EmailAddress"
-             placeholder="@L["EmailAddress"]"
-             type="email">
+             placeholder="@L["EmailAddress"]">
       <input asp-for="RegisterInput.Password"
-             placeholder="@L["Password"]"
-             type="password">
-      <button>@L["Register"]</button>
+             placeholder="@L["Password"]">
+      <button name="Action"
+              type="submit"
+              value="Register">
+        @L["Register"]
+      </button>
     </form>
   </div>
   <div class="form-container sign-in-container">
@@ -77,7 +76,6 @@
       <input asp-for="LoginInput.RememberMe"
              type="checkbox">@L["RememberMe"]
       <!-- TODO: 忘记密码 -->
-      <a href="#">@L["ForgetPassword"]</a>
       <button name="Action"
               type="submit"
               value="Login">

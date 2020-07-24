@@ -1,19 +1,19 @@
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Volo.Abp.Identity;
-using Volo.Abp.Validation;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace J3space.Abp.Account.Pages.Account
 {
-    public class Login : AccountPageModel
+    public class Login : PageModel
     {
-        public Login(Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager,
-            IdentityUserManager userManager
+        private readonly IAccountAppService _accountAppService;
+
+        public Login(
+            IAccountAppService accountAppService
         )
         {
-            SignInManager = signInManager;
-            UserManager = userManager;
+            _accountAppService = accountAppService;
         }
 
         [HiddenInput]
@@ -26,10 +26,7 @@ namespace J3space.Abp.Account.Pages.Account
 
         [BindProperty] public LoginDto LoginInput { get; set; }
 
-        // [BindProperty] public RegisterDto RegisterInput { get; set; }
-
-        private IdentityUserManager UserManager { get; }
-        private Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; }
+        [BindProperty] public RegisterDto RegisterInput { get; set; }
 
         public virtual IActionResult OnGetAsync()
         {
@@ -37,46 +34,34 @@ namespace J3space.Abp.Account.Pages.Account
             return Page();
         }
 
-        public virtual async Task<IActionResult> OnPostAsync()
+        public virtual async Task<IActionResult> OnPostAsync(string action)
         {
-            if (!ModelState.IsValid) return Page();
+            if (action == "Register")
+            {
+                if (ModelState.GetFieldValidationState(nameof(RegisterInput)) !=
+                    ModelValidationState.Valid)
+                    return Page();
 
-            await ReplaceEmailToUsernameOfInputIfNeeds();
+                await _accountAppService.RegisterAsync(RegisterInput);
+                LoginInput = new LoginDto
+                {
+                    Password = RegisterInput.Password,
+                    RememberMe = false,
+                    UserNameOrEmailAddress = RegisterInput.UserName
+                };
+            }
+            else if (action == "Login")
+            {
+                if (ModelState.GetFieldValidationState(nameof(LoginInput)) !=
+                    ModelValidationState.Valid)
+                    return Page();
+            }
 
-            var result = await SignInManager.PasswordSignInAsync(
-                LoginInput.UserNameOrEmailAddress,
-                LoginInput.Password,
-                LoginInput.RememberMe,
-                true
-            );
+            var loginResult = await _accountAppService.Login(LoginInput);
 
-            if (result.IsLockedOut) return Page();
+            if (loginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
 
-            if (result.IsNotAllowed) return Page();
-
-            if (!result.Succeeded) return Page();
-
-            //TODO: Find a way of getting user's id from the logged in user and do not query it again like that!
-            var user = await UserManager.FindByNameAsync(LoginInput.UserNameOrEmailAddress) ??
-                       await UserManager.FindByEmailAsync(LoginInput.UserNameOrEmailAddress);
-
-            Debug.Assert(user != null, nameof(user) + " != null");
-
-            return RedirectSafely(ReturnUrl, ReturnUrlHash);
-        }
-
-        protected virtual async Task ReplaceEmailToUsernameOfInputIfNeeds()
-        {
-            if (!ValidationHelper.IsValidEmailAddress(LoginInput.UserNameOrEmailAddress)) return;
-
-            var userByUsername =
-                await UserManager.FindByNameAsync(LoginInput.UserNameOrEmailAddress);
-            if (userByUsername != null) return;
-
-            var userByEmail = await UserManager.FindByEmailAsync(LoginInput.UserNameOrEmailAddress);
-            if (userByEmail == null) return;
-
-            LoginInput.UserNameOrEmailAddress = userByEmail.UserName;
+            return Page();
         }
     }
 }
