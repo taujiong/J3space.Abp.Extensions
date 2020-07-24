@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Identity;
@@ -26,7 +26,7 @@ namespace J3space.Abp.Account.Pages.Account
 
         [BindProperty] public LoginDto LoginInput { get; set; }
 
-        [BindProperty] public RegisterDto RegisterInput { get; set; }
+        // [BindProperty] public RegisterDto RegisterInput { get; set; }
 
         private IdentityUserManager UserManager { get; }
         private Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; }

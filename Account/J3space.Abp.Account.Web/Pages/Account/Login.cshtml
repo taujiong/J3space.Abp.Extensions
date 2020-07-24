@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model J3space.Abp.Account.Pages.Account.Login
 
 @section style
@@ -47,8 +47,7 @@
     </form>
   </div>
   <div class="form-container sign-in-container">
-    <form asp-action="Login"
-          asp-controller="Account">
+    <form method="post">
       <h1>@L["Login"]</h1>
       <div class="social-container">
         <a class="social"
@@ -65,12 +64,10 @@
         </a>
       </div>
       <span>@L["LocalAccountForLogin"]</span>
+      <input asp-for="ReturnUrl" />
+      <input asp-for="ReturnUrlHash" />
       <input asp-for="LoginInput.UserNameOrEmailAddress"
-             placeholder="@L["UserNameOrEmailAddress"]"
-             type="text">
-      <span asp-validation-for="LoginInput.UserNameOrEmailAddress"
-            class="text-danger">
-      </span>
+             placeholder="@L["UserNameOrEmailAddress"]">
       <input asp-for="LoginInput.Password"
              placeholder="@L["Password"]"
              type="password">
@@ -81,7 +78,11 @@
              type="checkbox">@L["RememberMe"]
       <!-- TODO: 忘记密码 -->
       <a href="#">@L["ForgetPassword"]</a>
-      <button>@L["Login"]</button>
+      <button name="Action"
+              type="submit"
+              value="Login">
+        @L["Login"]
+      </button>
     </form>
   </div>
   <div class="overlay-container">
