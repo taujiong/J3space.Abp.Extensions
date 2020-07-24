@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace J3space.Abp.Account.Pages.Account
+namespace J3space.Abp.Account.Web.Pages.Account
 {
     public class Login : PageModel
     {

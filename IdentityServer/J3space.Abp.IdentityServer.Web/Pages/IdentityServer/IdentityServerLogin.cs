@@ -2,7 +2,7 @@
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using J3space.Abp.Account;
-using J3space.Abp.Account.Pages.Account;
+using J3space.Abp.Account.Web.Pages.Account;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Volo.Abp.DependencyInjection;
