@@ -34,7 +34,7 @@ a:hover {
 }
 
 /*---------------------------------------------*/
-h1,h2,h3,h4,h5,h6 {
+h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
@@ -66,25 +66,69 @@ textarea:focus, input:focus {
     border-color: transparent !important;
 }
 
-input:focus::-webkit-input-placeholder { color:transparent; }
-input:focus:-moz-placeholder { color:transparent; }
-input:focus::-moz-placeholder { color:transparent; }
-input:focus:-ms-input-placeholder { color:transparent; }
+input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
 
-textarea:focus::-webkit-input-placeholder { color:transparent; }
-textarea:focus:-moz-placeholder { color:transparent; }
-textarea:focus::-moz-placeholder { color:transparent; }
-textarea:focus:-ms-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder {
+    color: transparent;
+}
 
-input::-webkit-input-placeholder { color: #adadad;}
-input:-moz-placeholder { color: #adadad;}
-input::-moz-placeholder { color: #adadad;}
-input:-ms-input-placeholder { color: #adadad;}
+input:focus::-moz-placeholder {
+    color: transparent;
+}
 
-textarea::-webkit-input-placeholder { color: #adadad;}
-textarea:-moz-placeholder { color: #adadad;}
-textarea::-moz-placeholder { color: #adadad;}
-textarea:-ms-input-placeholder { color: #adadad;}
+input:focus:-ms-input-placeholder {
+    color: transparent;
+}
+
+textarea:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+textarea:focus:-moz-placeholder {
+    color: transparent;
+}
+
+textarea:focus::-moz-placeholder {
+    color: transparent;
+}
+
+textarea:focus:-ms-input-placeholder {
+    color: transparent;
+}
+
+input::-webkit-input-placeholder {
+    color: #adadad;
+}
+
+input:-moz-placeholder {
+    color: #adadad;
+}
+
+input::-moz-placeholder {
+    color: #adadad;
+}
+
+input:-ms-input-placeholder {
+    color: #adadad;
+}
+
+textarea::-webkit-input-placeholder {
+    color: #adadad;
+}
+
+textarea:-moz-placeholder {
+    color: #adadad;
+}
+
+textarea::-moz-placeholder {
+    color: #adadad;
+}
+
+textarea:-ms-input-placeholder {
+    color: #adadad;
+}
 
 /*---------------------------------------------*/
 button {
@@ -147,7 +191,6 @@ iframe {
     line-height: 1.2;
     text-align: center;
 }
-
 
 
 /*------------------------------------------------------------------
@@ -363,17 +406,45 @@ input[type="checkbox"] {
     text-transform: uppercase;
 }
 
-.text-center {text-align: center;}
+.text-center {
+    text-align: center;
+}
 
-.m-b-23 {margin-bottom: 23px;}
-.p-l-55 {padding-left: 55px;}
-.p-r-55 {padding-right: 55px;}
-.p-t-65 {padding-top: 65px;}
-.p-b-54 {padding-bottom: 54px;}
-.p-b-49 {padding-bottom: 49px;}
-.p-t-50 {padding-top: 50px;}
-.p-b-20 {padding-bottom: 20px;}
-.p-t-25 {padding-top: 25px;}
+.m-b-23 {
+    margin-bottom: 23px;
+}
+
+.p-l-55 {
+    padding-left: 55px;
+}
+
+.p-r-55 {
+    padding-right: 55px;
+}
+
+.p-t-65 {
+    padding-top: 65px;
+}
+
+.p-b-54 {
+    padding-bottom: 54px;
+}
+
+.p-b-49 {
+    padding-bottom: 49px;
+}
+
+.p-t-50 {
+    padding-top: 50px;
+}
+
+.p-b-20 {
+    padding-bottom: 20px;
+}
+
+.p-t-25 {
+    padding-top: 25px;
+}
 
 .flex-c-m {
     display: -webkit-box;
@@ -512,4 +583,45 @@ input[type="checkbox"] {
     100% {
         transform: translatey(-110vh) rotate(720deg);
     }
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ notification ]*/
+
+@keyframes fade-in {
+    from {
+        visibility: hidden;
+        opacity: 0; }
+    to {
+        visibility: visible;
+        opacity: 1; } }
+
+.notify {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding: 20px;
+    color: #e2dede;
+    line-height: 1.3;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.35);
+    visibility: hidden;
+    opacity: 0;
+    max-width: 350px;
+    margin: 20px 0;
+    top: 0;
+    right: 0;
+    animation: fade-in 1s ease-in-out forwards, fade-in 1s ease-in-out reverse forwards 3s;
+    background-color: #ef5350;
+}
+
+.notify:before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    margin-right: 10px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.984c4.407 0 8.016 3.609 8.016 8.016 0 4.406-3.608 8.016-8.016 8.016S3.984 16.407 3.984 12 7.593 3.984 12 3.984m0-2C6.478 1.984 1.984 6.477 1.984 12c0 5.521 4.493 10.016 10.016 10.016S22.016 17.522 22.016 12c0-5.523-4.495-10.016-10.016-10.016zm0 2c4.407 0 8.016 3.609 8.016' fill='%23C71612'/%3E%3Cpath d='M13.406,12l2.578,2.578l-1.406,1.406L12,13.406l-2.578,2.578l-1.406-1.406L10.594,12L8.016,9.421l1.406-1.405L12,10.593 l2.578-2.577l1.406,1.405L13.406,12z' fill='%23C71612'/%3E%3C/svg%3E") center/cover no-repeat;
 }

@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace J3space.Abp.Account.Web.Pages.Account
@@ -25,6 +24,9 @@ namespace J3space.Abp.Account.Web.Pages.Account
         public string ReturnUrlHash { get; set; }
 
         [BindProperty] public LoginDto LoginInput { get; set; }
+
+        public AbpLoginResult LoginResult { get; set; } =
+            new AbpLoginResult(LoginResultType.Success);
 
         public virtual async Task<IActionResult> OnGetAsync()
         {
@@ -52,9 +54,9 @@ namespace J3space.Abp.Account.Web.Pages.Account
             if (!ModelState.IsValid)
                 return Page();
 
-            var loginResult = await AccountAppService.Login(LoginInput);
+            LoginResult = await AccountAppService.Login(LoginInput);
 
-            if (loginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
+            if (LoginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
 
             return Page();
         }

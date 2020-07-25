@@ -1,4 +1,5 @@
 ﻿@page
+@using J3space.Abp.Account
 @model J3space.Abp.Account.Web.Pages.Account.Login
 
 <div class="limiter">
@@ -12,7 +13,7 @@
     </ul>
 
     <div class="p-b-54 p-l-55 p-r-55 p-t-65 wrap-login">
-      <form class="login-form validate-form"
+      <form class="login-form"
             method="post">
         <span class="login-form-title p-b-49">@L["Login"]</span>
 
@@ -106,3 +107,9 @@
     </div>
   </div>
 </div>
+
+@if (Model.LoginResult.Result != LoginResultType.Success)
+{
+  var message = Model.LoginResult.Description;
+  <div class="notify">@L[message]</div>
+}

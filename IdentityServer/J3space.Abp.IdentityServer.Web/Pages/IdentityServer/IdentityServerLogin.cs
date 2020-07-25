@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
-using IdentityServer4.Models;
 using IdentityServer4.Services;
 using J3space.Abp.Account;
 using J3space.Abp.Account.Web.Pages.Account;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Volo.Abp.DependencyInjection;
 
 namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
@@ -38,9 +36,9 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
             if (!ModelState.IsValid)
                 return Page();
 
-            var loginResult = await AccountAppService.Login(LoginInput);
+            LoginResult = await AccountAppService.Login(LoginInput);
 
-            if (loginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
+            if (LoginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
 
             return Page();
         }
