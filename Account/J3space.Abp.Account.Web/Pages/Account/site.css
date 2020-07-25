@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1;
     color: #666666;
     margin: 0;
 }
@@ -188,7 +188,7 @@ iframe {
     display: block;
     font-size: 40px;
     color: #333333;
-    line-height: 1.2;
+    line-height: 1;
     text-align: center;
 }
 
@@ -211,7 +211,7 @@ iframe {
 .input {
     font-size: 16px;
     color: #333333;
-    line-height: 1.2;
+    line-height: 1;
 
     display: block;
     width: 100%;
@@ -224,7 +224,8 @@ iframe {
     display: inline-flex;
     align-items: center;
     width: 100%;
-    margin: 14px 0 45px;
+    height: 18px;
+    margin: 17px 0 45px;
 }
 
 .wrap-checkbox a {
@@ -327,7 +328,7 @@ input[type="checkbox"] {
 .login-form-btn {
     font-size: 16px;
     color: #fff;
-    line-height: 1.2;
+    line-height: 1;
     text-transform: uppercase;
 
     display: -webkit-box;
@@ -393,15 +394,15 @@ input[type="checkbox"] {
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
 
-.external-login {
+.external {
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1;
     color: #666666;
 }
 
-.register {
+.local {
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1;
     color: #333333;
     text-transform: uppercase;
 }
@@ -604,7 +605,7 @@ input[type="checkbox"] {
     font-size: 18px;
     padding: 20px;
     color: #e2dede;
-    line-height: 1.3;
+    line-height: 1;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.35);
     visibility: hidden;
     opacity: 0;

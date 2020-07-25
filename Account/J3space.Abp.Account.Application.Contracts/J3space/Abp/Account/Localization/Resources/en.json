@@ -8,6 +8,7 @@
     "RememberMe": "Remember me",
     "ForgetPassword": "Forgot your password?",
     "UseAnotherServiceToLogin": "External Login",
+    "UseAnotherServiceToRegister": "External Register",
     "UserLockedOutMessage": "The user account has been locked out due to invalid login attempts. Please wait a while and try again.",
     "InvalidUserNameOrPassword": "Invalid username or password!",
     "LoginIsNotAllowed": "You are not allowed to login! You need to confirm your email/phone number.",

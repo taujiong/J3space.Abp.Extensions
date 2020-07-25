@@ -1,6 +1,5 @@
-﻿@page
-@using J3space.Abp.Account
-@model J3space.Abp.Account.Web.Pages.Account.Login
+@page
+@model J3space.Abp.Account.Web.Pages.Account.Register
 
 <div class="limiter">
   <div class="container-login">
@@ -15,7 +14,7 @@
     <div class="p-b-54 p-l-55 p-r-55 p-t-65 wrap-login">
       <form class="login-form"
             method="post">
-        <span class="login-form-title p-b-49">@L["Login"]</span>
+        <span class="login-form-title p-b-49">@L["Register"]</span>
 
         <input asp-for="ReturnUrl" />
         <input asp-for="ReturnUrlHash" />
@@ -25,36 +24,37 @@
                class="icon">
             <use xlink:href="#icon-sharpicons_user"></use>
           </svg>
-          <input asp-for="LoginInput.UserNameOrEmailAddress"
+          <input asp-for="RegisterInput.UserName"
                  autocomplete="on"
                  class="input"
-                 placeholder="@L["UserNameOrEmailAddress"]"
+                 placeholder="@L["DisplayName:UserName"]"
                  required>
           <span class="focus-input"></span>
         </div>
 
-        <div class="wrap-input m-b-23">
+        <div class="m-b-23 wrap-input">
+          <svg aria-hidden="true"
+               class="icon">
+            <use xlink:href="#icon-youjian"></use>
+          </svg>
+          <input asp-for="RegisterInput.EmailAddress"
+                 autocomplete="on"
+                 class="input"
+                 placeholder="@L["DisplayName:Email"]"
+                 required>
+          <span class="focus-input"></span>
+        </div>
+
+        <div class="m-b-23 wrap-input">
           <svg aria-hidden="true"
                class="icon">
             <use xlink:href="#icon-lock"></use>
           </svg>
-          <input asp-for="LoginInput.Password"
+          <input asp-for="RegisterInput.Password"
                  class="input"
                  placeholder="@L["Password"]"
                  required>
           <span class="focus-input"></span>
-        </div>
-
-        <div class="wrap-checkbox">
-          <label class="remember-label"
-                 for="remember-input">
-            <input asp-for="LoginInput.RememberMe"
-                   id="remember-input"
-                   type="checkbox" />
-            <span>@L["RememberMe"]</span>
-          </label>
-
-          <a href="javascript:">@L["ForgetPassword"]</a>
         </div>
 
         <div class="container-login-form-btn">
@@ -62,13 +62,13 @@
             <div class="login-form-bgbtn"></div>
             <button class="login-form-btn"
                     type="submit">
-              @L["Login"]
+              @L["Register"]
             </button>
           </div>
         </div>
 
         <div class="external p-b-20 p-t-50 text-center">
-          <span>@L["UseAnotherServiceToLogin"]</span>
+          <span>@L["UseAnotherServiceToRegister"]</span>
         </div>
 
         <div class="flex-c-m">
@@ -98,18 +98,12 @@
         </div>
 
         <div class="flex-col-c p-t-25">
-          <a asp-page="/Account/Register"
+          <a asp-page="/Account/Login"
              class="local">
-            @L["Register"]
+            @L["Login"]
           </a>
         </div>
       </form>
     </div>
   </div>
 </div>
-
-@if (Model.LoginResult.Result != LoginResultType.Success)
-{
-  var message = Model.LoginResult.Description;
-  <div class="notify">@L[message]</div>
-}

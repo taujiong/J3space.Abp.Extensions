@@ -8,9 +8,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
     {
         protected readonly IAccountAppService AccountAppService;
 
-        protected Login(
-            IAccountAppService accountAppService
-        )
+        protected Login(IAccountAppService accountAppService)
         {
             AccountAppService = accountAppService;
         }
@@ -21,6 +19,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [HiddenInput]
         [BindProperty(SupportsGet = true)]
+
         public string ReturnUrlHash { get; set; }
 
         [BindProperty] public LoginDto LoginInput { get; set; }
@@ -36,21 +35,6 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            // if (action == "Register")
-            // {
-            //     if (ModelState.GetFieldValidationState(nameof(RegisterInput)) !=
-            //         ModelValidationState.Valid)
-            //         return Page();
-            //
-            //     await AccountAppService.RegisterAsync(RegisterInput);
-            //     LoginInput = new LoginDto
-            //     {
-            //         Password = RegisterInput.Password,
-            //         RememberMe = false,
-            //         UserNameOrEmailAddress = RegisterInput.UserName
-            //     };
-            // }
-
             if (!ModelState.IsValid)
                 return Page();
 
