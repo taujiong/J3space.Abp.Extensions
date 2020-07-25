@@ -8,7 +8,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
     {
         protected readonly IAccountAppService AccountAppService;
 
-        protected Login(IAccountAppService accountAppService)
+        public Login(IAccountAppService accountAppService)
         {
             AccountAppService = accountAppService;
         }
