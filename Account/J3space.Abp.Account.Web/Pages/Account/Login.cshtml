@@ -1,120 +1,108 @@
 ﻿@page
 @model J3space.Abp.Account.Web.Pages.Account.Login
 
-@section style
-{
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-        rel="stylesheet">
-  <link asp-append-version="true"
-        href="/Pages/Account/login.css"
-        rel="stylesheet">
-}
+<div class="limiter">
+  <div class="container-login">
 
-<div class="container"
-     id="container">
-  <div class="form-container sign-up-container">
-    <form method="post">
-      <h1>@L["Register"]</h1>
-      <div class="social-container">
-        <a class="social"
-           href="#">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a class="social"
-           href="#">
-          <i class="fab fa-google-plus-g"></i>
-        </a>
-        <a class="social"
-           href="#">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-      </div>
-      <span>@L["EmailForRegistration"]</span>
-      <input asp-for="RegisterInput.UserName"
-             placeholder="@L["UserName"]">
-      <input asp-for="RegisterInput.EmailAddress"
-             placeholder="@L["EmailAddress"]">
-      <input asp-for="RegisterInput.Password"
-             placeholder="@L["Password"]">
-      <button name="Action"
-              type="submit"
-              value="Register">
-        @L["Register"]
-      </button>
-    </form>
-  </div>
-  <div class="form-container sign-in-container">
-    <form method="post">
-      <h1>@L["Login"]</h1>
-      <div class="social-container">
-        <a class="social"
-           href="#">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a class="social"
-           href="#">
-          <i class="fab fa-google-plus-g"></i>
-        </a>
-        <a class="social"
-           href="#">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-      </div>
-      <span>@L["LocalAccountForLogin"]</span>
-      <input asp-for="ReturnUrl" />
-      <input asp-for="ReturnUrlHash" />
-      <input asp-for="LoginInput.UserNameOrEmailAddress"
-             placeholder="@L["UserNameOrEmailAddress"]" />
-      <input asp-for="LoginInput.Password"
-             placeholder="@L["Password"]"
-             type="password" />
-      <label class="remember-label"
-             for="remember-input">
-        <input asp-for="LoginInput.RememberMe"
-               id="remember-input"
-               type="checkbox" />
-        <span>@L["RememberMe"]</span>
-      </label>
-      <!-- TODO: 忘记密码 -->
-      <button name="Action"
-              type="submit"
-              value="Login">
-        @L["Login"]
-      </button>
-    </form>
-  </div>
-  <div class="overlay-container">
-    <div class="overlay">
-      <div class="overlay-left overlay-panel">
-        <h1>@L["AlreadyRegistered"]</h1>
-        <p>@L["LoginWithYourAccount"]</p>
-        <button class="ghost"
-                id="signIn">
-          @L["Login"]
-        </button>
-      </div>
-      <div class="overlay-panel overlay-right">
-        <h1>@L["AreYouANewUser"]</h1>
-        <p>@L["LoginInvitation"]</p>
-        <button class="ghost"
-                id="signUp">
-          @L["Register"]
-        </button>
-      </div>
+    <ul class="bg-bubbles">
+      @for (var n = 0; n < 10; n++)
+      {
+        <li></li>
+      }
+    </ul>
+
+    <div class="p-b-54 p-l-55 p-r-55 p-t-65 wrap-login">
+      <form class="login-form validate-form"
+            method="post">
+        <span class="login-form-title p-b-49">@L["Login"]</span>
+
+        <input asp-for="ReturnUrl" />
+        <input asp-for="ReturnUrlHash" />
+
+        <div class="m-b-23 wrap-input">
+          <svg aria-hidden="true"
+               class="icon">
+            <use xlink:href="#icon-sharpicons_user"></use>
+          </svg>
+          <input asp-for="LoginInput.UserNameOrEmailAddress"
+                 autocomplete="on"
+                 class="input"
+                 placeholder="@L["UserNameOrEmailAddress"]"
+                 required>
+          <span class="focus-input"></span>
+        </div>
+
+        <div class="wrap-input">
+          <svg aria-hidden="true"
+               class="icon">
+            <use xlink:href="#icon-lock"></use>
+          </svg>
+          <input asp-for="LoginInput.Password"
+                 class="input"
+                 placeholder="@L["Password"]"
+                 required>
+          <span class="focus-input"></span>
+        </div>
+
+        <div class="wrap-checkbox">
+          <label class="remember-label"
+                 for="remember-input">
+            <input asp-for="LoginInput.RememberMe"
+                   id="remember-input"
+                   type="checkbox" />
+            <span>@L["RememberMe"]</span>
+          </label>
+
+          <a href="javascript:">@L["ForgetPassword"]</a>
+        </div>
+
+        <div class="container-login-form-btn">
+          <div class="wrap-login-form-btn">
+            <div class="login-form-bgbtn"></div>
+            <button class="login-form-btn"
+                    type="submit">
+              @L["Login"]
+            </button>
+          </div>
+        </div>
+
+        <div class="external-login p-b-20 p-t-50 text-center">
+          <span>@L["UseAnotherServiceToLogin"]</span>
+        </div>
+
+        <div class="flex-c-m">
+          <a class="login-social-item"
+             href="#">
+            <svg aria-hidden="true"
+                 class="icon">
+              <use xlink:href="#icon-github"></use>
+            </svg>
+          </a>
+
+          <a class="login-social-item"
+             href="#">
+            <svg aria-hidden="true"
+                 class="icon">
+              <use xlink:href="#icon-QQ"></use>
+            </svg>
+          </a>
+
+          <a class="login-social-item"
+             href="#">
+            <svg aria-hidden="true"
+                 class="icon">
+              <use xlink:href="#icon-google"></use>
+            </svg>
+          </a>
+        </div>
+
+        <div class="flex-col-c p-t-25">
+          <a class="register"
+             href="javascript:">
+            @L["Register"]
+          </a>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-
-<script>
-  const signUpButton = document.getElementById('signUp');
-  const signInButton = document.getElementById('signIn');
-  const container = document.getElementById('container');
-
-  signUpButton.addEventListener('click', function () {
-    container.classList.add('right-panel-active')
-  })
-
-  signInButton.addEventListener('click', function () {
-    container.classList.remove('right-panel-active')
-  });
-</script>

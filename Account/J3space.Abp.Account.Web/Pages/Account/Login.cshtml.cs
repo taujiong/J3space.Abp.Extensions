@@ -26,36 +26,31 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public LoginDto LoginInput { get; set; }
 
-        [BindProperty] public RegisterDto RegisterInput { get; set; }
-
         public virtual async Task<IActionResult> OnGetAsync()
         {
             LoginInput = new LoginDto();
             return Page();
         }
 
-        public virtual async Task<IActionResult> OnPostAsync(string action)
+        public virtual async Task<IActionResult> OnPostAsync()
         {
-            if (action == "Register")
-            {
-                if (ModelState.GetFieldValidationState(nameof(RegisterInput)) !=
-                    ModelValidationState.Valid)
-                    return Page();
+            // if (action == "Register")
+            // {
+            //     if (ModelState.GetFieldValidationState(nameof(RegisterInput)) !=
+            //         ModelValidationState.Valid)
+            //         return Page();
+            //
+            //     await AccountAppService.RegisterAsync(RegisterInput);
+            //     LoginInput = new LoginDto
+            //     {
+            //         Password = RegisterInput.Password,
+            //         RememberMe = false,
+            //         UserNameOrEmailAddress = RegisterInput.UserName
+            //     };
+            // }
 
-                await AccountAppService.RegisterAsync(RegisterInput);
-                LoginInput = new LoginDto
-                {
-                    Password = RegisterInput.Password,
-                    RememberMe = false,
-                    UserNameOrEmailAddress = RegisterInput.UserName
-                };
-            }
-            else if (action == "Login")
-            {
-                if (ModelState.GetFieldValidationState(nameof(LoginInput)) !=
-                    ModelValidationState.Valid)
-                    return Page();
-            }
+            if (!ModelState.IsValid)
+                return Page();
 
             var loginResult = await AccountAppService.Login(LoginInput);
 

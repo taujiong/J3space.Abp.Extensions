@@ -33,41 +33,10 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
             return Page();
         }
 
-        public override async Task<IActionResult> OnPostAsync(string action)
+        public override async Task<IActionResult> OnPostAsync()
         {
-            if (action == "Cancel")
-            {
-                var context = await _interaction.GetAuthorizationContextAsync(ReturnUrl);
-                if (context == null)
-                {
-                    return Redirect("~/");
-                }
-
-                await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
-
-                return Redirect(ReturnUrl);
-            }
-
-            if (action == "Register")
-            {
-                if (ModelState.GetFieldValidationState(nameof(RegisterInput)) !=
-                    ModelValidationState.Valid)
-                    return Page();
-
-                await AccountAppService.RegisterAsync(RegisterInput);
-                LoginInput = new LoginDto
-                {
-                    Password = RegisterInput.Password,
-                    RememberMe = false,
-                    UserNameOrEmailAddress = RegisterInput.UserName
-                };
-            }
-            else if (action == "Login")
-            {
-                if (ModelState.GetFieldValidationState(nameof(LoginInput)) !=
-                    ModelValidationState.Valid)
-                    return Page();
-            }
+            if (!ModelState.IsValid)
+                return Page();
 
             var loginResult = await AccountAppService.Login(LoginInput);
 

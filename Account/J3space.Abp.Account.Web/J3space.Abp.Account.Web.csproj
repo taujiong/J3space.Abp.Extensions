@@ -17,10 +17,10 @@
   </PropertyGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Pages\**\*.js"/>
-      <EmbeddedResource Include="Pages\**\*.css"/>
-      <Content Remove="Pages\**\*.js"/>
-      <Content Remove="Pages\**\*.css"/>
+      <EmbeddedResource Include="Pages\**\*.css" />
+      <EmbeddedResource Include="Pages\**\*.jpg" />
+      <Content Remove="Pages\**\*.css" />
+      <Content Remove="Pages\**\*.jpg" />
       <Content Update="Pages\Account\_Layout.cshtml">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -40,14 +40,14 @@
     </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI" Version="3.0.4"/>
-    <PackageReference Include="Volo.Abp.AutoMapper" Version="3.0.4"/>
-    <PackageReference Include="Volo.Abp.Identity.Application" Version="3.0.4"/>
-    <PackageReference Include="Volo.Abp.UI.Navigation" Version="3.0.4"/>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI" Version="3.0.4" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="3.0.4" />
+    <PackageReference Include="Volo.Abp.Identity.Application" Version="3.0.4" />
+    <PackageReference Include="Volo.Abp.UI.Navigation" Version="3.0.4" />
   </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\J3space.Abp.Account.HttpApi\J3space.Abp.Account.HttpApi.csproj"/>
+      <ProjectReference Include="..\J3space.Abp.Account.HttpApi\J3space.Abp.Account.HttpApi.csproj" />
     </ItemGroup>
     
 </Project>
