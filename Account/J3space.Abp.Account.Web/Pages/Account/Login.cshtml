@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using J3space.Abp.Account
 @model J3space.Abp.Account.Web.Pages.Account.Login
 
@@ -23,7 +23,7 @@
         <div class="m-b-23 wrap-input">
           <svg aria-hidden="true"
                class="icon">
-            <use xlink:href="#icon-sharpicons_user"></use>
+            <use xlink:href="#icon-user"></use>
           </svg>
           <input asp-for="LoginInput.UserNameOrEmailAddress"
                  autocomplete="on"
@@ -33,7 +33,7 @@
           <span class="focus-input"></span>
         </div>
 
-        <div class="wrap-input m-b-23">
+        <div class="m-b-23 wrap-input">
           <svg aria-hidden="true"
                class="icon">
             <use xlink:href="#icon-lock"></use>
@@ -99,6 +99,8 @@
 
         <div class="flex-col-c p-t-25">
           <a asp-page="/Account/Register"
+             asp-route-returnUrl="@Model.ReturnUrl"
+             asp-route-returnUrlHash="@Model.ReturnUrlHash"
              class="local">
             @L["Register"]
           </a>

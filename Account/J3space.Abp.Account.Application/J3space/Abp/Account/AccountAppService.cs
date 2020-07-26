@@ -27,7 +27,6 @@ namespace J3space.Abp.Account
 
             (await _userManager.CreateAsync(user, input.Password)).CheckErrors();
 
-            await _userManager.SetEmailAsync(user, input.EmailAddress);
             await _userManager.AddDefaultRolesAsync(user);
 
             return ObjectMapper.Map<IdentityUser, IdentityUserDto>(user);
