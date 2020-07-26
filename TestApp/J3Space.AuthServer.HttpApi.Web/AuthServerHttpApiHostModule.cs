@@ -2,8 +2,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using J3space.Abp.Account.Web;
 using J3space.Abp.IdentityServer;
+using J3space.Abp.IdentityServer.Web;
 using J3space.AuthServer.MongoDb;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
@@ -30,8 +30,8 @@ namespace J3space.AuthServer
         typeof(AbpAutofacModule),
         typeof(AuthServerApplicationModule),
         typeof(AuthServerMongoDbModule),
-        typeof(AbpAccountWebModule),
-        // typeof(AbpIdentityServerWebModule),
+        // typeof(AbpAccountWebModule),
+        typeof(AbpIdentityServerWebModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(AbpIdentityAspNetCoreModule),
         typeof(AbpAspNetCoreSerilogModule)

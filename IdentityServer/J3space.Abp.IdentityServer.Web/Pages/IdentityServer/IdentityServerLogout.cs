@@ -35,7 +35,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
                 ReturnUrl = logoutContext.PostLogoutRedirectUri;
             }
 
-            return RedirectSafely(ReturnUrl, ReturnUrlHash);
+            return Redirect(ReturnUrl);
         }
     }
 }
