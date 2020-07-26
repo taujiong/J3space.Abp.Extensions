@@ -1,16 +1,16 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
-    public class Register : PageModel
+    public class Register : AccountPageModel
     {
-        private readonly IAccountAppService _accountAppService;
-
-        public Register(IAccountAppService accountAppService)
+        public Register(
+            IAccountAppService accountAppService,
+            IAuthenticationSchemeProvider schemeProvider
+        ) : base(accountAppService, schemeProvider)
         {
-            _accountAppService = accountAppService;
         }
 
         [HiddenInput]
@@ -21,11 +21,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
         [BindProperty(SupportsGet = true)]
         public string ReturnUrlHash { get; set; }
 
-        [BindProperty]public RegisterDto RegisterInput { get; set; }
+        [BindProperty] public RegisterDto RegisterInput { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             RegisterInput = new RegisterDto();
+
+            await SetAvailableExternalLoginProviders();
 
             return Page();
         }
@@ -35,7 +37,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             if (!ModelState.IsValid)
                 return Page();
 
-            await _accountAppService.RegisterAsync(RegisterInput);
+            await AccountAppService.RegisterAsync(RegisterInput);
             var loginInput = new LoginDto
             {
                 Password = RegisterInput.Password,
@@ -43,10 +45,11 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 UserNameOrEmailAddress = RegisterInput.UserName
             };
 
-            var loginResult = await _accountAppService.Login(loginInput);
+            var loginResult = await AccountAppService.Login(loginInput);
 
-            if (loginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
+            if (loginResult.Result == LoginResultType.Success) return RedirectSafely(ReturnUrl, ReturnUrlHash);
 
+            // TODO: 错误处理
             return Page();
         }
     }

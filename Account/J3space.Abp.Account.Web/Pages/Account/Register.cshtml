@@ -67,35 +67,29 @@
           </div>
         </div>
 
-        <div class="external p-b-20 p-t-50 text-center">
-          <span>@L["UseAnotherServiceToRegister"]</span>
-        </div>
+        @if (Model.AvailableExternalProviders.Any())
+        {
+          <div class="external p-b-20 p-t-50 text-center">
+            <span>@L["UseAnotherServiceToRegister"]</span>
+          </div>
 
-        <div class="flex-c-m">
-          <a class="login-social-item"
-             href="#">
-            <svg aria-hidden="true"
-                 class="icon">
-              <use xlink:href="#icon-github"></use>
-            </svg>
-          </a>
-
-          <a class="login-social-item"
-             href="#">
-            <svg aria-hidden="true"
-                 class="icon">
-              <use xlink:href="#icon-QQ"></use>
-            </svg>
-          </a>
-
-          <a class="login-social-item"
-             href="#">
-            <svg aria-hidden="true"
-                 class="icon">
-              <use xlink:href="#icon-google"></use>
-            </svg>
-          </a>
-        </div>
+          <div class="flex-c-m">
+            @foreach (var provider in Model.AvailableExternalProviders)
+            {
+              <a asp-page="./Login"
+                 asp-page-handler="ExternalLogin"
+                 asp-route-provider="@provider.AuthenticationScheme"
+                 asp-route-returnUrl="@Model.ReturnUrl"
+                 asp-route-returnUrlHash="@Model.ReturnUrlHash"
+                 class="login-social-item">
+                <svg aria-hidden="true"
+                     class="icon">
+                  <use xlink:href="#icon-@provider.DisplayName.ToLower()"></use>
+                </svg>
+              </a>
+            }
+          </div>
+        }
 
         <div class="flex-col-c p-t-25">
           <a asp-page="/Account/Login"

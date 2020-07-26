@@ -5,7 +5,6 @@ using J3space.Abp.Account.Web.Pages.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.DependencyInjection;
-using Volo.Abp.Guids;
 using Volo.Abp.Identity;
 
 namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
@@ -19,10 +18,8 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
             IAccountAppService accountAppService,
             IAuthenticationSchemeProvider schemeProvider,
             IIdentityServerInteractionService interaction,
-            Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signManager,
-            IdentityUserManager userManager,
-            IGuidGenerator guidGenerator
-        ) : base(accountAppService, schemeProvider, signManager, userManager, guidGenerator)
+            IdentityUserManager userManager, Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
+        ) : base(accountAppService, schemeProvider, userManager, signInManager)
         {
             _interaction = interaction;
         }
@@ -45,7 +42,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
 
             LoginResult = await AccountAppService.Login(LoginInput);
 
-            if (LoginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
+            if (LoginResult.Result == LoginResultType.Success) return RedirectSafely(ReturnUrl, ReturnUrlHash);
 
             return Page();
         }

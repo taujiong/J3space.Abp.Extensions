@@ -1,39 +1,27 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Volo.Abp;
-using Volo.Abp.Guids;
 using Volo.Abp.Identity;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
-    public class Login : PageModel
+    public class Login : AccountPageModel
     {
-        protected readonly IAccountAppService AccountAppService;
-        protected readonly IGuidGenerator GuidGenerator;
-        protected readonly IAuthenticationSchemeProvider SchemeProvider;
         protected readonly SignInManager<IdentityUser> SignInManager;
         protected readonly IdentityUserManager UserManager;
 
         public Login(
             IAccountAppService accountAppService,
             IAuthenticationSchemeProvider schemeProvider,
-            SignInManager<IdentityUser> signInManager,
             IdentityUserManager userManager,
-            IGuidGenerator guidGenerator
-        )
+            SignInManager<IdentityUser> signInManager
+        ) : base(accountAppService, schemeProvider)
         {
-            AccountAppService = accountAppService;
-            SchemeProvider = schemeProvider;
-            SignInManager = signInManager;
             UserManager = userManager;
-            GuidGenerator = guidGenerator;
+            SignInManager = signInManager;
         }
 
         [HiddenInput]
@@ -47,24 +35,15 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public LoginDto LoginInput { get; set; }
 
+        // TODO: 依赖这里在页面上显示信息，重构一下实现所有异常的页面显示，而不仅仅是登录错误
         public AbpLoginResult LoginResult { get; set; } =
             new AbpLoginResult(LoginResultType.Success);
-
-        public IEnumerable<ExternalProviderModel> AvailableExternalProviders { get; set; }
 
         public virtual async Task<IActionResult> OnGetAsync()
         {
             LoginInput = new LoginDto();
 
-            var schemes = await SchemeProvider.GetAllSchemesAsync();
-            AvailableExternalProviders = schemes
-                .Where(x => !string.IsNullOrWhiteSpace(x.DisplayName))
-                .Select(x => new ExternalProviderModel
-                {
-                    DisplayName = x.DisplayName,
-                    AuthenticationScheme = x.Name
-                })
-                .ToList();
+            await SetAvailableExternalLoginProviders();
 
             return Page();
         }
@@ -76,7 +55,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
             LoginResult = await AccountAppService.Login(LoginInput);
 
-            if (LoginResult.Result == LoginResultType.Success) return Redirect(ReturnUrl ?? "/");
+            if (LoginResult.Result == LoginResultType.Success) return RedirectSafely(ReturnUrl, ReturnUrlHash);
 
             return Page();
         }
@@ -84,12 +63,6 @@ namespace J3space.Abp.Account.Web.Pages.Account
         public virtual async Task<IActionResult> OnGetExternalLogin(string provider, string returnUrl,
             string returnUrlHash)
         {
-            if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
-
-            if (!Url.IsLocalUrl(returnUrl))
-                // TODO: 页面返回错误信息
-                throw new UserFriendlyException($"invalid return URL: {returnUrl}");
-
             var redirectUrl = Url.Page("./Login", "ExternalLoginCallback", new {returnUrl, returnUrlHash});
             var properties = SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             properties.Items["scheme"] = provider;
@@ -100,7 +73,9 @@ namespace J3space.Abp.Account.Web.Pages.Account
         public virtual async Task<IActionResult> OnGetExternalLoginCallbackAsync(string returnUrl, string returnUrlHash)
         {
             var loginInfo = await SignInManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null) return RedirectToPage("./Login"); // TODO: 此处应在页面显示报错信息
+            if (loginInfo == null)
+                // TODO: 此处应在页面显示报错信息
+                return RedirectToPage("./Login");
 
             var result = await SignInManager.ExternalLoginSignInAsync(
                 loginInfo.LoginProvider,
@@ -109,31 +84,31 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 true
             );
 
-            if (result.Succeeded) return Redirect(returnUrl);
+            if (result.Succeeded) return RedirectSafely(returnUrl, returnUrlHash);
 
-            // TODO: 不成功的话是不是就一定是没有注册呢
+            /*
+             * TODO: 不成功的话不一定是没有注册
+             * result.IsLockedOut;
+             * result.IsNotAllowed;
+             * result.RequiresTwoFactor;
+             */
             const string defaultExternalLoginUserPassword = "1q2w3E*"; // TODO: 默认密码放配置文件
             var userName = loginInfo.Principal.FindFirstValue(ClaimTypes.Name);
             var emailAddress = loginInfo.Principal.FindFirstValue(ClaimTypes.Email);
             var user = new IdentityUser(GuidGenerator.Create(), userName, emailAddress);
             user.AddLogin(loginInfo);
             (await UserManager.CreateAsync(user, defaultExternalLoginUserPassword)).CheckErrors();
-            await UserManager.AddDefaultRolesAsync(user);
+            (await UserManager.AddDefaultRolesAsync(user)).CheckErrors();
+
             var loginResult = await SignInManager.PasswordSignInAsync(user.UserName,
                 defaultExternalLoginUserPassword,
                 false,
                 false);
 
-            if (loginResult.Succeeded) return Redirect(returnUrl);
+            if (loginResult.Succeeded) return RedirectSafely(returnUrl, returnUrlHash);
 
             // TODO: 错误处理
             return Page();
-        }
-
-        public class ExternalProviderModel
-        {
-            public string DisplayName { get; set; }
-            public string AuthenticationScheme { get; set; }
         }
     }
 }

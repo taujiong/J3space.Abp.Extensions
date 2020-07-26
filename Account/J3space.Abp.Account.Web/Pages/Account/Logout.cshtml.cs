@@ -1,24 +1,25 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
-    public class Logout : PageModel
+    public class Logout : AccountPageModel
     {
-        protected readonly IAccountAppService AccountAppService;
-
-        public Logout(IAccountAppService accountAppService)
+        public Logout(
+            IAccountAppService accountAppService,
+            IAuthenticationSchemeProvider schemeProvider
+        ) : base(accountAppService, schemeProvider)
         {
-            AccountAppService = accountAppService;
         }
 
-        [BindProperty] protected string ReturnUrl { get; set; } = "/";
+        [BindProperty] protected string ReturnUrl { get; set; }
+        [BindProperty] protected string ReturnUrlHash { get; set; }
 
         public virtual async Task<IActionResult> OnGetAsync()
         {
             await AccountAppService.Logout();
-            return Redirect(ReturnUrl);
+            return RedirectSafely(ReturnUrl, ReturnUrlHash);
         }
     }
 }

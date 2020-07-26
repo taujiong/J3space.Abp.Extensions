@@ -2,6 +2,7 @@
 using IdentityServer4.Services;
 using J3space.Abp.Account;
 using J3space.Abp.Account.Web.Pages.Account;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.DependencyInjection;
 
@@ -12,15 +13,16 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
     {
         private readonly IIdentityServerInteractionService _interaction;
 
-        private string LogoutId { get; set; }
-
         public IdentityServerLogout(
             IAccountAppService accountAppService,
+            IAuthenticationSchemeProvider schemeProvider,
             IIdentityServerInteractionService interaction
-        ) : base(accountAppService)
+        ) : base(accountAppService, schemeProvider)
         {
             _interaction = interaction;
         }
+
+        private string LogoutId { get; set; }
 
         public override async Task<IActionResult> OnGetAsync()
         {
@@ -33,7 +35,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
                 ReturnUrl = logoutContext.PostLogoutRedirectUri;
             }
 
-            return Redirect(ReturnUrl);
+            return RedirectSafely(ReturnUrl, ReturnUrlHash);
         }
     }
 }
