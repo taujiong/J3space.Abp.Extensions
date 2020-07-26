@@ -33,9 +33,10 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
             {
                 var logoutContext = await _interaction.GetLogoutContextAsync(LogoutId);
                 ReturnUrl = logoutContext.PostLogoutRedirectUri;
+                return Redirect(ReturnUrl);
             }
 
-            return Redirect(ReturnUrl);
+            return RedirectSafely(ReturnUrl, ReturnUrlHash);
         }
     }
 }
