@@ -2,8 +2,11 @@
 using IdentityServer4.Services;
 using J3space.Abp.Account;
 using J3space.Abp.Account.Web.Pages.Account;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Guids;
+using Volo.Abp.Identity;
 
 namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
 {
@@ -14,8 +17,12 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
 
         public IdentityServerLogin(
             IAccountAppService accountAppService,
-            IIdentityServerInteractionService interaction
-        ) : base(accountAppService)
+            IAuthenticationSchemeProvider schemeProvider,
+            IIdentityServerInteractionService interaction,
+            Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signManager,
+            IdentityUserManager userManager,
+            IGuidGenerator guidGenerator
+        ) : base(accountAppService, schemeProvider, signManager, userManager, guidGenerator)
         {
             _interaction = interaction;
         }

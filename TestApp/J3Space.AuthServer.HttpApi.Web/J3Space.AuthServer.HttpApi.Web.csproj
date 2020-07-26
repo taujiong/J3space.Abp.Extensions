@@ -10,6 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="3.1.3"/>
         <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
@@ -24,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\IdentityServer\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj"/>
+      <ProjectReference Include="..\..\IdentityServer\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj"/>
         <ProjectReference Include="..\J3space.AuthServer.Application\J3space.AuthServer.Application.csproj" />
         <ProjectReference Include="..\J3space.AuthServer.HttpApi\J3space.AuthServer.HttpApi.csproj" />
         <ProjectReference Include="..\J3space.AuthServer.MongoDB\J3space.AuthServer.MongoDB.csproj" />

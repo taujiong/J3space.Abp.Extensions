@@ -2,11 +2,12 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using J3space.Abp.Account.Web;
 using J3space.Abp.IdentityServer;
-using J3space.Abp.IdentityServer.Web;
 using J3space.AuthServer.MongoDb;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +30,8 @@ namespace J3space.AuthServer
         typeof(AbpAutofacModule),
         typeof(AuthServerApplicationModule),
         typeof(AuthServerMongoDbModule),
-        typeof(AbpIdentityServerWebModule),
+        typeof(AbpAccountWebModule),
+        // typeof(AbpIdentityServerWebModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(AbpIdentityAspNetCoreModule),
         typeof(AbpAspNetCoreSerilogModule)
@@ -85,6 +87,13 @@ namespace J3space.AuthServer
             IConfiguration configuration)
         {
             context.Services.AddAuthentication()
+                .AddGitHub(options =>
+                {
+                    options.SignInScheme =
+                        IdentityConstants.ExternalScheme;
+                    options.ClientId = "22383998789876a9623d";
+                    options.ClientSecret = "bc2556b4b4c9b1b8587ea894170f2e842228ca86";
+                })
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
@@ -172,10 +181,7 @@ namespace J3space.AuthServer
             app.UseAuthorization();
 
             app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthServer API");
-            });
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthServer API"); });
 
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
