@@ -81,25 +81,26 @@ namespace J3space.Abp.Account.Web.Pages.Account
             return Page();
         }
 
-        public virtual async Task<IActionResult> OnGetExternalLogin(string provider)
+        public virtual async Task<IActionResult> OnGetExternalLogin(string provider, string returnUrl,
+            string returnUrlHash)
         {
-            if (string.IsNullOrEmpty(ReturnUrl)) ReturnUrl = "~/";
+            if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
 
-            if (!Url.IsLocalUrl(ReturnUrl))
+            if (!Url.IsLocalUrl(returnUrl))
                 // TODO: 页面返回错误信息
-                throw new UserFriendlyException("invalid return URL");
+                throw new UserFriendlyException($"invalid return URL: {returnUrl}");
 
-            var redirectUrl = Url.Page("./Login", "ExternalLoginCallback", new {ReturnUrl, ReturnUrlHash});
+            var redirectUrl = Url.Page("./Login", "ExternalLoginCallback", new {returnUrl, returnUrlHash});
             var properties = SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             properties.Items["scheme"] = provider;
 
             return await Task.FromResult(Challenge(properties, provider));
         }
 
-        public virtual async Task<IActionResult> OnGetExternalLoginCallbackAsync()
+        public virtual async Task<IActionResult> OnGetExternalLoginCallbackAsync(string returnUrl, string returnUrlHash)
         {
             var loginInfo = await SignInManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null) return RedirectToPage("./Login");
+            if (loginInfo == null) return RedirectToPage("./Login"); // TODO: 此处应在页面显示报错信息
 
             var result = await SignInManager.ExternalLoginSignInAsync(
                 loginInfo.LoginProvider,
@@ -108,23 +109,24 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 true
             );
 
-            if (result.Succeeded) return Redirect(ReturnUrl);
+            if (result.Succeeded) return Redirect(returnUrl);
 
             // TODO: 不成功的话是不是就一定是没有注册呢
-            const string defaultExternalLoginUserPassword = "1q2w3E*";
+            const string defaultExternalLoginUserPassword = "1q2w3E*"; // TODO: 默认密码放配置文件
             var userName = loginInfo.Principal.FindFirstValue(ClaimTypes.Name);
             var emailAddress = loginInfo.Principal.FindFirstValue(ClaimTypes.Email);
             var user = new IdentityUser(GuidGenerator.Create(), userName, emailAddress);
             user.AddLogin(loginInfo);
-            (await UserManager.CreateAsync(user, defaultExternalLoginUserPassword)).CheckErrors(); // TODO: 默认密码放配置文件
+            (await UserManager.CreateAsync(user, defaultExternalLoginUserPassword)).CheckErrors();
             await UserManager.AddDefaultRolesAsync(user);
             var loginResult = await SignInManager.PasswordSignInAsync(user.UserName,
                 defaultExternalLoginUserPassword,
                 false,
                 false);
 
-            if (loginResult.Succeeded) return Redirect(ReturnUrl);
+            if (loginResult.Succeeded) return Redirect(returnUrl);
 
+            // TODO: 错误处理
             return Page();
         }
 

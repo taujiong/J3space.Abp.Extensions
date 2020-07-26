@@ -79,6 +79,8 @@
               <a asp-page="./Login"
                  asp-page-handler="ExternalLogin"
                  asp-route-provider="@provider.AuthenticationScheme"
+                 asp-route-returnUrl="@Model.ReturnUrl"
+                 asp-route-returnUrlHash="@Model.ReturnUrlHash"
                  class="login-social-item">
                 <svg aria-hidden="true"
                      class="icon">
