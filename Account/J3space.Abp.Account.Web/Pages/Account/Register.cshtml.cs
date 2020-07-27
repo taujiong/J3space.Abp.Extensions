@@ -47,7 +47,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
             var loginResult = await AccountAppService.Login(loginInput);
 
-            if (loginResult.Result == LoginResultType.Success) return RedirectSafely(ReturnUrl, ReturnUrlHash);
+            if (AccountPageResult.Succeed) return RedirectSafely(ReturnUrl, ReturnUrlHash);
 
             // TODO: 错误处理
             return Page();

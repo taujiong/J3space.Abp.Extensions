@@ -22,9 +22,14 @@ namespace J3space.Abp.Account.Web.Pages.Account
             _schemeProvider = schemeProvider;
             LocalizationResourceType = typeof(AbpAccountResource);
             ObjectMapperContext = typeof(AbpAccountWebModule);
+            AccountPageResult = new AccountResult
+            {
+                Succeed = true
+            };
         }
 
         public IEnumerable<ExternalProviderModel> AvailableExternalProviders { get; set; }
+        public AccountResult AccountPageResult { get; set; }
 
         protected RedirectResult RedirectSafely(string returnUrl, string returnUrlHash = null)
         {

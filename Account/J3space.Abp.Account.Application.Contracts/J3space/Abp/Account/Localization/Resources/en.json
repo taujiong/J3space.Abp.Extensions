@@ -1,6 +1,7 @@
 {
   "culture": "en",
   "texts": {
+    "SuccessLogin": "Login successfully",
     "UserName": "Username",
     "EmailAddress": "Email address",
     "UserNameOrEmailAddress": "Username or email address",
@@ -9,9 +10,10 @@
     "ForgetPassword": "Forgot your password?",
     "UseAnotherServiceToLogin": "External Login",
     "UseAnotherServiceToRegister": "External Register",
-    "UserLockedOutMessage": "The user account has been locked out due to invalid login attempts. Please wait a while and try again.",
-    "InvalidUserNameOrPassword": "Invalid username or password!",
-    "LoginIsNotAllowed": "You are not allowed to login! You need to confirm your email/phone number.",
+    "RequiresTwoFactor": "Two factor authentication is required",
+    "Lockedout": "The user account has been locked out due to invalid login attempts. Please wait a while and try again.",
+    "Failed": "Invalid username or password!",
+    "NotAllowed": "You are not allowed to login! You need to confirm your email/phone number.",
     "SelfRegistrationDisabledMessage": "Self-registration is disabled for this application. Please contact the application administrator to register a new user.",
     "LocalLoginDisabledMessage": "Local login is disabled for this application.",
     "Login": "Login",

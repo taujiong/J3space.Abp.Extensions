@@ -1,6 +1,7 @@
 {
   "culture": "zh-Hans",
   "texts": {
+    "SuccessLogin": "登录成功",
     "UserName": "用户名称",
     "EmailAddress": "邮箱地址",
     "UserNameOrEmailAddress": "用户名称或邮箱地址",
@@ -9,9 +10,10 @@
     "ForgetPassword": "忘记密码？",
     "UseAnotherServiceToLogin": "第三方登录",
     "UseAnotherServiceToRegister": "第三方注册",
-    "UserLockedOutMessage": "登录失败,用户账户已被锁定.请稍后再试.",
-    "InvalidUserNameOrPassword": "用户名或密码错误!",
-    "LoginIsNotAllowed": "无法登录!你需要验证邮箱地址/手机号.",
+    "RequiresTwoFactor": "需要两步认证",
+    "Lockedout": "登录失败,用户账户已被锁定.请稍后再试.",
+    "Failed": "用户名或密码错误!",
+    "NotAllowed": "无法登录!你需要验证邮箱地址/手机号.",
     "SelfRegistrationDisabledMessage": "应用程序未开放注册,请联系管理员添加新用户.",
     "LocalLoginDisabledMessage": "应用程序未开放本地账户登录.",
     "Login": "登录",

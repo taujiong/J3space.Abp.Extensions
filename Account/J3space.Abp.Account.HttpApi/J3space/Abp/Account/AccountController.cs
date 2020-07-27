@@ -26,7 +26,7 @@ namespace J3space.Abp.Account
 
         [HttpPost]
         [Route("login")]
-        public Task<AbpLoginResult> Login(LoginDto login)
+        public Task<AccountResult> Login(LoginDto login)
         {
             return _accountAppService.Login(login);
         }
@@ -39,8 +39,8 @@ namespace J3space.Abp.Account
         }
 
         [HttpPost]
-        [Route("checkPassword")]
-        public Task<AbpLoginResult> CheckPassword(LoginDto login)
+        [Route("check-password")]
+        public Task<AccountResult> CheckPassword(LoginDto login)
         {
             return _accountAppService.CheckPassword(login);
         }

@@ -1,5 +1,4 @@
 ﻿@page
-@using J3space.Abp.Account
 @model J3space.Abp.Account.Web.Pages.Account.Login
 
 <div class="limiter">
@@ -104,8 +103,7 @@
   </div>
 </div>
 
-@if (Model.LoginResult.Result != LoginResultType.Success)
+@if (!Model.AccountPageResult.Succeed)
 {
-  var message = Model.LoginResult.Description;
-  <div class="notify">@L[message]</div>
+  <div class="notify">@Model.AccountPageResult.Message</div>
 }

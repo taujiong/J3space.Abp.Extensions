@@ -32,18 +32,20 @@ namespace J3space.Abp.Account
             return ObjectMapper.Map<IdentityUser, IdentityUserDto>(user);
         }
 
-        public async Task<AbpLoginResult> Login(LoginDto login)
+        public async Task<AccountResult> Login(LoginDto login)
         {
             ValidateLoginInfo(login);
 
             await ReplaceEmailToUsernameOfInputIfNeeds(login);
 
-            return GetAbpLoginResult(await _signInManager.PasswordSignInAsync(
+            var signInResult = await _signInManager.PasswordSignInAsync(
                 login.UserNameOrEmailAddress,
                 login.Password,
                 login.RememberMe,
                 true
-            ));
+            );
+
+            return GetAccountResult(signInResult);
         }
 
         public async Task Logout()
@@ -51,7 +53,7 @@ namespace J3space.Abp.Account
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<AbpLoginResult> CheckPassword(LoginDto login)
+        public async Task<AccountResult> CheckPassword(LoginDto login)
         {
             ValidateLoginInfo(login);
 
@@ -60,10 +62,31 @@ namespace J3space.Abp.Account
             var identityUser = await _userManager.FindByNameAsync(login.UserNameOrEmailAddress);
 
             if (identityUser == null)
-                return new AbpLoginResult(LoginResultType.InvalidUserNameOrPassword);
+                return new AccountResult
+                {
+                    Succeed = false,
+                    Message = L["Failed"]
+                };
 
-            return GetAbpLoginResult(
-                await _signInManager.CheckPasswordSignInAsync(identityUser, login.Password, true));
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(identityUser, login.Password, true);
+
+            return GetAccountResult(signInResult);
+        }
+
+        private AccountResult GetAccountResult(SignInResult signInResult)
+        {
+            if (!signInResult.Succeeded)
+                return new AccountResult
+                {
+                    Succeed = false,
+                    Message = L[signInResult.ToString()]
+                };
+
+            return new AccountResult
+            {
+                Succeed = true,
+                Message = L["SuccessLogin"]
+            };
         }
 
         protected virtual async Task ReplaceEmailToUsernameOfInputIfNeeds(LoginDto login)
@@ -77,21 +100,6 @@ namespace J3space.Abp.Account
             if (userByEmail == null) return;
 
             login.UserNameOrEmailAddress = userByEmail.UserName;
-        }
-
-        private static AbpLoginResult GetAbpLoginResult(SignInResult result)
-        {
-            if (result.IsLockedOut) return new AbpLoginResult(LoginResultType.LockedOut);
-
-            if (result.RequiresTwoFactor)
-                return new AbpLoginResult(LoginResultType.RequiresTwoFactor);
-
-            if (result.IsNotAllowed) return new AbpLoginResult(LoginResultType.NotAllowed);
-
-            if (!result.Succeeded)
-                return new AbpLoginResult(LoginResultType.InvalidUserNameOrPassword);
-
-            return new AbpLoginResult(LoginResultType.Success);
         }
 
         protected virtual void ValidateLoginInfo(LoginDto login)

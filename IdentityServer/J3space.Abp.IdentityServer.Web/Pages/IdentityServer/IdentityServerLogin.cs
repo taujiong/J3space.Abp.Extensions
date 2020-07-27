@@ -56,9 +56,9 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
             if (!ModelState.IsValid)
                 return Page();
 
-            LoginResult = await AccountAppService.Login(LoginInput);
+            AccountPageResult = await AccountAppService.Login(LoginInput);
 
-            if (LoginResult.Result == LoginResultType.Success) return RedirectSafely(ReturnUrl, ReturnUrlHash);
+            if (AccountPageResult.Succeed) return RedirectSafely(ReturnUrl, ReturnUrlHash);
 
             return Page();
         }

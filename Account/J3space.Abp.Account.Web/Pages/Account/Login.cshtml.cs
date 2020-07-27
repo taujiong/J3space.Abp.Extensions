@@ -35,10 +35,6 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public LoginDto LoginInput { get; set; }
 
-        // TODO: 依赖这里在页面上显示信息，重构一下实现所有异常的页面显示，而不仅仅是登录错误
-        public AbpLoginResult LoginResult { get; set; } =
-            new AbpLoginResult(LoginResultType.Success);
-
         public virtual async Task<IActionResult> OnGetAsync()
         {
             LoginInput = new LoginDto();
@@ -53,9 +49,9 @@ namespace J3space.Abp.Account.Web.Pages.Account
             if (!ModelState.IsValid)
                 return Page();
 
-            LoginResult = await AccountAppService.Login(LoginInput);
+            AccountPageResult = await AccountAppService.Login(LoginInput);
 
-            if (LoginResult.Result == LoginResultType.Success) return RedirectSafely(ReturnUrl, ReturnUrlHash);
+            if (AccountPageResult.Succeed) return RedirectSafely(ReturnUrl, ReturnUrlHash);
 
             return Page();
         }
