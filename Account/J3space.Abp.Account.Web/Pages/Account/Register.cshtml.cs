@@ -23,9 +23,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public RegisterDto RegisterInput { get; set; }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(string userName, string emailAddress)
         {
-            RegisterInput = new RegisterDto();
+            RegisterInput = new RegisterDto
+            {
+                UserName = userName,
+                EmailAddress = emailAddress
+            };
 
             await SetAvailableExternalLoginProviders();
 
@@ -34,8 +38,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
+            ValidateModel();
 
             await AccountAppService.RegisterAsync(RegisterInput);
             var loginInput = new LoginDto

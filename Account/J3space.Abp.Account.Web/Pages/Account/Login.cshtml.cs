@@ -1,23 +1,20 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Identity;
-using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
     public class Login : AccountPageModel
     {
-        protected readonly SignInManager<IdentityUser> SignInManager;
+        protected readonly Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager;
         protected readonly IdentityUserManager UserManager;
 
         public Login(
             IAccountAppService accountAppService,
             IAuthenticationSchemeProvider schemeProvider,
-            IdentityUserManager userManager,
-            SignInManager<IdentityUser> signInManager
+            IdentityUserManager userManager, Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
         ) : base(accountAppService, schemeProvider)
         {
             UserManager = userManager;
@@ -35,9 +32,12 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public LoginDto LoginInput { get; set; }
 
-        public virtual async Task<IActionResult> OnGetAsync()
+        public virtual async Task<IActionResult> OnGetAsync(string userNameOrEmailAddress)
         {
-            LoginInput = new LoginDto();
+            LoginInput = new LoginDto
+            {
+                UserNameOrEmailAddress = userNameOrEmailAddress
+            };
 
             await SetAvailableExternalLoginProviders();
 
@@ -46,8 +46,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
+            ValidateModel();
 
             AccountPageResult = await AccountAppService.Login(LoginInput);
 
@@ -97,25 +96,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
 
             // 到这里基本上就能确定是没有注册了
-            const string defaultExternalLoginUserPassword = "1q2w3E*"; // TODO: 默认密码放配置文件
-            var userName = loginInfo.Principal.FindFirstValue(ClaimTypes.Name);
-            var emailAddress = loginInfo.Principal.FindFirstValue(ClaimTypes.Email);
-            var user = new IdentityUser(GuidGenerator.Create(), userName, emailAddress);
-            user.AddLogin(loginInfo);
-            (await UserManager.CreateAsync(user, defaultExternalLoginUserPassword))
-                .CheckErrors(); // TODO: 考虑第三方获取的用户名被占用的情形
-            (await UserManager.AddDefaultRolesAsync(user)).CheckErrors();
+            var registerDto = new RegisterDto
+            {
+                UserName = loginInfo.Principal.FindFirstValue(ClaimTypes.Name),
+                EmailAddress = loginInfo.Principal.FindFirstValue(ClaimTypes.Email)
+            };
 
-            var loginResult = await SignInManager.PasswordSignInAsync(user.UserName,
-                defaultExternalLoginUserPassword,
-                false,
-                false);
-
-            if (loginResult.Succeeded) return RedirectSafely(returnUrl, returnUrlHash);
-
-            AccountPageResult.Succeed = false;
-            AccountPageResult.Message = L[loginResult.ToString()];
-            return Page();
+            return RedirectToPage("./Register", registerDto);
         }
     }
 }

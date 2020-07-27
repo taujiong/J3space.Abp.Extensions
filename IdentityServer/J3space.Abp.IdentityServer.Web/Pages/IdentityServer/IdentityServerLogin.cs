@@ -26,9 +26,12 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
             _interaction = interaction;
         }
 
-        public override async Task<IActionResult> OnGetAsync()
+        public override async Task<IActionResult> OnGetAsync(string userNameOrEmailAddress)
         {
-            LoginInput = new LoginDto();
+            LoginInput = new LoginDto
+            {
+                UserNameOrEmailAddress = userNameOrEmailAddress
+            };
 
             await SetAvailableExternalLoginProviders();
 
@@ -53,8 +56,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
         {
             // TODO: 取消的逻辑
 
-            if (!ModelState.IsValid)
-                return Page();
+            ValidateModel();
 
             AccountPageResult = await AccountAppService.Login(LoginInput);
 
