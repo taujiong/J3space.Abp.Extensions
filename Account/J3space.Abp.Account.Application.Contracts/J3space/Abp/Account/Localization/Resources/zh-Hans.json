@@ -1,6 +1,7 @@
 {
   "culture": "zh-Hans",
   "texts": {
+    "NullExternalLoginInfo": "未能正确加载第三方登录的返回信息",
     "SuccessLogin": "登录成功",
     "UserName": "用户名称",
     "EmailAddress": "邮箱地址",

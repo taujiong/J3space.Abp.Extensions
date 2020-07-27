@@ -70,8 +70,11 @@ namespace J3space.Abp.Account.Web.Pages.Account
         {
             var loginInfo = await SignInManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
-                // TODO: 此处应在页面显示报错信息
-                return RedirectToPage("./Login");
+            {
+                AccountPageResult.Succeed = false;
+                AccountPageResult.Message = L["NullExternalLoginInfo"];
+                return Page();
+            }
 
             var result = await SignInManager.ExternalLoginSignInAsync(
                 loginInfo.LoginProvider,
@@ -82,18 +85,25 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
             if (result.Succeeded) return RedirectSafely(returnUrl, returnUrlHash);
 
-            /*
-             * TODO: 不成功的话不一定是没有注册
-             * result.IsLockedOut;
-             * result.IsNotAllowed;
-             * result.RequiresTwoFactor;
-             */
+            if (result.IsLockedOut || result.IsNotAllowed || result.RequiresTwoFactor)
+            {
+                AccountPageResult = new AccountResult
+                {
+                    Succeed = false,
+                    Message = L[result.ToString()]
+                };
+
+                return Page();
+            }
+
+            // 到这里基本上就能确定是没有注册了
             const string defaultExternalLoginUserPassword = "1q2w3E*"; // TODO: 默认密码放配置文件
             var userName = loginInfo.Principal.FindFirstValue(ClaimTypes.Name);
             var emailAddress = loginInfo.Principal.FindFirstValue(ClaimTypes.Email);
             var user = new IdentityUser(GuidGenerator.Create(), userName, emailAddress);
             user.AddLogin(loginInfo);
-            (await UserManager.CreateAsync(user, defaultExternalLoginUserPassword)).CheckErrors();
+            (await UserManager.CreateAsync(user, defaultExternalLoginUserPassword))
+                .CheckErrors(); // TODO: 考虑第三方获取的用户名被占用的情形
             (await UserManager.AddDefaultRolesAsync(user)).CheckErrors();
 
             var loginResult = await SignInManager.PasswordSignInAsync(user.UserName,
@@ -103,7 +113,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
             if (loginResult.Succeeded) return RedirectSafely(returnUrl, returnUrlHash);
 
-            // TODO: 错误处理
+            AccountPageResult.Succeed = false;
+            AccountPageResult.Message = L[loginResult.ToString()];
             return Page();
         }
     }

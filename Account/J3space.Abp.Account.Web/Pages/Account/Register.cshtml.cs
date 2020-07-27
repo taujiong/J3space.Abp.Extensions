@@ -45,11 +45,10 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 UserNameOrEmailAddress = RegisterInput.UserName
             };
 
-            var loginResult = await AccountAppService.Login(loginInput);
+            AccountPageResult = await AccountAppService.Login(loginInput);
 
             if (AccountPageResult.Succeed) return RedirectSafely(ReturnUrl, ReturnUrlHash);
 
-            // TODO: 错误处理
             return Page();
         }
     }

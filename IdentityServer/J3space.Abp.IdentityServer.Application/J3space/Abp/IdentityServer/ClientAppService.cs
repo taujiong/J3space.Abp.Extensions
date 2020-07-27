@@ -202,7 +202,6 @@ namespace J3space.Abp.IdentityServer
             var client = _clientRepository.FindAsync(id);
             if (client == null) throw new EntityNotFoundException(typeof(Client), id);
 
-            // TODO: 跟进官方进度，是否 return true
             await _clientRepository.DeleteAsync(id);
 
             return new JsonResult(new

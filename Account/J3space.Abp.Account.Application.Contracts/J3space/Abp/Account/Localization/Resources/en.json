@@ -1,6 +1,7 @@
 {
   "culture": "en",
   "texts": {
+    "NullExternalLoginInfo": "Error loading external login information during confirmation",
     "SuccessLogin": "Login successfully",
     "UserName": "Username",
     "EmailAddress": "Email address",
