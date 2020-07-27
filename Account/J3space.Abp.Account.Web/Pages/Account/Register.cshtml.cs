@@ -1,16 +1,27 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Volo.Abp.Identity;
+using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
     public class Register : AccountPageModel
     {
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IdentityUserManager _userManager;
+
         public Register(
             IAccountAppService accountAppService,
-            IAuthenticationSchemeProvider schemeProvider
+            IAuthenticationSchemeProvider schemeProvider,
+            SignInManager<IdentityUser> signInManager,
+            IdentityUserManager userManager
         ) : base(accountAppService, schemeProvider)
         {
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HiddenInput]
@@ -40,7 +51,31 @@ namespace J3space.Abp.Account.Web.Pages.Account
         {
             ValidateModel();
 
-            await AccountAppService.RegisterAsync(RegisterInput);
+            var user = new IdentityUser(GuidGenerator.Create(), RegisterInput.UserName, RegisterInput.EmailAddress,
+                CurrentTenant.Id);
+
+            // TODO: 注意潜在的新注册用户意外获取到别的第三方登录信息的问题
+            var externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
+            if (externalLoginInfo != null)
+            {
+                user.AddLogin(externalLoginInfo);
+            }
+
+            var userCreateResult = await _userManager.CreateAsync(user, RegisterInput.Password);
+            if (userCreateResult.Errors.Any())
+            {
+                AccountPageResult.Succeed = false;
+                foreach (var error in userCreateResult.Errors)
+                {
+                    // TODO: 错误信息国际化
+                    AccountPageResult.Message += error.Description;
+                }
+
+                await SetAvailableExternalLoginProviders();
+
+                return Page();
+            }
+
             var loginInput = new LoginDto
             {
                 Password = RegisterInput.Password,

@@ -1,20 +1,23 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Identity;
+using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
     public class Login : AccountPageModel
     {
-        protected readonly Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager;
+        protected readonly SignInManager<IdentityUser> SignInManager;
         protected readonly IdentityUserManager UserManager;
 
         public Login(
             IAccountAppService accountAppService,
             IAuthenticationSchemeProvider schemeProvider,
-            IdentityUserManager userManager, Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
+            IdentityUserManager userManager,
+            SignInManager<IdentityUser> signInManager
         ) : base(accountAppService, schemeProvider)
         {
             UserManager = userManager;
