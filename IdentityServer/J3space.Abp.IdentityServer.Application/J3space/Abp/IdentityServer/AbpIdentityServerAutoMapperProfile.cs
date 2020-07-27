@@ -5,7 +5,6 @@ using J3space.Abp.IdentityServer.IdentityResources;
 using Volo.Abp.IdentityServer.ApiResources;
 using Volo.Abp.IdentityServer.Clients;
 using Volo.Abp.IdentityServer.IdentityResources;
-using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
 
 namespace J3space.Abp.IdentityServer
 {

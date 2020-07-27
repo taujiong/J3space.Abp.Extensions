@@ -21,7 +21,8 @@ namespace J3space.Abp.IdentityServer
                 L("Permission:ChangePermissions"),
                 MultiTenancySides.Host);
 
-            var apiResourcesPermission = identityServerGroup.AddPermission(IdentityServerPermissions.ApiResource.Default,
+            var apiResourcesPermission = identityServerGroup.AddPermission(
+                IdentityServerPermissions.ApiResource.Default,
                 L("Permission:ApiResourceManagement"));
             apiResourcesPermission.AddChild(IdentityServerPermissions.ApiResource.Create,
                 L("Permission:Create"));
@@ -39,7 +40,6 @@ namespace J3space.Abp.IdentityServer
                 L("Permission:Edit"));
             apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Delete,
                 L("Permission:Delete"));
-
         }
 
         private static LocalizableString L(string name)

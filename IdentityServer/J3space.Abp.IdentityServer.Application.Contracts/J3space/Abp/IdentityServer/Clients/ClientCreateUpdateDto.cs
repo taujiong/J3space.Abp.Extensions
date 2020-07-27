@@ -1,6 +1,6 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
- namespace J3space.Abp.IdentityServer.Clients
+namespace J3space.Abp.IdentityServer.Clients
 {
     public class ClientCreateUpdateDto
     {

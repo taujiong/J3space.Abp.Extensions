@@ -9,8 +9,6 @@ namespace J3space.AuthServer.Data
 {
     public class AuthServerDbMigrationService : ITransientDependency
     {
-        public ILogger<AuthServerDbMigrationService> Logger { get; set; }
-
         private readonly IDataSeeder _dataSeeder;
         private readonly IEnumerable<IAuthServerDbSchemaMigrator> _dbSchemaMigrators;
 
@@ -23,6 +21,8 @@ namespace J3space.AuthServer.Data
 
             Logger = NullLogger<AuthServerDbMigrationService>.Instance;
         }
+
+        public ILogger<AuthServerDbMigrationService> Logger { get; set; }
 
         public async Task MigrateAsync()
         {
@@ -39,10 +39,7 @@ namespace J3space.AuthServer.Data
             Logger.LogInformation(
                 "Migrating schema for host database...");
 
-            foreach (var migrator in _dbSchemaMigrators)
-            {
-                await migrator.MigrateAsync();
-            }
+            foreach (var migrator in _dbSchemaMigrators) await migrator.MigrateAsync();
         }
 
         private async Task SeedDataAsync()

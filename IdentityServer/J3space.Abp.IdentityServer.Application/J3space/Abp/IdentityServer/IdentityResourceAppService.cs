@@ -16,8 +16,8 @@ namespace J3space.Abp.IdentityServer
     [Authorize(IdentityServerPermissions.IdentityResource.Default)]
     public class IdentityResourceAppService : IdentityServerAppServiceBase, IIdentityResourceAppService
     {
-        private readonly IIdentityResourceRepository _resourceRepository;
         private readonly IGuidGenerator _guidGenerator;
+        private readonly IIdentityResourceRepository _resourceRepository;
 
         public IdentityResourceAppService(
             IIdentityResourceRepository resourceRepository,
@@ -38,7 +38,7 @@ namespace J3space.Abp.IdentityServer
                 totalCount,
                 ObjectMapper.Map<List<IdentityResource>, List<IdentityResourceDto>>(
                     list)
-                );
+            );
         }
 
         public async Task<ListResultDto<IdentityResourceDto>> GetAllListAsync()
@@ -53,10 +53,7 @@ namespace J3space.Abp.IdentityServer
         public async Task<IdentityResourceDto> GetAsync(Guid id)
         {
             var identityResource = await _resourceRepository.FindAsync(id);
-            if (identityResource == null)
-            {
-                throw new EntityNotFoundException(typeof(IdentityResource), id);
-            }
+            if (identityResource == null) throw new EntityNotFoundException(typeof(IdentityResource), id);
 
             return ObjectMapper.Map<IdentityResource, IdentityResourceDto>(identityResource);
         }
@@ -79,10 +76,7 @@ namespace J3space.Abp.IdentityServer
             IdentityResourceCreateUpdateDto input)
         {
             var identityResource = await _resourceRepository.FindAsync(id);
-            if (identityResource == null)
-            {
-                throw new EntityNotFoundException(typeof(IdentityResource), id);
-            }
+            if (identityResource == null) throw new EntityNotFoundException(typeof(IdentityResource), id);
 
             identityResource.Description = input.Description.IsNullOrEmpty()
                 ? input.Name
@@ -102,16 +96,10 @@ namespace J3space.Abp.IdentityServer
                         .UserClaims);
 
                 var toBeRemoved = oldList.Except(input.UserClaims);
-                foreach (var claim in toBeRemoved)
-                {
-                    identityResource.RemoveUserClaim(claim);
-                }
+                foreach (var claim in toBeRemoved) identityResource.RemoveUserClaim(claim);
 
                 var toBeAdd = input.UserClaims.Except(oldList);
-                foreach (var claim in toBeAdd)
-                {
-                    identityResource.AddUserClaim(claim);
-                }
+                foreach (var claim in toBeAdd) identityResource.AddUserClaim(claim);
             }
 
             identityResource = await _resourceRepository.UpdateAsync(identityResource);
@@ -123,10 +111,7 @@ namespace J3space.Abp.IdentityServer
         public async Task<JsonResult> DeleteAsync(Guid id)
         {
             var client = _resourceRepository.FindAsync(id);
-            if (client == null)
-            {
-                throw new EntityNotFoundException(typeof(IdentityResource), id);
-            }
+            if (client == null) throw new EntityNotFoundException(typeof(IdentityResource), id);
 
             await _resourceRepository.DeleteAsync(id);
 

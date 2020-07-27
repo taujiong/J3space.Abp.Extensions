@@ -41,10 +41,7 @@ namespace J3space.Abp.Account.Web
                 options.MenuContributors.Add(new AbpAccountUserMenuContributor());
             });
 
-            Configure<RazorPagesOptions>(options =>
-            {
-                options.Conventions.AuthorizePage("/Account/Manage");
-            });
+            Configure<RazorPagesOptions>(options => { options.Conventions.AuthorizePage("/Account/Manage"); });
         }
     }
 }

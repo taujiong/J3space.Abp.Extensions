@@ -8,9 +8,9 @@ using Serilog.Events;
 
 namespace J3space.AuthServer.DbMigrator
 {
-    class Program
+    internal class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -29,12 +29,14 @@ namespace J3space.AuthServer.DbMigrator
             await CreateHostBuilder(args).RunConsoleAsync();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureLogging((context, logging) => logging.ClearProviders())
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<DbMigratorHostedService>();
                 });
+        }
     }
 }

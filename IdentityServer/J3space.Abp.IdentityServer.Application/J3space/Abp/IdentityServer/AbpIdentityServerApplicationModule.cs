@@ -9,7 +9,7 @@ namespace J3space.Abp.IdentityServer
         typeof(AbpIdentityServerApplicationContractsModule),
         typeof(AbpAutoMapperModule),
         typeof(AbpPermissionManagementApplicationModule)
-        )]
+    )]
     public class AbpIdentityServerApplicationModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
@@ -18,7 +18,7 @@ namespace J3space.Abp.IdentityServer
 
             Configure<AbpAutoMapperOptions>(options =>
             {
-                options.AddProfile<AbpIdentityServerAutoMapperProfile>(validate: true);
+                options.AddProfile<AbpIdentityServerAutoMapperProfile>(true);
             });
         }
     }

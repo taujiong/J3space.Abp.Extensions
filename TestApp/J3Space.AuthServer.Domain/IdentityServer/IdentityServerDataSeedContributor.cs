@@ -21,10 +21,10 @@ namespace J3space.AuthServer.IdentityServer
     {
         private readonly IApiResourceRepository _apiResourceRepository;
         private readonly IClientRepository _clientRepository;
-        private readonly IIdentityResourceDataSeeder _identityResourceDataSeeder;
-        private readonly IGuidGenerator _guidGenerator;
-        private readonly IPermissionDataSeeder _permissionDataSeeder;
         private readonly IConfiguration _configuration;
+        private readonly IGuidGenerator _guidGenerator;
+        private readonly IIdentityResourceDataSeeder _identityResourceDataSeeder;
+        private readonly IPermissionDataSeeder _permissionDataSeeder;
 
         public IdentityServerDataSeedContributor(
             IClientRepository clientRepository,
@@ -70,24 +70,18 @@ namespace J3space.AuthServer.IdentityServer
         {
             var apiResource = await _apiResourceRepository.FindByNameAsync(name);
             if (apiResource == null)
-            {
                 apiResource = await _apiResourceRepository.InsertAsync(
                     new ApiResource(
                         _guidGenerator.Create(),
                         name,
                         name + " API"
                     ),
-                    autoSave: true
+                    true
                 );
-            }
 
             foreach (var claim in claims)
-            {
                 if (apiResource.FindClaim(claim) == null)
-                {
                     apiResource.AddUserClaim(claim);
-                }
-            }
 
             return await _apiResourceRepository.UpdateAsync(apiResource);
         }
@@ -117,27 +111,25 @@ namespace J3space.AuthServer.IdentityServer
                  * solution. Otherwise, you can delete this client. */
 
                 await CreateClientAsync(
-                    name: webClientId,
-                    scopes: commonScopes,
-                    grantTypes: new[] { "hybrid" },
-                    secret: (configurationSection["AuthServer_Web:ClientSecret"] ?? "1q2w3e*").Sha256(),
-                    redirectUri: $"{webClientRootUrl}signin-oidc",
-                    postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc",
-                    frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout"
+                    webClientId,
+                    commonScopes,
+                    new[] {"hybrid"},
+                    (configurationSection["AuthServer_Web:ClientSecret"] ?? "1q2w3e*").Sha256(),
+                    $"{webClientRootUrl}signin-oidc",
+                    $"{webClientRootUrl}signout-callback-oidc",
+                    $"{webClientRootUrl}Account/FrontChannelLogout"
                 );
             }
 
             //Console Test Client
             var consoleClientId = configurationSection["AuthServer_App:ClientId"];
             if (!consoleClientId.IsNullOrWhiteSpace())
-            {
                 await CreateClientAsync(
-                    name: consoleClientId,
-                    scopes: commonScopes,
-                    grantTypes: new[] { "password", "client_credentials" },
-                    secret: (configurationSection["AuthServer_App:ClientSecret"] ?? "1q2w3e*").Sha256()
+                    consoleClientId,
+                    commonScopes,
+                    new[] {"password", "client_credentials"},
+                    (configurationSection["AuthServer_App:ClientSecret"] ?? "1q2w3e*").Sha256()
                 );
-            }
         }
 
         private async Task<Client> CreateClientAsync(
@@ -152,7 +144,6 @@ namespace J3space.AuthServer.IdentityServer
         {
             var client = await _clientRepository.FindByCliendIdAsync(name);
             if (client == null)
-            {
                 client = await _clientRepository.InsertAsync(
                     new Client(
                         _guidGenerator.Create(),
@@ -171,55 +162,33 @@ namespace J3space.AuthServer.IdentityServer
                         RequireConsent = false,
                         FrontChannelLogoutUri = frontChannelLogoutUri
                     },
-                    autoSave: true
+                    true
                 );
-            }
 
             foreach (var scope in scopes)
-            {
                 if (client.FindScope(scope) == null)
-                {
                     client.AddScope(scope);
-                }
-            }
 
             foreach (var grantType in grantTypes)
-            {
                 if (client.FindGrantType(grantType) == null)
-                {
                     client.AddGrantType(grantType);
-                }
-            }
 
-            if (client.FindSecret(secret) == null)
-            {
-                client.AddSecret(secret);
-            }
+            if (client.FindSecret(secret) == null) client.AddSecret(secret);
 
             if (redirectUri != null)
-            {
                 if (client.FindRedirectUri(redirectUri) == null)
-                {
                     client.AddRedirectUri(redirectUri);
-                }
-            }
 
             if (postLogoutRedirectUri != null)
-            {
                 if (client.FindPostLogoutRedirectUri(postLogoutRedirectUri) == null)
-                {
                     client.AddPostLogoutRedirectUri(postLogoutRedirectUri);
-                }
-            }
 
             if (permissions != null)
-            {
                 await _permissionDataSeeder.SeedAsync(
                     ClientPermissionValueProvider.ProviderName,
                     name,
                     permissions
                 );
-            }
 
             return await _clientRepository.UpdateAsync(client);
         }

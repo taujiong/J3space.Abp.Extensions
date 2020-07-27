@@ -53,10 +53,7 @@ namespace J3space.Abp.IdentityServer
         public async Task<ApiResourceDto> GetAsync(Guid id)
         {
             var apiResource = await _apiResourceRepository.FindAsync(id);
-            if (apiResource == null)
-            {
-                throw new EntityNotFoundException(typeof(ApiResource), id);
-            }
+            if (apiResource == null) throw new EntityNotFoundException(typeof(ApiResource), id);
 
             return ObjectMapper.Map<ApiResource, ApiResourceDto>(apiResource);
         }
@@ -78,10 +75,7 @@ namespace J3space.Abp.IdentityServer
         public async Task<ApiResourceDto> UpdateAsync(Guid id, ApiResourceCreateUpdateDto input)
         {
             var apiResource = await _apiResourceRepository.FindAsync(id);
-            if (apiResource == null)
-            {
-                throw new EntityNotFoundException(typeof(ApiResource), id);
-            }
+            if (apiResource == null) throw new EntityNotFoundException(typeof(ApiResource), id);
 
             apiResource.Description = input.Description.IsNullOrEmpty()
                 ? input.Name
@@ -95,16 +89,10 @@ namespace J3space.Abp.IdentityServer
                 var oldList = ObjectMapper.Map<List<ApiScope>, List<string>>(apiResource.Scopes);
 
                 var toBeRemoved = oldList.Except(input.Scopes);
-                foreach (var scope in toBeRemoved)
-                {
-                    apiResource.RemoveScope(scope);
-                }
+                foreach (var scope in toBeRemoved) apiResource.RemoveScope(scope);
 
                 var toBeAdd = input.Scopes.Except(oldList);
-                foreach (var scope in toBeAdd)
-                {
-                    apiResource.AddScope(scope);
-                }
+                foreach (var scope in toBeAdd) apiResource.AddScope(scope);
             }
 
             if (input.UserClaims != null)
@@ -113,16 +101,10 @@ namespace J3space.Abp.IdentityServer
                     ObjectMapper.Map<List<ApiResourceClaim>, List<string>>(apiResource.UserClaims);
 
                 var toBeRemoved = oldList.Except(input.UserClaims);
-                foreach (var claim in toBeRemoved)
-                {
-                    apiResource.RemoveClaim(claim);
-                }
+                foreach (var claim in toBeRemoved) apiResource.RemoveClaim(claim);
 
                 var toBeAdd = input.UserClaims.Except(oldList);
-                foreach (var claim in toBeAdd)
-                {
-                    apiResource.AddUserClaim(claim);
-                }
+                foreach (var claim in toBeAdd) apiResource.AddUserClaim(claim);
             }
 
             apiResource = await _apiResourceRepository.UpdateAsync(apiResource);
@@ -134,10 +116,7 @@ namespace J3space.Abp.IdentityServer
         public async Task<JsonResult> DeleteAsync(Guid id)
         {
             var client = _apiResourceRepository.FindAsync(id);
-            if (client == null)
-            {
-                throw new EntityNotFoundException(typeof(ApiResource), id);
-            }
+            if (client == null) throw new EntityNotFoundException(typeof(ApiResource), id);
 
             await _apiResourceRepository.DeleteAsync(id);
 

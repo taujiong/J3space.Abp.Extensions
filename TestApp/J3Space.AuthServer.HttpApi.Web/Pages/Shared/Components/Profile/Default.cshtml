@@ -1,6 +1,7 @@
 ﻿@inject ICurrentUser CurrentUser
 @using Microsoft.AspNetCore.Http.Extensions
 @using Volo.Abp.Users
+@using System.Net
 @model J3space.AuthServer.Pages.Shared.Components.Profile.ProfileViewModel
 
 <div id="profile">
@@ -14,7 +15,7 @@
     <el-dropdown-menu>
       @foreach (var language in Model.OtherLanguages)
       {
-        var url = $"/Abp/Languages/Switch?culture={language.CultureName}&uiCulture={language.UiCultureName}&ReturnUrl={System.Net.WebUtility.UrlEncode(Context.Request.GetEncodedPathAndQuery())}";
+        var url = $"/Abp/Languages/Switch?culture={language.CultureName}&uiCulture={language.UiCultureName}&ReturnUrl={WebUtility.UrlEncode(Context.Request.GetEncodedPathAndQuery())}";
         <el-dropdown-item command="@url">
           @language.DisplayName
         </el-dropdown-item>

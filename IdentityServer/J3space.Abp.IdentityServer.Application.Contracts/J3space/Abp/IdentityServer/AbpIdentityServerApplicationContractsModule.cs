@@ -12,7 +12,7 @@ namespace J3space.Abp.IdentityServer
         typeof(AbpDddApplicationModule),
         typeof(AbpIdentityServerDomainSharedModule),
         typeof(AbpIdentityServerDomainModule)
-        )]
+    )]
     public class AbpIdentityServerApplicationContractsModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)

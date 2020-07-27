@@ -57,10 +57,7 @@ namespace J3space.Abp.IdentityServer
         public async Task<ClientDto> GetAsync(Guid id)
         {
             var client = await _clientRepository.FindAsync(id);
-            if (client == null)
-            {
-                throw new EntityNotFoundException(typeof(Client), id);
-            }
+            if (client == null) throw new EntityNotFoundException(typeof(Client), id);
 
             return ObjectMapper.Map<Client, ClientDto>(client);
         }
@@ -86,10 +83,7 @@ namespace J3space.Abp.IdentityServer
         public async Task<ClientDto> UpdateAsync(Guid id, ClientCreateUpdateDto input)
         {
             var client = await _clientRepository.FindAsync(id);
-            if (client == null)
-            {
-                throw new EntityNotFoundException(typeof(Client), id);
-            }
+            if (client == null) throw new EntityNotFoundException(typeof(Client), id);
 
             client.Description = input.Description.IsNullOrEmpty()
                 ? input.ClientId
@@ -104,16 +98,10 @@ namespace J3space.Abp.IdentityServer
                     ObjectMapper.Map<List<ClientSecret>, List<string>>(client.ClientSecrets);
 
                 var toBeRemoved = oldList.Except(input.ClientSecrets);
-                foreach (var secret in toBeRemoved)
-                {
-                    client.RemoveSecret(secret);
-                }
+                foreach (var secret in toBeRemoved) client.RemoveSecret(secret);
 
                 var toBeAdd = input.ClientSecrets.Except(oldList);
-                foreach (var secret in toBeAdd)
-                {
-                    client.AddSecret(secret);
-                }
+                foreach (var secret in toBeAdd) client.AddSecret(secret);
             }
 
             if (input.AllowedScopes != null)
@@ -122,16 +110,10 @@ namespace J3space.Abp.IdentityServer
                     ObjectMapper.Map<List<ClientScope>, List<string>>(client.AllowedScopes);
 
                 var toBeRemoved = oldList.Except(input.AllowedScopes);
-                foreach (var scope in toBeRemoved)
-                {
-                    client.RemoveScope(scope);
-                }
+                foreach (var scope in toBeRemoved) client.RemoveScope(scope);
 
                 var toBeAdd = input.AllowedScopes.Except(oldList);
-                foreach (var scope in toBeAdd)
-                {
-                    client.AddScope(scope);
-                }
+                foreach (var scope in toBeAdd) client.AddScope(scope);
             }
 
             if (input.AllowedGrantTypes != null)
@@ -140,16 +122,10 @@ namespace J3space.Abp.IdentityServer
                     ObjectMapper.Map<List<ClientGrantType>, List<string>>(client.AllowedGrantTypes);
 
                 var toBeRemoved = oldList.Except(input.AllowedGrantTypes);
-                foreach (var grant in toBeRemoved)
-                {
-                    client.RemoveGrantType(grant);
-                }
+                foreach (var grant in toBeRemoved) client.RemoveGrantType(grant);
 
                 var toBeAdd = input.AllowedGrantTypes.Except(oldList);
-                foreach (var grant in toBeAdd)
-                {
-                    client.AddGrantType(grant);
-                }
+                foreach (var grant in toBeAdd) client.AddGrantType(grant);
             }
 
             if (input.AllowedCorsOrigins != null)
@@ -159,16 +135,10 @@ namespace J3space.Abp.IdentityServer
                         client.AllowedCorsOrigins);
 
                 var toBeRemoved = oldList.Except(input.AllowedCorsOrigins);
-                foreach (var cors in toBeRemoved)
-                {
-                    client.RemoveCorsOrigin(cors);
-                }
+                foreach (var cors in toBeRemoved) client.RemoveCorsOrigin(cors);
 
                 var toBeAdd = input.AllowedCorsOrigins.Except(oldList);
-                foreach (var cors in toBeAdd)
-                {
-                    client.AddCorsOrigin(cors);
-                }
+                foreach (var cors in toBeAdd) client.AddCorsOrigin(cors);
             }
 
             if (input.RedirectUris != null)
@@ -177,16 +147,10 @@ namespace J3space.Abp.IdentityServer
                     ObjectMapper.Map<List<ClientRedirectUri>, List<string>>(client.RedirectUris);
 
                 var toBeRemoved = oldList.Except(input.RedirectUris);
-                foreach (var uri in toBeRemoved)
-                {
-                    client.RemoveRedirectUri(uri);
-                }
+                foreach (var uri in toBeRemoved) client.RemoveRedirectUri(uri);
 
                 var toBeAdd = input.RedirectUris.Except(oldList);
-                foreach (var uri in toBeAdd)
-                {
-                    client.AddRedirectUri(uri);
-                }
+                foreach (var uri in toBeAdd) client.AddRedirectUri(uri);
             }
 
             if (input.PostLogoutRedirectUris != null)
@@ -196,16 +160,10 @@ namespace J3space.Abp.IdentityServer
                         client.PostLogoutRedirectUris);
 
                 var toBeRemoved = oldList.Except(input.PostLogoutRedirectUris);
-                foreach (var uri in toBeRemoved)
-                {
-                    client.RemovePostLogoutRedirectUri(uri);
-                }
+                foreach (var uri in toBeRemoved) client.RemovePostLogoutRedirectUri(uri);
 
                 var toBeAdd = input.PostLogoutRedirectUris.Except(oldList);
-                foreach (var uri in toBeAdd)
-                {
-                    client.AddPostLogoutRedirectUri(uri);
-                }
+                foreach (var uri in toBeAdd) client.AddPostLogoutRedirectUri(uri);
             }
 
             #endregion
@@ -222,19 +180,15 @@ namespace J3space.Abp.IdentityServer
 
                 var toBeRemoved = oldList.Except(input.Permissions);
                 foreach (var permission in toBeRemoved)
-                {
                     await _permissionManager.SetAsync(permission,
                         ClientPermissionValueProvider.ProviderName,
                         client.ClientId, false);
-                }
 
                 var toBeAdd = input.Permissions.Except(oldList);
                 foreach (var permission in toBeAdd)
-                {
                     await _permissionManager.SetAsync(permission,
                         ClientPermissionValueProvider.ProviderName,
                         client.ClientId, true);
-                }
             }
 
             client = await _clientRepository.UpdateAsync(client);
@@ -246,10 +200,7 @@ namespace J3space.Abp.IdentityServer
         public async Task<JsonResult> DeleteAsync(Guid id)
         {
             var client = _clientRepository.FindAsync(id);
-            if (client == null)
-            {
-                throw new EntityNotFoundException(typeof(Client), id);
-            }
+            if (client == null) throw new EntityNotFoundException(typeof(Client), id);
 
             // TODO: 跟进官方进度，是否 return true
             await _clientRepository.DeleteAsync(id);

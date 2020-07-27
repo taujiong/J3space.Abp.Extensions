@@ -1,6 +1,6 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
- namespace J3space.Abp.IdentityServer.IdentityResources
+namespace J3space.Abp.IdentityServer.IdentityResources
 {
     public class IdentityResourceCreateUpdateDto
     {

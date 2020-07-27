@@ -21,10 +21,7 @@ namespace J3space.AuthServer
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            Configure<AbpAutoMapperOptions>(options =>
-            {
-                options.AddMaps<AuthServerApplicationModule>();
-            });
+            Configure<AbpAutoMapperOptions>(options => { options.AddMaps<AuthServerApplicationModule>(); });
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿﻿namespace J3space.Abp.IdentityServer
+﻿namespace J3space.Abp.IdentityServer
 {
     public static class IdentityServerPermissions
     {

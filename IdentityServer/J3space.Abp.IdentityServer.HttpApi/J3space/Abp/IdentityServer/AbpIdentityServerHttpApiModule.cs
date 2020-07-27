@@ -7,7 +7,7 @@ namespace J3space.Abp.IdentityServer
     [DependsOn(
         typeof(AbpIdentityServerApplicationContractsModule),
         typeof(AbpAspNetCoreMvcModule)
-        )]
+    )]
     public class AbpIdentityServerHttpApiModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
