@@ -67,7 +67,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             {
                 AccountPageResult.Succeed = false;
                 foreach (var error in userCreateResult.Errors)
-                    AccountPageResult.Message += error.LocalizeErrorMessage(_localizer);
+                    AccountPageResult.Message += $"{error.LocalizeErrorMessage(_localizer)}|";
 
                 await SetAvailableExternalLoginProviders();
 

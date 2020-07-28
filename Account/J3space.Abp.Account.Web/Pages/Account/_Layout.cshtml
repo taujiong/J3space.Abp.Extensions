@@ -29,6 +29,23 @@
 
 <body>
 @RenderBody()
-<script src="//at.alicdn.com/t/font_1966347_b22o72ufqai.js"></script>
+
+@if (!Model.AccountPageResult.Succeed)
+{
+  <div class="notify">
+    <svg aria-hidden="true"
+         class="error-notify icon">
+      <use xlink:href="#icon-error"></use>
+    </svg>
+    <div>
+      @foreach (var message in Model.AccountPageResult.Message.Split("|", StringSplitOptions.RemoveEmptyEntries))
+      {
+        <p class="error-message">@message</p>
+      }
+    </div>
+  </div>
+}
+
+<script src="//at.alicdn.com/t/font_1966347_1cqmya5ja5t.js"></script>
 </body>
 </html>
