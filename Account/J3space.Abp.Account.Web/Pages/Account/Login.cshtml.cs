@@ -98,7 +98,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 EmailAddress = loginInfo.Principal.FindFirstValue(ClaimTypes.Email)
             };
 
-            return RedirectToPage("./Register", registerDto);
+            return RedirectToPage("./Register", new
+            {
+                registerDto.UserName,
+                registerDto.EmailAddress,
+                returnUrl,
+                returnUrlHash
+            });
         }
     }
 }
