@@ -3,13 +3,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Volo.Abp.Identity;
+using Volo.Abp.Identity.Localization;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
     public class Register : AccountPageModel
     {
+        private readonly IStringLocalizer<IdentityResource> _localizer;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IdentityUserManager _userManager;
 
@@ -17,11 +20,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
             IAccountAppService accountAppService,
             IAuthenticationSchemeProvider schemeProvider,
             SignInManager<IdentityUser> signInManager,
-            IdentityUserManager userManager
+            IdentityUserManager userManager,
+            IStringLocalizer<IdentityResource> localizer
         ) : base(accountAppService, schemeProvider)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _localizer = localizer;
         }
 
         [HiddenInput]
@@ -62,8 +67,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             {
                 AccountPageResult.Succeed = false;
                 foreach (var error in userCreateResult.Errors)
-                    // TODO: 错误信息国际化
-                    AccountPageResult.Message += error.Description;
+                    AccountPageResult.Message += error.LocalizeErrorMessage(_localizer);
 
                 await SetAvailableExternalLoginProviders();
 
