@@ -1,24 +1,19 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Identity;
-using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
     public class Login : AccountPageModel
     {
-        protected readonly SignInManager<IdentityUser> SignInManager;
+        protected readonly Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager;
         protected readonly IdentityUserManager UserManager;
 
         public Login(
             IAccountAppService accountAppService,
-            IAuthenticationSchemeProvider schemeProvider,
-            IdentityUserManager userManager,
-            SignInManager<IdentityUser> signInManager
-        ) : base(accountAppService, schemeProvider)
+            IdentityUserManager userManager, Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
+        ) : base(accountAppService)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,14 +30,12 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public LoginDto LoginInput { get; set; }
 
-        public virtual async Task<IActionResult> OnGetAsync(string userNameOrEmailAddress)
+        public virtual IActionResult OnGet(string userNameOrEmailAddress)
         {
             LoginInput = new LoginDto
             {
                 UserNameOrEmailAddress = userNameOrEmailAddress
             };
-
-            await SetAvailableExternalLoginProviders();
 
             return Page();
         }

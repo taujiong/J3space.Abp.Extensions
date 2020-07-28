@@ -1,5 +1,19 @@
 @page
+@inject IAuthenticationSchemeProvider SchemeProvider
+@using Microsoft.AspNetCore.Authentication
+@using J3space.Abp.Account.Web.Pages.Account
 @model J3space.Abp.Account.Web.Pages.Account.Register
+@{
+  var schemes = await SchemeProvider.GetAllSchemesAsync();
+  var availableExternalProviders = schemes
+    .Where(x => !string.IsNullOrWhiteSpace(x.DisplayName))
+    .Select(x => new AccountPageModel.ExternalProviderModel
+    {
+      DisplayName = x.DisplayName,
+      AuthenticationScheme = x.Name
+    })
+    .ToList();
+}
 
 <div class="limiter">
   <div class="container-login">
@@ -67,14 +81,14 @@
           </div>
         </div>
 
-        @if (Model.AvailableExternalProviders.Any())
+        @if (availableExternalProviders.Any())
         {
           <div class="external p-b-20 p-t-50 text-center">
             <span>@L["UseAnotherServiceToRegister"]</span>
           </div>
 
           <div class="flex-c-m">
-            @foreach (var provider in Model.AvailableExternalProviders)
+            @foreach (var provider in availableExternalProviders)
             {
               <a asp-page="./Login"
                  asp-page-handler="ExternalLogin"

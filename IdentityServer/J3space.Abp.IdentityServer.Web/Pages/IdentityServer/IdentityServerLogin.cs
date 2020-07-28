@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using IdentityServer4.Services;
 using J3space.Abp.Account;
 using J3space.Abp.Account.Web.Pages.Account;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Identity;
@@ -18,22 +17,19 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
 
         public IdentityServerLogin(
             IAccountAppService accountAppService,
-            IAuthenticationSchemeProvider schemeProvider,
             IIdentityServerInteractionService interaction,
             IdentityUserManager userManager, Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
-        ) : base(accountAppService, schemeProvider, userManager, signInManager)
+        ) : base(accountAppService, userManager, signInManager)
         {
             _interaction = interaction;
         }
 
-        public override async Task<IActionResult> OnGetAsync(string userNameOrEmailAddress)
+        public async Task<IActionResult> OnGetAsync(string userNameOrEmailAddress)
         {
             LoginInput = new LoginDto
             {
                 UserNameOrEmailAddress = userNameOrEmailAddress
             };
-
-            await SetAvailableExternalLoginProviders();
 
             var context = await _interaction.GetAuthorizationContextAsync(ReturnUrl);
 

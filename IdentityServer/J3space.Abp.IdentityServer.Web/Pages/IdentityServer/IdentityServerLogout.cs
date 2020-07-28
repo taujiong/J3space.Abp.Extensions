@@ -2,7 +2,6 @@
 using IdentityServer4.Services;
 using J3space.Abp.Account;
 using J3space.Abp.Account.Web.Pages.Account;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.DependencyInjection;
 
@@ -15,9 +14,8 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
 
         public IdentityServerLogout(
             IAccountAppService accountAppService,
-            IAuthenticationSchemeProvider schemeProvider,
             IIdentityServerInteractionService interaction
-        ) : base(accountAppService, schemeProvider)
+        ) : base(accountAppService)
         {
             _interaction = interaction;
         }

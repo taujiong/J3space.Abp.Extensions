@@ -18,11 +18,10 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public Register(
             IAccountAppService accountAppService,
-            IAuthenticationSchemeProvider schemeProvider,
             SignInManager<IdentityUser> signInManager,
             IdentityUserManager userManager,
             IStringLocalizer<IdentityResource> localizer
-        ) : base(accountAppService, schemeProvider)
+        ) : base(accountAppService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -39,15 +38,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public RegisterDto RegisterInput { get; set; }
 
-        public async Task<IActionResult> OnGet(string userName, string emailAddress)
+        public IActionResult OnGet(string userName, string emailAddress)
         {
             RegisterInput = new RegisterDto
             {
                 UserName = userName,
                 EmailAddress = emailAddress
             };
-
-            await SetAvailableExternalLoginProviders();
 
             return Page();
         }
@@ -68,8 +65,6 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 AccountPageResult.Succeed = false;
                 foreach (var error in userCreateResult.Errors)
                     AccountPageResult.Message += $"{error.LocalizeErrorMessage(_localizer)}|";
-
-                await SetAvailableExternalLoginProviders();
 
                 return Page();
             }

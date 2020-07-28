@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace J3space.Abp.Account.Web.Pages.Account
@@ -7,9 +6,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
     public class Logout : AccountPageModel
     {
         public Logout(
-            IAccountAppService accountAppService,
-            IAuthenticationSchemeProvider schemeProvider
-        ) : base(accountAppService, schemeProvider)
+            IAccountAppService accountAppService
+        ) : base(accountAppService)
         {
         }
 
