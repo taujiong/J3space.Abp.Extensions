@@ -60,6 +60,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             if (externalLoginInfo != null) user.AddLogin(externalLoginInfo);
 
             var userCreateResult = await _userManager.CreateAsync(user, RegisterInput.Password);
+            await _userManager.AddDefaultRolesAsync(user);
             if (userCreateResult.Errors.Any())
             {
                 AccountPageResult.Succeed = false;
