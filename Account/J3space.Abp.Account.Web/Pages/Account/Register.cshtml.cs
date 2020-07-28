@@ -54,22 +54,16 @@ namespace J3space.Abp.Account.Web.Pages.Account
             var user = new IdentityUser(GuidGenerator.Create(), RegisterInput.UserName, RegisterInput.EmailAddress,
                 CurrentTenant.Id);
 
-            // TODO: 注意潜在的新注册用户意外获取到别的第三方登录信息的问题
             var externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
-            if (externalLoginInfo != null)
-            {
-                user.AddLogin(externalLoginInfo);
-            }
+            if (externalLoginInfo != null) user.AddLogin(externalLoginInfo);
 
             var userCreateResult = await _userManager.CreateAsync(user, RegisterInput.Password);
             if (userCreateResult.Errors.Any())
             {
                 AccountPageResult.Succeed = false;
                 foreach (var error in userCreateResult.Errors)
-                {
                     // TODO: 错误信息国际化
                     AccountPageResult.Message += error.Description;
-                }
 
                 await SetAvailableExternalLoginProviders();
 
@@ -85,9 +79,12 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
             AccountPageResult = await AccountAppService.Login(loginInput);
 
-            if (AccountPageResult.Succeed) return RedirectSafely(ReturnUrl, ReturnUrlHash);
+            if (!AccountPageResult.Succeed) return Page();
 
-            return Page();
+            if (externalLoginInfo?.LoginProvider != null)
+                await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            return RedirectSafely(ReturnUrl, ReturnUrlHash);
         }
     }
 }
