@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using IdentityServer4.Models;
 using IdentityServer4.Services;
 using J3space.Abp.Account;
 using J3space.Abp.Account.Web.Pages.Account;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Identity;
-using Volo.Abp.MultiTenancy;
 
 namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
 {
@@ -24,34 +23,18 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
             _interaction = interaction;
         }
 
-        public async Task<IActionResult> OnGetAsync(string userNameOrEmailAddress)
+        public override async Task<IActionResult> OnGetCancelAsync(string returnUrl)
         {
-            LoginInput = new LoginDto
-            {
-                UserNameOrEmailAddress = userNameOrEmailAddress
-            };
+            var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
+            if (context == null) return Redirect("~/");
 
-            var context = await _interaction.GetAuthorizationContextAsync(ReturnUrl);
+            await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
 
-            if (context != null)
-            {
-                LoginInput.UserNameOrEmailAddress = context.LoginHint;
-
-                var tenant = context.Parameters[TenantResolverConsts.DefaultTenantKey];
-                if (!string.IsNullOrEmpty(tenant))
-                {
-                    CurrentTenant.Change(Guid.Parse(tenant));
-                    Response.Cookies.Append(TenantResolverConsts.DefaultTenantKey, tenant);
-                }
-            }
-
-            return Page();
+            return Redirect(returnUrl);
         }
 
         public override async Task<IActionResult> OnPostAsync()
         {
-            // TODO: 取消的逻辑
-
             ValidateModel();
 
             AccountPageResult = await AccountAppService.Login(LoginInput);

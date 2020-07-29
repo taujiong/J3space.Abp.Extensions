@@ -111,6 +111,12 @@
              class="local">
             @L["Register"]
           </a>
+          <a asp-page="./Login"
+             asp-page-handler="Cancel"
+             asp-route-returnUrl="@Model.ReturnUrl"
+             class="local">
+            @L["Cancel"]
+          </a>
         </div>
       </form>
     </div>

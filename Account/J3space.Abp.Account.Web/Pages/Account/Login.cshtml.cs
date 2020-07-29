@@ -40,6 +40,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
             return Page();
         }
 
+#pragma warning disable 1998
+        public virtual async Task<IActionResult> OnGetCancelAsync(string returnUrl)
+#pragma warning restore 1998
+        {
+            return Redirect("~/");
+        }
+
         public virtual async Task<IActionResult> OnPostAsync()
         {
             ValidateModel();
