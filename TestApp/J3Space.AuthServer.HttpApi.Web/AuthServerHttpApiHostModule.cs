@@ -91,8 +91,8 @@ namespace J3space.AuthServer
                 {
                     options.SignInScheme =
                         IdentityConstants.ExternalScheme;
-                    options.ClientId = "22383998789876a9623d";
-                    options.ClientSecret = "bc2556b4b4c9b1b8587ea894170f2e842228ca86";
+                    options.ClientId = configuration["ExternalIdentityProvider:GitHub:ClientId"];
+                    options.ClientSecret = configuration["ExternalIdentityProvider:GitHub:ClientSecret"];
                 })
                 .AddIdentityServerAuthentication(options =>
                 {
