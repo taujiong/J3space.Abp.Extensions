@@ -2,6 +2,10 @@
 
 [WIP] abp vnext 框架的补充
 
+![IdentityServer 效果图.png](https://i.loli.net/2020/07/31/QbtqvCuNMAkrfjz.png)
+
+## 说明
+
 abp vnext 框架是 C# 平台优秀的开源项目，其模块化的设计，基于 DDD 的清晰的项目结构十分适合二次开发。
 
 但是在 startup 项目中仍然有一些不足的地方。
@@ -27,3 +31,13 @@ abp vnext 框架是 C# 平台优秀的开源项目，其模块化的设计，基
   - [x] 纯 css 的登录、注册界面
   - [x] 扩展 AccountService 服务
   - [ ] 外部身份认证
+
+## 测试
+
+以下内容建立在你已经了解 [Abp vnext](https://docs.abp.io/en/abp/latest) 的基础上。
+
+1. 建立数据库，TestApp 使用的是 MongoDB
+2. 克隆本仓库，在 appsettings.json 中配置 GitHub 的 ClientId 以及 Client Secret
+3. 运行 J3Space.AuthServer.HttpApi.Web 项目
+4. 克隆 [Learn.IdentityServer](https://github.com/taujiong/Learn.IdentityServer)
+5. 首先运行 Api1 项目，再依次运行 ConsoleClient，WpfClient，MvcClient 项目

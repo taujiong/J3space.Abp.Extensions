@@ -113,7 +113,7 @@ namespace J3space.AuthServer.IdentityServer
                 await CreateClientAsync(
                     webClientId,
                     commonScopes,
-                    new[] {"hybrid"},
+                    new[] {"authorization_code"},
                     (configurationSection["AuthServer_Web:ClientSecret"] ?? "1q2w3e*").Sha256(),
                     $"{webClientRootUrl}signin-oidc",
                     $"{webClientRootUrl}signout-callback-oidc",
