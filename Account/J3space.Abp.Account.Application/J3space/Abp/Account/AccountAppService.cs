@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Volo.Abp.Identity;
 using Volo.Abp.Validation;
@@ -32,10 +31,8 @@ namespace J3space.Abp.Account
             return ObjectMapper.Map<IdentityUser, IdentityUserDto>(user);
         }
 
-        public async Task<AccountResult> Login(LoginDto login)
+        public virtual async Task<AccountResult> Login(LoginDto login)
         {
-            ValidateLoginInfo(login);
-
             await ReplaceEmailToUsernameOfInputIfNeeds(login);
 
             var signInResult = await _signInManager.PasswordSignInAsync(
@@ -48,15 +45,13 @@ namespace J3space.Abp.Account
             return GetAccountResult(signInResult);
         }
 
-        public async Task Logout()
+        public virtual async Task Logout()
         {
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<AccountResult> CheckPassword(LoginDto login)
+        public virtual async Task<AccountResult> CheckPassword(LoginDto login)
         {
-            ValidateLoginInfo(login);
-
             await ReplaceEmailToUsernameOfInputIfNeeds(login);
 
             var identityUser = await _userManager.FindByNameAsync(login.UserNameOrEmailAddress);
@@ -73,7 +68,7 @@ namespace J3space.Abp.Account
             return GetAccountResult(signInResult);
         }
 
-        private AccountResult GetAccountResult(SignInResult signInResult)
+        protected virtual AccountResult GetAccountResult(SignInResult signInResult)
         {
             if (!signInResult.Succeeded)
                 return new AccountResult
@@ -100,17 +95,6 @@ namespace J3space.Abp.Account
             if (userByEmail == null) return;
 
             login.UserNameOrEmailAddress = userByEmail.UserName;
-        }
-
-        protected virtual void ValidateLoginInfo(LoginDto login)
-        {
-            if (login == null) throw new ArgumentException(nameof(login));
-
-            if (login.UserNameOrEmailAddress.IsNullOrEmpty())
-                throw new ArgumentNullException(nameof(login.UserNameOrEmailAddress));
-
-            if (login.Password.IsNullOrEmpty())
-                throw new ArgumentNullException(nameof(login.Password));
         }
     }
 }

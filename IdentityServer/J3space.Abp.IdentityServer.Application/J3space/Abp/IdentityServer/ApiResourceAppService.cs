@@ -28,7 +28,7 @@ namespace J3space.Abp.IdentityServer
             _guidGenerator = guidGenerator;
         }
 
-        public async Task<PagedResultDto<ApiResourceDto>> GetListAsync(
+        public virtual async Task<PagedResultDto<ApiResourceDto>> GetListAsync(
             PagedAndSortedResultRequestDto input)
         {
             var list = await _apiResourceRepository.GetListAsync(input.Sorting, input.SkipCount,
@@ -41,7 +41,7 @@ namespace J3space.Abp.IdentityServer
             );
         }
 
-        public async Task<ListResultDto<ApiResourceDto>> GetAllListAsync()
+        public virtual async Task<ListResultDto<ApiResourceDto>> GetAllListAsync()
         {
             var list = await _apiResourceRepository.GetListAsync();
 
@@ -50,7 +50,7 @@ namespace J3space.Abp.IdentityServer
             );
         }
 
-        public async Task<ApiResourceDto> GetAsync(Guid id)
+        public virtual async Task<ApiResourceDto> GetAsync(Guid id)
         {
             var apiResource = await _apiResourceRepository.FindAsync(id);
             if (apiResource == null) throw new EntityNotFoundException(typeof(ApiResource), id);
@@ -59,7 +59,7 @@ namespace J3space.Abp.IdentityServer
         }
 
         [Authorize(IdentityServerPermissions.ApiResource.Create)]
-        public async Task<ApiResourceDto> CreateAsync(ApiResourceCreateUpdateDto input)
+        public virtual async Task<ApiResourceDto> CreateAsync(ApiResourceCreateUpdateDto input)
         {
             var apiResource = await _apiResourceRepository.FindByNameAsync(input.Name);
             if (apiResource == null)
@@ -72,7 +72,7 @@ namespace J3space.Abp.IdentityServer
         }
 
         [Authorize(IdentityServerPermissions.ApiResource.Update)]
-        public async Task<ApiResourceDto> UpdateAsync(Guid id, ApiResourceCreateUpdateDto input)
+        public virtual async Task<ApiResourceDto> UpdateAsync(Guid id, ApiResourceCreateUpdateDto input)
         {
             var apiResource = await _apiResourceRepository.FindAsync(id);
             if (apiResource == null) throw new EntityNotFoundException(typeof(ApiResource), id);
@@ -113,7 +113,7 @@ namespace J3space.Abp.IdentityServer
         }
 
         [Authorize(IdentityServerPermissions.ApiResource.Delete)]
-        public async Task<JsonResult> DeleteAsync(Guid id)
+        public virtual async Task<JsonResult> DeleteAsync(Guid id)
         {
             var client = _apiResourceRepository.FindAsync(id);
             if (client == null) throw new EntityNotFoundException(typeof(ApiResource), id);

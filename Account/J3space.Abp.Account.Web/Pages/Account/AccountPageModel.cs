@@ -23,7 +23,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public AccountResult AccountPageResult { get; set; }
 
-        protected RedirectResult RedirectSafely(string returnUrl, string returnUrlHash = null)
+        protected virtual RedirectResult RedirectSafely(string returnUrl, string returnUrlHash = null)
         {
             if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
                 returnUrl = "~/";

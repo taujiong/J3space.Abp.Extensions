@@ -26,21 +26,21 @@ namespace J3space.Abp.Account
 
         [HttpPost]
         [Route("login")]
-        public Task<AccountResult> Login(LoginDto login)
+        public virtual Task<AccountResult> Login(LoginDto login)
         {
             return _accountAppService.Login(login);
         }
 
         [HttpGet]
         [Route("logout")]
-        public Task Logout()
+        public virtual Task Logout()
         {
             return _accountAppService.Logout();
         }
 
         [HttpPost]
         [Route("check-password")]
-        public Task<AccountResult> CheckPassword(LoginDto login)
+        public virtual Task<AccountResult> CheckPassword(LoginDto login)
         {
             return _accountAppService.CheckPassword(login);
         }

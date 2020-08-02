@@ -38,7 +38,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public RegisterDto RegisterInput { get; set; }
 
-        public IActionResult OnGet(string userName, string emailAddress)
+        public virtual IActionResult OnGet(string userName, string emailAddress)
         {
             RegisterInput = new RegisterDto
             {
@@ -49,7 +49,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public virtual async Task<IActionResult> OnPostAsync()
         {
             ValidateModel();
 

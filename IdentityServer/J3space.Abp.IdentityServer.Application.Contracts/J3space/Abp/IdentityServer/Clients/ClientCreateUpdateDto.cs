@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Volo.Abp.IdentityServer.Clients;
 
 namespace J3space.Abp.IdentityServer.Clients
 {
     public class ClientCreateUpdateDto
     {
+        [Required]
+        [StringLength(ClientConsts.ClientIdMaxLength)]
         public string ClientId { get; set; }
+
+        [StringLength(ClientConsts.DescriptionMaxLength)]
         public string Description { get; set; }
+
         public List<string> AllowedScopes { get; set; }
         public List<string> AllowedGrantTypes { get; set; }
         public List<string> AllowedCorsOrigins { get; set; }

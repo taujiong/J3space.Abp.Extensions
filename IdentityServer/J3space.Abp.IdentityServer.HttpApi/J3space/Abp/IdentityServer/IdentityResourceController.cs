@@ -20,7 +20,7 @@ namespace J3space.Abp.IdentityServer
         }
 
         [HttpGet]
-        public Task<PagedResultDto<IdentityResourceDto>> GetListAsync(
+        public virtual Task<PagedResultDto<IdentityResourceDto>> GetListAsync(
             PagedAndSortedResultRequestDto input)
         {
             return _identityResourceAppService.GetListAsync(input);
@@ -28,34 +28,34 @@ namespace J3space.Abp.IdentityServer
 
         [HttpGet]
         [Route("all")]
-        public Task<ListResultDto<IdentityResourceDto>> GetAllListAsync()
+        public virtual Task<ListResultDto<IdentityResourceDto>> GetAllListAsync()
         {
             return _identityResourceAppService.GetAllListAsync();
         }
 
         [HttpGet]
         [Route("{id}")]
-        public Task<IdentityResourceDto> GetAsync(Guid id)
+        public virtual Task<IdentityResourceDto> GetAsync(Guid id)
         {
             return _identityResourceAppService.GetAsync(id);
         }
 
         [HttpPost]
-        public Task<IdentityResourceDto> CreateAsync(IdentityResourceCreateUpdateDto input)
+        public virtual Task<IdentityResourceDto> CreateAsync(IdentityResourceCreateUpdateDto input)
         {
             return _identityResourceAppService.CreateAsync(input);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public Task<IdentityResourceDto> UpdateAsync(Guid id, IdentityResourceCreateUpdateDto input)
+        public virtual Task<IdentityResourceDto> UpdateAsync(Guid id, IdentityResourceCreateUpdateDto input)
         {
             return _identityResourceAppService.UpdateAsync(id, input);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public Task<JsonResult> DeleteAsync(Guid id)
+        public virtual Task<JsonResult> DeleteAsync(Guid id)
         {
             return _identityResourceAppService.DeleteAsync(id);
         }

@@ -32,7 +32,7 @@ namespace J3space.Abp.IdentityServer
             _permissionManager = permissionManager;
         }
 
-        public async Task<PagedResultDto<ClientDto>> GetListAsync(
+        public virtual async Task<PagedResultDto<ClientDto>> GetListAsync(
             PagedAndSortedResultRequestDto input)
         {
             var list = await _clientRepository.GetListAsync(input.Sorting, input.SkipCount,
@@ -45,7 +45,7 @@ namespace J3space.Abp.IdentityServer
             );
         }
 
-        public async Task<ListResultDto<ClientDto>> GetAllListAsync()
+        public virtual async Task<ListResultDto<ClientDto>> GetAllListAsync()
         {
             var list = await _clientRepository.GetListAsync();
 
@@ -54,7 +54,7 @@ namespace J3space.Abp.IdentityServer
             );
         }
 
-        public async Task<ClientDto> GetAsync(Guid id)
+        public virtual async Task<ClientDto> GetAsync(Guid id)
         {
             var client = await _clientRepository.FindAsync(id);
             if (client == null) throw new EntityNotFoundException(typeof(Client), id);
@@ -63,7 +63,7 @@ namespace J3space.Abp.IdentityServer
         }
 
         [Authorize(IdentityServerPermissions.Client.Create)]
-        public async Task<ClientDto> CreateAsync(ClientCreateUpdateDto input)
+        public virtual async Task<ClientDto> CreateAsync(ClientCreateUpdateDto input)
         {
             var client = await _clientRepository.FindByCliendIdAsync(input.ClientId);
             if (client == null)
@@ -80,7 +80,7 @@ namespace J3space.Abp.IdentityServer
         }
 
         [Authorize(IdentityServerPermissions.Client.Update)]
-        public async Task<ClientDto> UpdateAsync(Guid id, ClientCreateUpdateDto input)
+        public virtual async Task<ClientDto> UpdateAsync(Guid id, ClientCreateUpdateDto input)
         {
             var client = await _clientRepository.FindAsync(id);
             if (client == null) throw new EntityNotFoundException(typeof(Client), id);
@@ -197,7 +197,7 @@ namespace J3space.Abp.IdentityServer
         }
 
         [Authorize(IdentityServerPermissions.Client.Delete)]
-        public async Task<JsonResult> DeleteAsync(Guid id)
+        public virtual async Task<JsonResult> DeleteAsync(Guid id)
         {
             var client = _clientRepository.FindAsync(id);
             if (client == null) throw new EntityNotFoundException(typeof(Client), id);
