@@ -4,6 +4,7 @@
 @using J3space.Abp.Account.Web.Pages.Account
 @model J3space.Abp.Account.Web.Pages.Account.Register
 @{
+  Layout = "_AccountModuleLayout";
   var schemes = await SchemeProvider.GetAllSchemesAsync();
   var availableExternalProviders = schemes
     .Where(x => !string.IsNullOrWhiteSpace(x.DisplayName))
