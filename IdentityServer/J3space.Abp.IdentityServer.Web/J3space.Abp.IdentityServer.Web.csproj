@@ -26,4 +26,11 @@
     <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="3.0.4"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\Consent\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
