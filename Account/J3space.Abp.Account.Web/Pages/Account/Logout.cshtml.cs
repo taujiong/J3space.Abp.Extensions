@@ -5,10 +5,9 @@ namespace J3space.Abp.Account.Web.Pages.Account
 {
     public class Logout : AccountPageModel
     {
-        public Logout(
-            IAccountAppService accountAppService
-        ) : base(accountAppService)
+        public Logout(IAccountAppService accountAppService)
         {
+            AccountAppService = accountAppService;
         }
 
         [BindProperty] protected string ReturnUrl { get; set; }

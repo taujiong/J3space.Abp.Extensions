@@ -21,8 +21,9 @@ namespace J3space.Abp.Account.Web.Pages.Account
             SignInManager<IdentityUser> signInManager,
             IdentityUserManager userManager,
             IStringLocalizer<IdentityResource> localizer
-        ) : base(accountAppService)
+        )
         {
+            AccountAppService = accountAppService;
             _signInManager = signInManager;
             _userManager = userManager;
             _localizer = localizer;
@@ -53,8 +54,11 @@ namespace J3space.Abp.Account.Web.Pages.Account
         {
             ValidateModel();
 
-            var user = new IdentityUser(GuidGenerator.Create(), RegisterInput.UserName, RegisterInput.EmailAddress,
-                CurrentTenant.Id);
+            var user = new IdentityUser(
+                GuidGenerator.Create(),
+                RegisterInput.UserName, RegisterInput.EmailAddress,
+                CurrentTenant.Id
+            );
 
             var externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
             if (externalLoginInfo != null) user.AddLogin(externalLoginInfo);

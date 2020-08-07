@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace J3space.Abp.IdentityServer.Web.Pages.Consent
@@ -10,7 +9,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Consent
 
         public List<ScopeViewModel> ApiScopes { get; set; }
 
-        [Required] public string UserDecision { get; set; }
+        public string UserDecision { get; set; }
 
         public bool RememberConsent { get; set; }
 

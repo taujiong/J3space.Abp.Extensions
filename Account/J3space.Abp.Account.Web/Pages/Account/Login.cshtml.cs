@@ -8,14 +8,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
     public class Login : AccountPageModel
     {
         protected readonly Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager;
-        protected readonly IdentityUserManager UserManager;
 
         public Login(
             IAccountAppService accountAppService,
-            IdentityUserManager userManager, Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
-        ) : base(accountAppService)
+            Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
+        )
         {
-            UserManager = userManager;
+            AccountAppService = accountAppService;
             SignInManager = signInManager;
         }
 

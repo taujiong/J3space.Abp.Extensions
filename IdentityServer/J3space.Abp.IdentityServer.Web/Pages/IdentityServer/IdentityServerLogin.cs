@@ -17,8 +17,8 @@ namespace J3space.Abp.IdentityServer.Web.Pages.IdentityServer
         public IdentityServerLogin(
             IAccountAppService accountAppService,
             IIdentityServerInteractionService interaction,
-            IdentityUserManager userManager, Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
-        ) : base(accountAppService, userManager, signInManager)
+            Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> signInManager
+        ) : base(accountAppService, signInManager)
         {
             _interaction = interaction;
         }

@@ -6,13 +6,13 @@ using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
+using J3space.Abp.Account.Web.Pages.Account;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp;
-using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 
 namespace J3space.Abp.IdentityServer.Web.Pages.Consent
 {
-    public class ConsentModel : AbpPageModel
+    public class ConsentModel : AccountPageModel
     {
         private readonly IClientStore _clientStore;
 
@@ -70,6 +70,8 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Consent
 
         public virtual async Task<IActionResult> OnPost(string userDecision)
         {
+            ValidateModel();
+
             ConsentInput.UserDecision = userDecision;
 
             var result = await ProcessConsentAsync();
@@ -102,7 +104,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Consent
                         ScopesConsented = ConsentInput.GetAllowedScopeNames()
                     };
                 else
-                    throw new UserFriendlyException("You must pick at least one permission"); //TODO: How to handle this
+                    throw new UserFriendlyException("You must pick at least one permission");
             }
 
             if (grantedConsent != null)
@@ -112,7 +114,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Consent
 
                 await _interaction.GrantConsentAsync(request, grantedConsent);
 
-                result.RedirectUri = ReturnUrl; //TODO: ReturnUrlHash?
+                result.RedirectUri = GetSafeRedirectUri(ReturnUrl, ReturnUrlHash);
             }
 
             return result;
