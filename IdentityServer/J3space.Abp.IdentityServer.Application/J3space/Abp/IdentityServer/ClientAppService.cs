@@ -89,6 +89,7 @@ namespace J3space.Abp.IdentityServer
                 ? input.ClientId
                 : input.Description;
             client.RequireConsent = input.RequireConsent;
+            client.LogoUri = input.LogoUri;
 
             #region 常用属性更新
 

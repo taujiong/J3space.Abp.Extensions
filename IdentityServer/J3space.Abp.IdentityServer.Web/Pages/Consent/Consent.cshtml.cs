@@ -57,6 +57,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Consent
             ClientInfo = new ClientInfoModel(client);
             ConsentInput = new ConsentInputModel
             {
+                UserName = HttpContext.User.Identity.Name,
                 RememberConsent = true,
                 IdentityScopes = resources.IdentityResources.Select(x => CreateScopeViewModel(x, true)).ToList(),
                 ApiScopes = resources.ApiResources.SelectMany(x => x.Scopes).Select(x => CreateScopeViewModel(x, true))

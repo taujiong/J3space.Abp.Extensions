@@ -1,0 +1,175 @@
+﻿.container {
+    max-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    margin: 100px auto;
+}
+
+.container .client-logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.container .client-logo .logo-container {
+    height: 8em;
+    width: 8em;
+    border-radius: 50%;
+    background-color: #f6f6f6;
+    position: relative;
+}
+
+.container .client-logo .logo-container .logo {
+    width: 4em;
+    height: 4em;
+    fill: currentColor;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container .client-logo .connection {
+    display: flex;
+    align-items: center;
+}
+
+.container .client-logo .connection .line {
+    width: 60px;
+    border-top: 2px dashed #aaa9a9;
+    margin: 0 8px;
+}
+
+.container .client-logo .connection .tick {
+    width: 2em;
+    height: 2em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.container .request-info {
+    text-align: center;
+    margin: 40px 0 20px;
+}
+
+.container .request-info div {
+    color: gray;
+    margin: 10px 0;
+    line-height: 1.5em;
+}
+
+.container .request-info .client-name {
+    font-size: 24px;
+    font-weight: bolder;
+    color: black;
+}
+
+.container .request-info .username {
+    font-weight: bolder;
+}
+
+.container .request-info .long-message {
+    font-size: 18px;
+}
+
+.container .container-form {
+    align-self: start;
+    width: 100%;
+}
+
+.container .container-form .scope {
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    margin: 0 0 20px;
+}
+
+.container .container-form .scope .scope-head {
+    display: flex;
+    background-color: #eee;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.container .container-form .scope .scope-head .img {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.container .container-form .scope .scope-head h3 {
+    line-height: 2em;
+    padding: 0 10px;
+    margin: 0;
+}
+
+.container .container-form .scope .list-group {
+    list-style: none;
+    margin: 6px 0;
+    padding: 0 10px;
+}
+
+.container .container-form .scope .list-group .list-group-item {
+    margin-bottom: 6px;
+}
+
+.container .container-form .scope .list-group .list-group-item label {
+    display: inline-flex;
+    align-items: center;
+}
+
+.container .container-form .remember {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+}
+
+.container .container-form .remember input::before {
+    content: "";
+    display: block;
+    border-top: 1px solid gray;
+}
+
+.container .container-form .btn-group {
+    margin: 20px 0;
+    display: flex;
+}
+
+.container .container-form .btn-group .btn {
+    width: fit-content;
+    height: 40px;
+    margin: 0 20px 0 0;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: none;
+}
+
+.container .container-form .btn-group .btn:hover {
+    transition: all 150ms linear;
+    opacity: 0.85;
+}
+
+.container .container-form .btn-group .btn:active {
+    transition: all 150ms linear;
+    opacity: 0.75;
+}
+
+.container .container-form .btn-group .btn:focus {
+    outline: 1px dotted #959595;
+    outline-offset: -4px;
+}
+
+.container .container-form .btn-group .btn-primary {
+    color: white;
+    background-color: #416dea;
+}
+
+input[type="checkbox"] {
+    height: 16px;
+    width: 16px;
+    margin-right: 12px;
+}

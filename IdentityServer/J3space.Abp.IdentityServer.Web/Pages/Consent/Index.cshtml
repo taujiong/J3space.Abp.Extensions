@@ -17,142 +17,151 @@
         name="viewport">
   <meta content="ie=edge"
         http-equiv="X-UA-Compatible">
+  <link rel="stylesheet"
+        href="/Pages/Consent/consent.css"
+        asp-append-version="true">
   <title>Consent</title>
 </head>
 
 <body>
 
-<div class="row">
-  <div class="col-md-12">
-    <h2>
-      @if (Model.ClientInfo.ClientLogoUrl != null)
-      {
-        <img src="@Model.ClientInfo.ClientLogoUrl">
-      }
-
-      @Model.ClientInfo.ClientName
-      <small>is requesting your permission</small>
-    </h2>
-  </div>
-</div>
-<form asp-page="/Consent/Index"
-      method="post">
-  <input type="hidden"
-         asp-for="ReturnUrl" />
-  <input type="hidden"
-         asp-for="ReturnUrlHash" />
-
-  <div>Uncheck the permissions you do not wish to grant.</div>
-
-  @if (!Model.ConsentInput.IdentityScopes.IsNullOrEmpty())
+<div class="container">
+  @if (Model.ClientInfo.ClientLogoUrl != null)
   {
-    <h3>Personal Information</h3>
-
-    <ul class="list-group">
-      @for (var i = 0; i < Model.ConsentInput.IdentityScopes.Count; i++)
-      {
-        <li class="list-group-item">
-          <div class="form-check">
-            <label asp-for="@Model.ConsentInput.IdentityScopes[i].Checked"
-                   class="form-check-label">
-              <input asp-for="@Model.ConsentInput.IdentityScopes[i].Checked"
-                     class="form-check-input" />
-              @Model.ConsentInput.IdentityScopes[i].DisplayName
-              @if (Model.ConsentInput.IdentityScopes[i].Required)
-              {
-                <span>
-                  <em>(required)</em>
-                </span>
-              }
-            </label>
-          </div>
-          <input asp-for="@Model.ConsentInput.IdentityScopes[i].Name"
-                 type="hidden" />
-          @if (Model.ConsentInput.IdentityScopes[i].Description != null)
-          {
-            <div class="consent-description">
-              @Model.ConsentInput.IdentityScopes[i].Description
-            </div>
-          }
-        </li>
-      }
-    </ul>
-  }
-
-  @if (!Model.ConsentInput.ApiScopes.IsNullOrEmpty())
-  {
-    <h3>Application Access</h3>
-
-    <ul class="list-group">
-      @for (var i = 0; i < Model.ConsentInput.ApiScopes.Count; i++)
-      {
-        <li class="list-group-item">
-          <div class="form-check">
-            <label asp-for="@Model.ConsentInput.ApiScopes[i].Checked"
-                   class="form-check-label">
-              <input asp-for="@Model.ConsentInput.ApiScopes[i].Checked"
-                     class="form-check-input"
-                     disabled="@Model.ConsentInput.ApiScopes[i].Required" />
-              @Model.ConsentInput.ApiScopes[i].DisplayName
-              @if (Model.ConsentInput.ApiScopes[i].Required)
-              {
-                <span>
-                  <em>(required)</em>
-                </span>
-              }
-            </label>
-          </div>
-          <input asp-for="@Model.ConsentInput.ApiScopes[i].Name"
-                 type="hidden" />
-          @if (Model.ConsentInput.ApiScopes[i].Description != null)
-          {
-            <div class="consent-description">
-              @Model.ConsentInput.ApiScopes[i].Description
-            </div>
-          }
-        </li>
-      }
-    </ul>
-  }
-
-  @if (Model.ClientInfo.AllowRememberConsent)
-  {
-    <div class="form-check">
-      <label asp-for="@Model.ConsentInput.RememberConsent"
-             class="form-check-label">
-        <input asp-for="@Model.ConsentInput.RememberConsent"
-               class="form-check-input" />
-        <strong>Remember My Decision</strong>
-      </label>
+    <div class="client-logo">
+      <div class="logo-container">
+        <img src="@Model.ClientInfo.ClientLogoUrl"
+             alt="ClientLogo"
+             class="logo">
+      </div>
+      <div class="connection">
+        <span class="line"></span>
+        <svg aria-hidden="true"
+             class="tick">
+          <use xlink:href="#icon-success"></use>
+        </svg>
+        <span class="line"></span>
+      </div>
+      <div class="logo-container">
+        <svg aria-hidden="true"
+             class="logo">
+          <use xlink:href="#icon-guard"></use>
+        </svg>
+      </div>
     </div>
   }
 
-  <div>
-    <button autofocus
-            class="btn btn-primary"
-            name="UserDecision"
-            value="yes">
-      Yes, Allow
-    </button>
-    <button class="btn"
-            name="UserDecision"
-            value="no">
-      No, Do Not Allow
-    </button>
-    @if (Model.ClientInfo.ClientUrl != null)
-    {
-      <a class="btn btn-secondary pull-right"
-         target="_blank"
-         href="@Model.ClientInfo.ClientUrl">
-        <strong>@Model.ClientInfo.ClientName</strong>
-      </a>
-    }
+  <div class="request-info">
+    <div class="client-name">@Model.ClientInfo.ClientName</div>
+    <div>
+      wants to access your account:
+      <span class="username">@Model.ConsentInput.UserName</span>
+    </div>
+    <div class="long-message">
+      The following permissions are requested by the app
+      <br>
+      Uncheck the permissions you do not want to grant
+    </div>
   </div>
 
-  <div asp-validation-summary="All"
-       class="text-danger">
-  </div>
+  <div class="container-form">
+    <form asp-page="/Consent/Index"
+          method="post">
+      <input type="hidden"
+             asp-for="ReturnUrl" />
+      <input type="hidden"
+             asp-for="ReturnUrlHash" />
 
-</form>
+      <div class="scope">
+        @if (!Model.ConsentInput.IdentityScopes.IsNullOrEmpty())
+        {
+          <div class="scope-head">
+            <svg aria-hidden="true"
+                 class="img">
+              <use xlink:href="#icon-person"></use>
+            </svg>
+            <h3>Personal Information</h3>
+          </div>
+
+          <ul class="list-group">
+            @for (var i = 0; i < Model.ConsentInput.IdentityScopes.Count; i++)
+            {
+              <li class="list-group-item">
+                <label asp-for="@Model.ConsentInput.IdentityScopes[i].Checked">
+                  <input asp-for="@Model.ConsentInput.IdentityScopes[i].Checked" />
+                  @Model.ConsentInput.IdentityScopes[i].DisplayName
+                  @if (Model.ConsentInput.IdentityScopes[i].Required)
+                  {
+                    <span style="color: red">
+                      *
+                    </span>
+                  }
+                </label>
+                <input asp-for="@Model.ConsentInput.IdentityScopes[i].Name"
+                       type="hidden" />
+              </li>
+            }
+          </ul>
+        }
+
+        @if (!Model.ConsentInput.ApiScopes.IsNullOrEmpty())
+        {
+          <div class="scope-head">
+            <svg aria-hidden="true"
+                 class="img">
+              <use xlink:href="#icon-app"></use>
+            </svg>
+            <h3>Application Access</h3>
+          </div>
+
+          <ul class="list-group">
+            @for (var i = 0; i < Model.ConsentInput.ApiScopes.Count; i++)
+            {
+              <li class="list-group-item">
+                <label asp-for="@Model.ConsentInput.ApiScopes[i].Checked">
+                  <input asp-for="@Model.ConsentInput.ApiScopes[i].Checked"
+                         disabled="@Model.ConsentInput.ApiScopes[i].Required" />
+                  @Model.ConsentInput.ApiScopes[i].DisplayName
+                  @if (Model.ConsentInput.ApiScopes[i].Required)
+                  {
+                    <span style="color: red">
+                      *
+                    </span>
+                  }
+                </label>
+                <input asp-for="@Model.ConsentInput.ApiScopes[i].Name"
+                       type="hidden" />
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      @if (Model.ClientInfo.AllowRememberConsent)
+      {
+        <label asp-for="@Model.ConsentInput.RememberConsent"
+               class="remember">
+          <input asp-for="@Model.ConsentInput.RememberConsent" />
+          <strong>Remember My Decision</strong>
+        </label>
+      }
+
+      <div class="btn-group">
+        <button autofocus
+                class="btn btn-primary"
+                name="UserDecision"
+                value="yes">
+          Yes, Allow
+        </button>
+        <button class="btn"
+                name="UserDecision"
+                value="no">
+          No, Do Not Allow
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
+<script src="//at.alicdn.com/t/font_1966347_hs6t4e5x23v.js"></script>
 </html>

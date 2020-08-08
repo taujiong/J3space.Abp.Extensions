@@ -10,6 +10,8 @@ namespace J3space.Abp.IdentityServer.Clients
         [StringLength(ClientConsts.ClientIdMaxLength)]
         public string ClientId { get; set; }
 
+        public string LogoUri { get; set; }
+
         [StringLength(ClientConsts.DescriptionMaxLength)]
         public string Description { get; set; }
 

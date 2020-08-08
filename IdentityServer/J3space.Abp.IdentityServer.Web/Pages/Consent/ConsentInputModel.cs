@@ -5,6 +5,8 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Consent
 {
     public class ConsentInputModel
     {
+        public string UserName { get; set; }
+
         public List<ScopeViewModel> IdentityScopes { get; set; }
 
         public List<ScopeViewModel> ApiScopes { get; set; }
