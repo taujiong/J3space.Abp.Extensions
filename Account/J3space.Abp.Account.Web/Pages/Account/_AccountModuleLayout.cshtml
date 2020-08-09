@@ -1,10 +1,12 @@
 ﻿@using Volo.Abp.AspNetCore.Mvc.AntiForgery
 @using Volo.Abp.Localization
 @using System.Globalization
+@using Volo.Abp.Settings
 @inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject ISettingProvider SettingProvider
 @{
   AbpAntiForgeryManager.SetCookie();
-  const string appName = "MyApplication"; // TODO: 引入配置文件内容
+  var appName = await SettingProvider.GetOrNullAsync("App.Name");
   var pageTitle = string.IsNullOrEmpty(ViewBag.Title) ? appName : ViewBag.Title;
   var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
 }

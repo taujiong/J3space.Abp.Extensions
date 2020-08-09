@@ -4,7 +4,12 @@
     {
         private const string Prefix = "AuthServer";
 
-        //Add your own setting names here. Example:
-        //public const string MySetting1 = Prefix + ".MySetting1";
+        public static class App
+        {
+            private const string AppPrefix = "App";
+            public const string Name = AppPrefix + ".Name";
+            public const string Url = AppPrefix + ".Url";
+            public const string LogoUrl = AppPrefix + ".LogoUrl";
+        }
     }
 }
