@@ -2,19 +2,17 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{6EFD3F6A-B303-4D6A-BF79-6D9764759F47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Application", "IdentityServer\J3space.Abp.IdentityServer.Application\J3space.Abp.IdentityServer.Application.csproj", "{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Application", "J3space.Abp.IdentityServer\src\J3space.Abp.IdentityServer.Application\J3space.Abp.IdentityServer.Application.csproj", "{77CD55E5-03F4-42FF-A3FF-C51A0CCE15DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Application.Contracts", "IdentityServer\J3space.Abp.IdentityServer.Application.Contracts\J3space.Abp.IdentityServer.Application.Contracts.csproj", "{F1CFF32F-D671-4320-B7DB-E965E35DB36E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Application.Contracts", "J3space.Abp.IdentityServer\src\J3space.Abp.IdentityServer.Application.Contracts\J3space.Abp.IdentityServer.Application.Contracts.csproj", "{F1CFF32F-D671-4320-B7DB-E965E35DB36E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.HttpApi", "IdentityServer\J3space.Abp.IdentityServer.HttpApi\J3space.Abp.IdentityServer.HttpApi.csproj", "{1487C639-8B3C-4E02-B125-0D6D9C2844A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.HttpApi", "J3space.Abp.IdentityServer\src\J3space.Abp.IdentityServer.HttpApi\J3space.Abp.IdentityServer.HttpApi.csproj", "{1487C639-8B3C-4E02-B125-0D6D9C2844A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.HttpApi.Client", "IdentityServer\J3space.Abp.IdentityServer.HttpApi.Client\J3space.Abp.IdentityServer.HttpApi.Client.csproj", "{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.HttpApi.Client", "J3space.Abp.IdentityServer\src\J3space.Abp.IdentityServer.HttpApi.Client\J3space.Abp.IdentityServer.HttpApi.Client.csproj", "{2525CFF1-DDF9-468E-8D4C-DA126E1DE5BE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{ED7A8E1B-DEA6-45ED-BD76-7996B76EF3BC}"
 ProjectSection(SolutionItems) = preProject
 	.gitignore = .gitignore
-	common.props = common.props
-	configureawait.props = configureawait.props
 	README.md = README.md
 	LICENSE = LICENSE
 EndProjectSection
@@ -41,17 +39,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.AuthServer.MongoDB"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Account", "Account", "{A4270970-075D-4D69-8066-53925E224779}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Application", "Account\J3space.Abp.Account.Application\J3space.Abp.Account.Application.csproj", "{A1EE7EFC-EE74-4327-8417-4B594E3EE039}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Application", "J3space.Abp.Account\src\J3space.Abp.Account.Application\J3space.Abp.Account.Application.csproj", "{A1EE7EFC-EE74-4327-8417-4B594E3EE039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Application.Contracts", "Account\J3space.Abp.Account.Application.Contracts\J3space.Abp.Account.Application.Contracts.csproj", "{4E6F7B80-76B1-41A9-ABE1-67E43981EBA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Application.Contracts", "J3space.Abp.Account\src\J3space.Abp.Account.Application.Contracts\J3space.Abp.Account.Application.Contracts.csproj", "{4E6F7B80-76B1-41A9-ABE1-67E43981EBA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.HttpApi", "Account\J3space.Abp.Account.HttpApi\J3space.Abp.Account.HttpApi.csproj", "{A12AAFBD-4009-4CB6-8AD8-EE5C2939A5F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.HttpApi", "J3space.Abp.Account\src\J3space.Abp.Account.HttpApi\J3space.Abp.Account.HttpApi.csproj", "{A12AAFBD-4009-4CB6-8AD8-EE5C2939A5F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.HttpApi.Client", "Account\J3space.Abp.Account.HttpApi.Client\J3space.Abp.Account.HttpApi.Client.csproj", "{1F65EF8E-5A7A-4FE1-929E-3710784D6C07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.HttpApi.Client", "J3space.Abp.Account\src\J3space.Abp.Account.HttpApi.Client\J3space.Abp.Account.HttpApi.Client.csproj", "{1F65EF8E-5A7A-4FE1-929E-3710784D6C07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Web", "Account\J3space.Abp.Account.Web\J3space.Abp.Account.Web.csproj", "{BF63DB8C-AF23-44FD-B613-639184C77C8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.Account.Web", "J3space.Abp.Account\src\J3space.Abp.Account.Web\J3space.Abp.Account.Web.csproj", "{BF63DB8C-AF23-44FD-B613-639184C77C8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Web", "IdentityServer\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj", "{2CD67A68-5313-4A4A-BF23-D3A3ECF5DE03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Web", "J3space.Abp.IdentityServer\src\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj", "{2CD67A68-5313-4A4A-BF23-D3A3ECF5DE03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

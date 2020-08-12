@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\common.props" />
-
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>J3space.AuthServer</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Account\J3space.Abp.Account.Application\J3space.Abp.Account.Application.csproj" />
-        <ProjectReference Include="..\..\IdentityServer\J3space.Abp.IdentityServer.Application\J3space.Abp.IdentityServer.Application.csproj" />
+        <ProjectReference Include="..\..\J3space.Abp.Account\src\J3space.Abp.Account.Application\J3space.Abp.Account.Application.csproj" />
+        <ProjectReference Include="..\..\J3space.Abp.IdentityServer\src\J3space.Abp.IdentityServer.Application\J3space.Abp.IdentityServer.Application.csproj" />
         <ProjectReference Include="..\J3space.AuthServer.Application.Contracts\J3space.AuthServer.Application.Contracts.csproj" />
         <ProjectReference Include="..\J3space.AuthServer.Domain\J3space.AuthServer.Domain.csproj" />
     </ItemGroup>
