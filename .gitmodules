@@ -4,3 +4,6 @@
 [submodule "J3space.Abp.IdentityServer"]
 	path = J3space.Abp.IdentityServer
 	url = https://github.com/taujiong/J3space.Abp.IdentityServer.git
+[submodule "J3space.SampleApp"]
+	path = J3space.SampleApp
+	url = https://github.com/taujiong/J3space.SampleApp.git
