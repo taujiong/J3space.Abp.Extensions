@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="appsettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="appsettings.json">
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
+        <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.Autofac" Version="3.0.4" />
+        <ProjectReference Include="..\J3space.Sample.Domain\J3space.Sample.Domain.csproj" />
+        <ProjectReference Include="..\J3space.Sample.Application.Contracts\J3space.Sample.Application.Contracts.csproj" />
+        <ProjectReference Include="..\J3space.Sample.MongoDB\J3space.Sample.MongoDB.csproj" />
+    </ItemGroup>
+
+</Project>

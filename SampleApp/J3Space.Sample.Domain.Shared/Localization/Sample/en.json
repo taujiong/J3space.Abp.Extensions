@@ -1,0 +1,24 @@
+{
+  "culture": "en",
+  "texts": {
+    "InvalidUserNameOrPassword": "Your username or password is invalid",
+    "LockedOut": "The account is locked",
+    "Login": "Login",
+    "LongWelcomeMessage": "Welcome to Sample",
+    "ManageYourProfile": "Profile",
+    "Menu:Home": "Home",
+    "NotAllowed": "The login is not allowed",
+    "Permission:IdentityServerManagement": "Identity Server Management",
+    "Permission:ClientManagement": "Client Management",
+    "Permission:ApiResourcesManagement": "Api Resources Management",
+    "Permission:IdentityResourcesManagement": "Identity Resources Management",
+    "Permission:Create": "Create",
+    "Permission:Update": "Edit",
+    "Permission:Delete": "Delete",
+    "Permission:ManagePermissions": "Manage Permissions",
+    "RequiresTwoFactor": "Two factor is required",
+    "Success": "Success",
+    "Reset": "Reset",
+    "Welcome": "Welcome"
+  }
+}

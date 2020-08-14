@@ -1,0 +1,42 @@
+﻿@using Volo.Abp.AspNetCore.Mvc.AntiForgery
+@using Volo.Abp.Localization
+@using System.Globalization
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@{
+  AbpAntiForgeryManager.SetCookie();
+  const string appName = "J3space.Sample";
+  var pageTitle = string.IsNullOrEmpty(ViewBag.Title) ? appName : ViewBag.Title;
+  var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+}
+
+<!DOCTYPE html>
+
+<html lang="@CultureInfo.CurrentCulture.Name"
+      dir="@rtl">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="viewport">
+  <meta content="ie=edge"
+        http-equiv="X-UA-Compatible">
+
+  <title>@pageTitle</title>
+
+  <link href="https://unpkg.com/element-ui@2.13.2/lib/theme-chalk/index.css"
+        rel="stylesheet">
+  <link asp-append-version="true"
+        href="~/css/global.css"
+        rel="stylesheet">
+  @await RenderSectionAsync("style", false)
+</head>
+<script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui@2.13.2/lib/index.js"></script>
+<script src="https://libs.cdnjs.net/jquery/3.3.1/jquery.min.js"></script>
+<script src="~/js/abp.js"></script>
+<script src="~/js/abp.jquery.js"></script>
+<script src="~/Abp/ApplicationConfigurationScript"></script>
+<script src="~/Abp/ServiceProxyScript"></script>
+<body>
+@RenderBody()
+</body>
+</html>

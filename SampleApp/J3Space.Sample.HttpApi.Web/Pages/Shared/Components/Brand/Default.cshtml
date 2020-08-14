@@ -1,0 +1,11 @@
+﻿@model J3space.Sample.Pages.Shared.Components.Brand.BrandViewModel
+
+<a href="~/">
+  @if (!string.IsNullOrEmpty(Model.AppLogoUrl))
+  {
+    <img src="@Model.AppLogoUrl"
+         style="height: 30px; vertical-align: middle"
+         alt="AppLogo" />
+  }
+  <span style="font-size: 30px; vertical-align: middle">@Model.AppName</span>
+</a>

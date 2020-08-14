@@ -250,4 +250,4 @@ paket-files/
 *.sln.iml
 
 # secret
-TestApp/J3Space.AuthServer.HttpApi.Web/secrets.json
+**/secrets.json
