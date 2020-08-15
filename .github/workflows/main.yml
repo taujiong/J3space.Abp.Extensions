@@ -34,9 +34,9 @@ jobs:
         
     - name: Setup Sample App
       run: |
-        cd J3space.SampleApp/src
+        cd J3space.SampleApp/src/J3Space.Sample.Domain.Shared
         ls
-        cd J3space.SampleApp
+        cd ../../
         git pull
         dotnet restore
         dotnet build -c Release
