@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
     
     steps:
     - uses: actions/checkout@v2
@@ -33,6 +35,9 @@ jobs:
     - name: Setup Sample App
       run: |
         cd J3space.SampleApp
+        pwd
+        ls
+        dir
         dotnet restore
         dotnet build -c Release
         
