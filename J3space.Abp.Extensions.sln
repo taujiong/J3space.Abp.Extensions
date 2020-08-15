@@ -16,27 +16,28 @@ ProjectSection(SolutionItems) = preProject
 	README.md = README.md
 	LICENSE = LICENSE
 	.gitmodules = .gitmodules
+	.github\workflows\main.yml = .github\workflows\main.yml
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApp", "SampleApp", "{572028B8-F507-44A0-B3C6-304BAABF6DD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.Application", "J3space.SampleApp\src\J3Space.Sample.Application\J3Space.Sample.Application.csproj", "{68744A05-FE2D-4F09-8D96-ED69174F0651}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.Application", "J3space.SampleApp\src\J3space.Sample.Application\J3space.Sample.Application.csproj", "{68744A05-FE2D-4F09-8D96-ED69174F0651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.Application.Contracts", "J3space.SampleApp\src\J3Space.Sample.Application.Contracts\J3Space.Sample.Application.Contracts.csproj", "{FF138F0E-3658-4C9E-AA43-4664C0C7F4A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.Application.Contracts", "J3space.SampleApp\src\J3space.Sample.Application.Contracts\J3space.Sample.Application.Contracts.csproj", "{FF138F0E-3658-4C9E-AA43-4664C0C7F4A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.DbMigrator", "J3space.SampleApp\src\J3Space.Sample.DbMigrator\J3Space.Sample.DbMigrator.csproj", "{E3FA5050-629F-4001-B3E1-F931D8907FEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.DbMigrator", "J3space.SampleApp\src\J3space.Sample.DbMigrator\J3space.Sample.DbMigrator.csproj", "{E3FA5050-629F-4001-B3E1-F931D8907FEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.Domain", "J3space.SampleApp\src\J3Space.Sample.Domain\J3Space.Sample.Domain.csproj", "{245C12C7-DE34-4E46-9FB7-EEA9B70D9851}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.Domain", "J3space.SampleApp\src\J3space.Sample.Domain\J3space.Sample.Domain.csproj", "{245C12C7-DE34-4E46-9FB7-EEA9B70D9851}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.Domain.Shared", "J3space.SampleApp\src\J3Space.Sample.Domain.Shared\J3Space.Sample.Domain.Shared.csproj", "{1AD4C976-7D15-487B-ABA6-354024624ECC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.Domain.Shared", "J3space.SampleApp\src\J3space.Sample.Domain.Shared\J3space.Sample.Domain.Shared.csproj", "{1AD4C976-7D15-487B-ABA6-354024624ECC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.HttpApi", "J3space.SampleApp\src\J3Space.Sample.HttpApi\J3Space.Sample.HttpApi.csproj", "{C5A63266-F000-4AB2-A668-233615D210D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi", "J3space.SampleApp\src\J3space.Sample.HttpApi\J3space.Sample.HttpApi.csproj", "{C5A63266-F000-4AB2-A668-233615D210D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.HttpApi.Client", "J3space.SampleApp\src\J3Space.Sample.HttpApi.Client\J3Space.Sample.HttpApi.Client.csproj", "{E13879C6-838D-4DAE-AC72-7E7E774BF5CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Client", "J3space.SampleApp\src\J3space.Sample.HttpApi.Client\J3space.Sample.HttpApi.Client.csproj", "{E13879C6-838D-4DAE-AC72-7E7E774BF5CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.HttpApi.Web", "J3space.SampleApp\src\J3Space.Sample.HttpApi.Web\J3Space.Sample.HttpApi.Web.csproj", "{0858F99A-6872-4250-A6D1-DD4857626B6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Web", "J3space.SampleApp\src\J3space.Sample.HttpApi.Web\J3space.Sample.HttpApi.Web.csproj", "{0858F99A-6872-4250-A6D1-DD4857626B6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Sample.MongoDB", "J3space.SampleApp\src\J3Space.Sample.MongoDB\J3Space.Sample.MongoDB.csproj", "{00F179DC-3D34-4FFB-9509-BBE73EA2C128}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.MongoDB", "J3space.SampleApp\src\J3space.Sample.MongoDB\J3space.Sample.MongoDB.csproj", "{00F179DC-3D34-4FFB-9509-BBE73EA2C128}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Account", "Account", "{A4270970-075D-4D69-8066-53925E224779}"
 EndProject
