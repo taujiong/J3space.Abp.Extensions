@@ -32,7 +32,7 @@ jobs:
         
     - name: Setup Sample App
       run: |
-        cd J3space.Abp.Sample
+        cd J3space.SampleApp
         dotnet restore
         dotnet build -c Release
         
