@@ -29,7 +29,7 @@ jobs:
       - name: dotnet pack and push
         run: |
           dotnet pack -c Release --no-build -o dest
-          dotnet nuget add source https://nuget.pkg.github.com/taujiong/index.json -n github -u taujiong -p ${{secrets.GITHUB_TOKEN}}
+          dotnet nuget add source https://nuget.pkg.github.com/taujiong/index.json -n github -u taujiong -p ${{secrets.GITHUB_TOKEN}} [--store-password-in-clear-text]
           dotnet nuget push dest\* -s "github" --skip-duplicate
           dotnet nuget push dest\* -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
 
