@@ -16,7 +16,8 @@ ProjectSection(SolutionItems) = preProject
 	README.md = README.md
 	LICENSE = LICENSE
 	.gitmodules = .gitmodules
-	.github\workflows\main.yml = .github\workflows\main.yml
+	.github\workflows\main.yml = .github\workflows\dev.yml
+	.github\workflows\release.yml = .github\workflows\release.yml
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApp", "SampleApp", "{572028B8-F507-44A0-B3C6-304BAABF6DD3}"

@@ -1,0 +1,35 @@
+name: release
+
+on:
+  release:
+    types: [ created, edited ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.6.0
+
+      - name: dotnet build
+        run: |
+          dotnet restore
+          dotnet build -c Release
+
+      - name: dotnet test
+        run: dotnet test
+
+      - name: dotnet pack and push
+        run: |
+          dotnet pack -c Release --no-build -o dest
+          dotnet nuget add source https://nuget.pkg.github.com/taujiong/index.json -n github -u taujiong -p ${{secrets.GITHUB_TOKEN}}
+          dotnet nuget push dest\* -s "github" --skip-duplicate
+          dotnet nuget push dest\* -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+
