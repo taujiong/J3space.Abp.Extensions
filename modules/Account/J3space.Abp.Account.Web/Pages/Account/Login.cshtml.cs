@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using J3space.Abp.Account.Web.Models;
@@ -67,9 +65,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
             catch (AbpValidationException e)
             {
-                var message = e.ValidationErrors
-                    .Select(error => error.ErrorMessage)
-                    .JoinAsString("\n");
+                var message = GetMessageFromException(e);
                 MyAlerts.Warning(message, L["OperationFailed"]);
                 return await OnGetAsync();
             }

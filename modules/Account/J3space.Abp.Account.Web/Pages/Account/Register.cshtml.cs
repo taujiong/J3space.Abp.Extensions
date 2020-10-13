@@ -10,10 +10,7 @@ using Microsoft.Extensions.Options;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Settings;
-using Volo.Abp.Identity;
-using Volo.Abp.Localization;
 using Volo.Abp.Settings;
-using Volo.Abp.Validation;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
@@ -43,7 +40,18 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnGetAsync(string userName = "", string email = "")
         {
-            await CheckSelfRegistrationAsync();
+            try
+            {
+                await CheckSelfRegistrationAsync();
+            }
+            catch (UserFriendlyException e)
+            {
+                var message = GetMessageFromException(e);
+                MyAlerts.Danger(message, L["OperationFailed"]);
+                ExternalProviderHelper.VisibleExternalProviders = new List<ExternalProviderModel>();
+                return Page();
+            }
+
             await ExternalProviderHelper.GetVisibleExternalProviders();
 
             Input = new RegisterInputModel
@@ -79,23 +87,14 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
                 return Redirect(ReturnUrl ?? "~/");
             }
-            // CheckSelfRegistrationAsync 抛出已被翻译的异常
             catch (UserFriendlyException e)
             {
-                MyAlerts.Danger(e.Message, L["OperationFailed"]);
+                var message = GetMessageFromException(e);
+                MyAlerts.Danger(message, L["OperationFailed"]);
             }
-            // AccountService 抛出未被翻译的异常
-            catch (AbpIdentityResultException e)
+            catch (BusinessException e)
             {
-                var message = e.LocalizeMessage(new LocalizationContext(ServiceProvider))
-                    .Replace(",", "\n");
-                MyAlerts.Warning(message, L["OperationFailed"]);
-            }
-            catch (AbpValidationException e)
-            {
-                var message = e.ValidationErrors
-                    .Select(error => error.ErrorMessage)
-                    .JoinAsString("\n");
+                var message = GetMessageFromException(e);
                 MyAlerts.Warning(message, L["OperationFailed"]);
             }
 
