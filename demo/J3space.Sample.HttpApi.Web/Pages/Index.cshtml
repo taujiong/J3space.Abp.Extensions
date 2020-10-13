@@ -1,0 +1,28 @@
+@page
+@using J3space.Sample.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.Users
+@model J3space.Sample.Pages.Index
+@inject IHtmlLocalizer<SampleResource> L
+@inject ICurrentUser CurrentUser
+@{
+  ViewData["Title"] = "Home page";
+}
+
+<div id="vue">
+  <h1>@L["LongWelcomeMessage"]</h1>
+
+  @if (!CurrentUser.IsAuthenticated)
+  {
+    <a asp-page="/Account/Login">
+      @L["Login"]
+    </a>
+  }
+  else
+  {
+    <span>@CurrentUser.UserName</span>
+    <a asp-page="/Account/Logout">
+      @L["Logout"]
+    </a>
+  }
+</div>
