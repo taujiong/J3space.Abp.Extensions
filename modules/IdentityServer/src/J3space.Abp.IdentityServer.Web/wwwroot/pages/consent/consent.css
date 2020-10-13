@@ -1,0 +1,50 @@
+input[type="checkbox"] {
+    height: 1rem;
+    width: 1rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+label {
+    vertical-align: middle;
+}
+
+.logo-client-wrapper {
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    background-color: #f6f6f6;
+    position: relative;
+}
+
+.logo-client {
+    width: 4em;
+    height: 4em;
+    fill: currentColor;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.connection {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.icon-tick {
+    width: 2rem;
+    height: 2rem;
+    vertical-align: -0.15em;
+    fill: currentColor;
+}
+
+.connection:before,
+.connection:after {
+    content: '';
+    flex: 1;
+    border-top: 2px dashed #aaa9a9;
+    margin: 0 0.5rem;
+}

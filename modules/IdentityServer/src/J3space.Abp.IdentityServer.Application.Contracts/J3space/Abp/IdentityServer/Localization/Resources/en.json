@@ -1,0 +1,13 @@
+{
+  "culture": "en",
+  "texts": {
+    "Permission:ApiResourceManagement": "Api Resource Management",
+    "Permission:ChangePermissions": "Change permissions",
+    "Permission:ClientManagement": "Client Management",
+    "Permission:Create": "Create",
+    "Permission:Delete": "Delete",
+    "Permission:Edit": "Edit",
+    "Permission:IdentityResourceManagement": "Identity Resource Management",
+    "Permission:IdentityServerManagement": "Identity Server Management"
+  }
+}

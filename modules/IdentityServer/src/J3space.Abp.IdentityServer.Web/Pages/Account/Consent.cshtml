@@ -1,0 +1,181 @@
+@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IBrandingProvider BrandingProvider
+@using System.Globalization
+@using Volo.Abp.AspNetCore.Mvc.AntiForgery
+@using Volo.Abp.Localization
+@using Volo.Abp.Ui.Branding
+@model J3space.Abp.IdentityServer.Web.Pages.Account.ConsentModel
+@{
+  Layout = null;
+  AbpAntiForgeryManager.SetCookie();
+
+  var pageTitle = ViewBag.Title == null ? BrandingProvider.AppName : ViewBag.Title;
+  var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+}
+
+<!DOCTYPE html>
+
+<html dir="@rtl"
+      lang="@CultureInfo.CurrentCulture.Name">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="viewport">
+  <meta content="ie=edge"
+        http-equiv="X-UA-Compatible">
+
+  <title>@pageTitle</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css"
+        rel="stylesheet" />
+  <link asp-append-version="true"
+        href="~/pages/consent/consent.css"
+        rel="stylesheet">
+</head>
+<body class="@rtl">
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered is-flex-mobile">
+        <div class="column"
+             style="max-width: 410px">
+          @if (Model.ClientInfo.ClientLogoUrl != null)
+          {
+            <div class="is-mobile level">
+              <div class="level-left logo-client-wrapper">
+                <img alt="ClientLogo"
+                     class="logo-client"
+                     src="@Model.ClientInfo.ClientLogoUrl">
+              </div>
+              <div class="connection">
+                <svg aria-hidden="true"
+                     class="icon-tick">
+                  <use xlink:href="#icon-success"></use>
+                </svg>
+              </div>
+              <div class="logo-client-wrapper">
+                <svg aria-hidden="true"
+                     class="logo">
+                  <use xlink:href="#icon-guard"></use>
+                </svg>
+              </div>
+            </div>
+          }
+
+          <div class="has-text-centered mb-3">
+            <div class="has-text-dark has-text-weight-medium is-size-4">
+              @Model.ClientInfo.ClientName
+            </div>
+            <div class="has-text-grey">
+              wants to access your account:
+              <span class="has-text-weight-medium">
+                @Model.ConsentInput.UserName
+              </span>
+            </div>
+          </div>
+
+          <form asp-page="/Account/Consent"
+                method="post">
+            <input asp-for="ReturnUrl" />
+            <input asp-for="ReturnUrlHash" />
+
+            <div class="box is-radiusless mb-3 px-0 py-0">
+              @if (!Model.ConsentInput.IdentityScopes.IsNullOrEmpty())
+              {
+                <div class="has-background-grey-lighter is-mobile level mb-2 px-2">
+                  <div class="level-left">
+                    <svg aria-hidden="true"
+                         class="icon is-small mr-2">
+                      <use xlink:href="#icon-person"></use>
+                    </svg>
+                    <h3>Personal Information</h3>
+                  </div>
+                </div>
+
+                <ul class="mb-2 mx-2">
+                  @for (var i = 0; i < Model.ConsentInput.IdentityScopes.Count; i++)
+                  {
+                    <li class="mt-2">
+                      <label asp-for="@Model.ConsentInput.IdentityScopes[i].Checked"
+                             class="level-left">
+                        <input asp-for="@Model.ConsentInput.IdentityScopes[i].Checked" />
+                        @Model.ConsentInput.IdentityScopes[i].DisplayName
+                        @if (Model.ConsentInput.IdentityScopes[i].Required)
+                        {
+                          <span style="color: red">*</span>
+                        }
+                      </label>
+                      <input asp-for="@Model.ConsentInput.IdentityScopes[i].Name" />
+                    </li>
+                  }
+                </ul>
+              }
+
+              @if (!Model.ConsentInput.ApiScopes.IsNullOrEmpty())
+              {
+                <div class="has-background-grey-lighter is-mobile level mb-2 px-2">
+                  <div class="level-left">
+                    <svg aria-hidden="true"
+                         class="icon is-small mr-2">
+                      <use xlink:href="#icon-app"></use>
+                    </svg>
+                    <h3>Application Access</h3>
+                  </div>
+                </div>
+
+                <ul class="mx-2 pb-2">
+                  @for (var i = 0; i < Model.ConsentInput.ApiScopes.Count; i++)
+                  {
+                    <li class="list-group-item">
+                      <label asp-for="@Model.ConsentInput.ApiScopes[i].Checked"
+                             class="level-left">
+                        <input asp-for="@Model.ConsentInput.ApiScopes[i].Checked"
+                               disabled="@Model.ConsentInput.ApiScopes[i].Required" />
+                        @Model.ConsentInput.ApiScopes[i].DisplayName
+                        @if (Model.ConsentInput.ApiScopes[i].Required)
+                        {
+                          <span style="color: red">
+                            *
+                          </span>
+                        }
+                      </label>
+                      <input asp-for="@Model.ConsentInput.ApiScopes[i].Name" />
+                    </li>
+                  }
+                </ul>
+              }
+            </div>
+
+            @if (Model.ClientInfo.AllowRememberConsent)
+            {
+              <label asp-for="@Model.ConsentInput.RememberConsent"
+                     class="level-left ml-2">
+                <input asp-for="@Model.ConsentInput.RememberConsent" />
+                <strong>Remember My Decision</strong>
+              </label>
+            }
+
+            <div class="buttons mt-5">
+              <button class="button is-primary"
+                      name="UserDecision"
+                      value="yes">
+                Yes, Allow
+              </button>
+              <button class="button"
+                      name="UserDecision"
+                      value="no">
+                No, Refuse
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="~/pages/common/iconfont.js"></script>
+</body>
+</html>
