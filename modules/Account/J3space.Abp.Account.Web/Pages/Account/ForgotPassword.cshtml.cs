@@ -51,11 +51,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
                         returnUrlHash = ReturnUrlHash
                     });
             }
+            // from AccountService.CheckSelfRegistrationAsync
             catch (UserFriendlyException e)
             {
                 MyAlerts.Warning(e.Message, L["OperationFailed"]);
                 return await OnGetAsync();
             }
+            // from AccountService.GetUserByEmail
             catch (BusinessException e)
             {
                 var message = L[e.Code, e.Data["Email"]];

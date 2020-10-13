@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Account;
 using Volo.Abp.Auditing;
 using Volo.Abp.Identity;
+using Volo.Abp.Localization;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Validation;
 
@@ -64,10 +67,10 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            ValidateModel();
-
             try
             {
+                ValidateModel();
+
                 await AccountAppService.ResetPasswordAsync(
                     new ResetPasswordDto
                     {
@@ -79,14 +82,18 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
             catch (AbpIdentityResultException e)
             {
-                if (!string.IsNullOrWhiteSpace(e.Message))
-                {
-                    var message = e.Message.Replace(",", "\n");
-                    MyAlerts.Warning(message, L["OperationFailed"]);
-                    return await OnGetAsync();
-                }
-
-                throw;
+                var message = e.LocalizeMessage(new LocalizationContext(ServiceProvider))
+                    .Replace(",", "\n");
+                MyAlerts.Warning(message, L["OperationFailed"]);
+                return await OnGetAsync();
+            }
+            catch (AbpValidationException e)
+            {
+                var message = e.ValidationErrors
+                    .Select(error => error.ErrorMessage)
+                    .JoinAsString("\n");
+                MyAlerts.Warning(message, L["OperationFailed"]);
+                return await OnGetAsync();
             }
 
             //TODO: Try to automatically login!
@@ -102,7 +109,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             if (!Equals(Password, ConfirmPassword))
             {
                 ModelState.AddModelError("ConfirmPassword",
-                    L["'{0}' and '{1}' do not match.", "ConfirmPassword", "Password"]);
+                    L["'{0}' and '{1}' do not match.", L["ConfirmPassword"], L["DisplayName:Password"]]);
             }
 
             base.ValidateModel();

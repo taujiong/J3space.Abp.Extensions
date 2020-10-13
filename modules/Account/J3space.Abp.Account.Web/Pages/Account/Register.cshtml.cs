@@ -10,7 +10,10 @@ using Microsoft.Extensions.Options;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Settings;
+using Volo.Abp.Identity;
+using Volo.Abp.Localization;
 using Volo.Abp.Settings;
+using Volo.Abp.Validation;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
@@ -40,13 +43,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnGetAsync(string userName = "", string email = "")
         {
-            if (!await CheckSelfRegistrationAsync())
-            {
-                MyAlerts.Danger(L["SelfRegistrationDisabledMessage"], L["OperationFailed"]);
-                ExternalProviderHelper.VisibleExternalProviders = new List<ExternalProviderModel>();
-                return Page();
-            }
-
+            await CheckSelfRegistrationAsync();
             await ExternalProviderHelper.GetVisibleExternalProviders();
 
             Input = new RegisterInputModel
@@ -62,12 +59,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
         {
             try
             {
-                if (!await CheckSelfRegistrationAsync())
-                {
-                    MyAlerts.Danger(L["SelfRegistrationDisabledMessage"], L["OperationFailed"]);
-                    ExternalProviderHelper.VisibleExternalProviders = new List<ExternalProviderModel>();
-                    return Page();
-                }
+                await CheckSelfRegistrationAsync();
 
                 if (IsExternalLogin)
                 {
@@ -87,12 +79,27 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
                 return Redirect(ReturnUrl ?? "~/");
             }
-            catch (BusinessException e)
+            // CheckSelfRegistrationAsync 抛出已被翻译的异常
+            catch (UserFriendlyException e)
             {
-                var message = e.Message.Replace(",", "\n");
-                MyAlerts.Warning(message, L["OperationFailed"]);
-                return await OnGetAsync();
+                MyAlerts.Danger(e.Message, L["OperationFailed"]);
             }
+            // AccountService 抛出未被翻译的异常
+            catch (AbpIdentityResultException e)
+            {
+                var message = e.LocalizeMessage(new LocalizationContext(ServiceProvider))
+                    .Replace(",", "\n");
+                MyAlerts.Warning(message, L["OperationFailed"]);
+            }
+            catch (AbpValidationException e)
+            {
+                var message = e.ValidationErrors
+                    .Select(error => error.ErrorMessage)
+                    .JoinAsString("\n");
+                MyAlerts.Warning(message, L["OperationFailed"]);
+            }
+
+            return await OnGetAsync();
         }
 
         protected virtual async Task RegisterLocalUserAsync()
@@ -144,10 +151,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
             await SignInManager.SignInAsync(user, true);
         }
 
-        protected virtual async Task<bool> CheckSelfRegistrationAsync()
+        protected virtual async Task CheckSelfRegistrationAsync()
         {
-            return await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled)
-                   && await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin);
+            if (!await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled) ||
+                !await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin))
+            {
+                throw new UserFriendlyException(L["SelfRegistrationDisabledMessage"]);
+            }
         }
     }
 }

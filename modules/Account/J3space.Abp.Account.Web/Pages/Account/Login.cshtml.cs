@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using J3space.Abp.Account.Web.Models;
@@ -59,7 +61,18 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 return await OnGetAsync();
             }
 
-            ValidateModel();
+            try
+            {
+                ValidateModel();
+            }
+            catch (AbpValidationException e)
+            {
+                var message = e.ValidationErrors
+                    .Select(error => error.ErrorMessage)
+                    .JoinAsString("\n");
+                MyAlerts.Warning(message, L["OperationFailed"]);
+                return await OnGetAsync();
+            }
 
             await ReplaceEmailToUsernameOfInputIfNeeds();
 
