@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <Import Project="..\..\common.props"/>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>J3space.Abp.Account.Web</AssemblyName>
+    <PackageId>J3space.Abp.Account.Web</PackageId>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>J3space.Abp.Account.Web</RootNamespace>
+    <IsPackable>true</IsPackable>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\**\*.css"/>
+    <EmbeddedResource Include="wwwroot\**\*.jpg"/>
+    <EmbeddedResource Include="wwwroot\**\*.js"/>
+    <EmbeddedResource Include="Localization\Resources\*.json"/>
+    <Content Remove="wwwroot\**\*.css"/>
+    <Content Remove="wwwroot\**\*.jpg"/>
+    <Content Remove="wwwroot\**\*.js"/>
+    <Content Remove="Localization\Resources\*.json"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Account.HttpApi" Version="3.2.0"/>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI" Version="3.2.0"/>
+    <PackageReference Include="Volo.Abp.Identity.AspNetCore" Version="3.2.0"/>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,62 @@
+@using Volo.Abp.AspNetCore.Mvc.AntiForgery
+@using Volo.Abp.Localization
+@using Volo.Abp.Ui.Branding
+@using System.Globalization
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IBrandingProvider BrandingProvider
+@{
+  Layout = null;
+  AbpAntiForgeryManager.SetCookie();
+
+  var pageTitle = ViewBag.Title == null ? BrandingProvider.AppName : ViewBag.Title;
+  var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+}
+
+<!DOCTYPE html>
+
+<html dir="@rtl"
+      lang="@CultureInfo.CurrentCulture.Name">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="viewport">
+  <meta content="ie=edge"
+        http-equiv="X-UA-Compatible">
+
+  <title>@pageTitle</title>
+  @if (ViewBag.Description != null)
+  {
+    <meta content="@ViewBag.Description"
+          name="description" />
+  }
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css"
+        rel="stylesheet" />
+  <link asp-append-version="true"
+        href="~/pages/account/account.css"
+        rel="stylesheet"
+        type="text/css" />
+</head>
+<body class="@rtl">
+<ul class="bg-bubbles">
+  @for (var n = 0; n < 10; n++)
+  {
+    <li></li>
+  }
+</ul>
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered is-flex-mobile">
+        <div class="column"
+             style="max-width: 410px;">
+          @RenderBody()
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="~/pages/common/iconfont.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+@page
+@model J3space.Abp.Account.Web.Pages.Account.RegisterModel
+
+<form class="box"
+      method="post">
+  <div class="has-text-centered is-size-1 mb-3">@L["Register"]</div>
+
+  <input asp-for="ReturnUrl" />
+  <input asp-for="ReturnUrlHash" />
+
+  <div class="field">
+    <div class="wrap-input">
+      <svg aria-hidden="true"
+           class="icon">
+        <use xlink:href="#icon-user"></use>
+      </svg>
+      <input asp-for="Input.UserName"
+             autocomplete="on"
+             class="input is-shadowless"
+             placeholder="@L["DisplayName:UserName"]"
+             required>
+      <span class="focus-input"></span>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="wrap-input">
+      <svg aria-hidden="true"
+           class="icon">
+        <use xlink:href="#icon-email"></use>
+      </svg>
+      <input asp-for="Input.EmailAddress"
+             autocomplete="on"
+             class="input is-shadowless"
+             placeholder="@L["DisplayName:Email"]"
+             required>
+      <span class="focus-input"></span>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="wrap-input">
+      <svg aria-hidden="true"
+           class="icon">
+        <use xlink:href="#icon-lock"></use>
+      </svg>
+      <input asp-for="Input.Password"
+             class="input is-shadowless"
+             placeholder="@L["Password"]"
+             required>
+      <span class="focus-input"></span>
+    </div>
+  </div>
+
+  <div class="mb-4 pt-4">
+    <div class="wrap-form-btn">
+      <div class="form-btn-bg"></div>
+      <button class="form-btn"
+              type="submit">
+        @L["Register"]
+      </button>
+    </div>
+  </div>
+
+  @if (!Model.IsExternalLogin && Model.ExternalProviderHelper.VisibleExternalProviders.Any())
+  {
+    <div class="has-text-centered my-5">
+      <span>@L["UseAnotherServiceToRegister"]</span>
+    </div>
+
+    <div class="columns is-centered is-mobile">
+      @foreach (var provider in Model.ExternalProviderHelper.VisibleExternalProviders)
+      {
+        <a asp-page="./Login"
+           asp-page-handler="ExternalLogin"
+           asp-route-provider="@provider.AuthenticationScheme"
+           asp-route-returnUrl="@Model.ReturnUrl"
+           asp-route-returnUrlHash="@Model.ReturnUrlHash"
+           class="login-social-item mx-1">
+          <svg aria-hidden="true"
+               class="icon">
+            <use xlink:href="#icon-@provider.DisplayName.ToLower()"></use>
+          </svg>
+        </a>
+      }
+    </div>
+  }
+
+  <div class="has-text-centered">
+    <a asp-page="/Account/Login"
+       asp-route-returnUrl="@Model.ReturnUrl"
+       asp-route-returnUrlHash="@Model.ReturnUrlHash"
+       class="is-size-6 mx-1">
+      @L["Login"]
+    </a>
+    <a asp-page="./Login"
+       asp-page-handler="Cancel"
+       asp-route-returnUrl="@Model.ReturnUrl"
+       class="is-size-6 mx-1">
+      @L["Cancel"]
+    </a>
+  </div>
+</form>
