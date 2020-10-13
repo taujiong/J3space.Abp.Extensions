@@ -1,6 +1,7 @@
 {
   "culture": "zh-Hant",
   "texts": {
+    "OperationFailed": "操作失敗",
     "UseAnotherServiceToRegister": "使用另一個服務註冊"
   }
 }

@@ -2,23 +2,25 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Localization;
+using Volo.Abp.AspNetCore.Mvc.UI.Alerts;
 using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 using Volo.Abp.Identity;
-using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace J3space.Abp.Account.Web.Pages.Account
 {
     public abstract class AccountPageModel : AbpPageModel
     {
+        protected AccountPageModel()
+        {
+            MyAlerts = new AlertList();
+            LocalizationResourceType = typeof(AccountResource);
+        }
+
         public IAccountAppService AccountAppService { get; set; }
         public Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; set; }
         public IdentityUserManager UserManager { get; set; }
         public IdentitySecurityLogManager IdentitySecurityLogManager { get; set; }
-
-        protected AccountPageModel()
-        {
-            LocalizationResourceType = typeof(AccountResource);
-        }
+        public AlertList MyAlerts { get; }
 
         protected virtual RedirectResult RedirectSafely(string returnUrl, string returnUrlHash = null)
         {

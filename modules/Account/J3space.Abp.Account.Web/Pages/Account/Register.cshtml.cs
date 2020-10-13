@@ -37,7 +37,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
         [BindProperty(SupportsGet = true)] public bool IsExternalLogin { get; set; }
         public ExternalProviderHelper ExternalProviderHelper { get; }
 
-        public virtual async Task<IActionResult> OnGetAsync(string userName, string email)
+        public virtual async Task<IActionResult> OnGetAsync(string userName = "", string email = "")
         {
             await CheckSelfRegistrationAsync();
             await ExternalProviderHelper.GetVisibleExternalProviders();
@@ -77,8 +77,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
             catch (BusinessException e)
             {
-                Alerts.Danger(e.Message);
-                return Page();
+                MyAlerts.Warning(e.Message, L["OperationFailed"]);
+                return await OnGetAsync();
             }
         }
 
