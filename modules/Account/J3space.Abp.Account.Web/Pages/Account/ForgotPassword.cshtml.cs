@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Identity;
 using Volo.Abp.Validation;
@@ -30,23 +31,31 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            await AccountAppService.SendPasswordResetCodeAsync(
-                new SendPasswordResetCodeDto
-                {
-                    Email = Email,
-                    AppName = "MVC",
-                    ReturnUrl = ReturnUrl,
-                    ReturnUrlHash = ReturnUrlHash
-                }
-            );
+            try
+            {
+                await AccountAppService.SendPasswordResetCodeAsync(
+                    new SendPasswordResetCodeDto
+                    {
+                        Email = Email,
+                        AppName = "MVC",
+                        ReturnUrl = ReturnUrl,
+                        ReturnUrlHash = ReturnUrlHash
+                    }
+                );
 
-            return RedirectToPage(
-                "./PasswordResetLinkSent",
-                new
-                {
-                    returnUrl = ReturnUrl,
-                    returnUrlHash = ReturnUrlHash
-                });
+                return RedirectToPage(
+                    "./PasswordResetLinkSent",
+                    new
+                    {
+                        returnUrl = ReturnUrl,
+                        returnUrlHash = ReturnUrlHash
+                    });
+            }
+            catch (BusinessException e)
+            {
+                MyAlerts.Warning(e.Message, L["OperationFailed"]);
+                return await OnGetAsync();
+            }
         }
     }
 }
