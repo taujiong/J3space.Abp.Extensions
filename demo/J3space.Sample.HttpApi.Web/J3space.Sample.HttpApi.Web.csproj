@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>J3space.Sample</RootNamespace>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
-    <NoWarn>$(NoWarn);CS1591;CS0436</NoWarn>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\J3space.Abp.IdentityServer\src\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj" />
+    <ProjectReference Include="..\..\modules\IdentityServer\src\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj"/>
     <ProjectReference Include="..\J3space.Sample.Application\J3space.Sample.Application.csproj" />
     <ProjectReference Include="..\J3space.Sample.HttpApi\J3space.Sample.HttpApi.csproj" />
     <ProjectReference Include="..\J3space.Sample.MongoDB\J3space.Sample.MongoDB.csproj" />
@@ -33,11 +33,6 @@
   <ItemGroup>
     <Content Update="wwwroot\**.*">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="secrets.json">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\J3space.Abp.IdentityServer\src\J3space.Abp.IdentityServer.HttpApi.Client\J3space.Abp.IdentityServer.HttpApi.Client.csproj" />
+    <ProjectReference Include="..\..\modules\IdentityServer\src\J3space.Abp.IdentityServer.HttpApi.Client\J3space.Abp.IdentityServer.HttpApi.Client.csproj"/>
     <ProjectReference Include="..\J3space.Sample.Application.Contracts\J3space.Sample.Application.Contracts.csproj" />
   </ItemGroup>
 

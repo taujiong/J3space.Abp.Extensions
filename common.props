@@ -1,0 +1,22 @@
+﻿<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Version>0.1.0</Version>
+    <NoWarn>$(NoWarn);CS1591;CS0436</NoWarn>
+    <Authors>taujiong</Authors>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/52844763?s=128</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/taujiong/J3space.Abp.Extensions.git</PackageProjectUrl>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/taujiong/J3space.Abp.Extensions.git</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All"/>
+    <PackageReference Include="ConfigureAwait.Fody" Version="3.3.1" PrivateAssets="All"/>
+    <PackageReference Include="Fody" Version="6.2.0">
+      <PrivateAssets>All</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

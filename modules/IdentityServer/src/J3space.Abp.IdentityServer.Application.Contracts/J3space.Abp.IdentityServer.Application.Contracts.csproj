@@ -1,20 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\common.props" />
+    <Import Project="..\..\..\..\common.props"/>
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-        <PackageId>J3space.Abp.IdentityServer.Application.Contracts</PackageId>
-        <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-        <RootNamespace />
+      <Description>An extension for Abp vnext IdentityServer module, adds CRUD methods for client, api resources and identity resources</Description>
+      <TargetFramework>netcoreapp3.1</TargetFramework>
+      <PackageId>J3space.Abp.IdentityServer.Application.Contracts</PackageId>
+      <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+      <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+      <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+      <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+      <RootNamespace/>
     </PropertyGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="J3space\Abp\IdentityServer\Localization\Resources\*.json" />
-        <Content Remove="J3space\Abp\IdentityServer\Localization\Resources\*.json" />
+      <EmbeddedResource Include="J3space\Abp\IdentityServer\Localization\Resources\*.json"/>
+      <Content Remove="J3space\Abp\IdentityServer\Localization\Resources\*.json"/>
     </ItemGroup>
 
     <ItemGroup>

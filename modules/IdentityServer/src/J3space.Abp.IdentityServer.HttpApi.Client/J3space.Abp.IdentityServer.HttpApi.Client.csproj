@@ -1,16 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\common.props" />
+    <Import Project="..\..\..\..\common.props"/>
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-        <AssemblyName>J3space.Abp.IdentityServer.HttpApi.Client</AssemblyName>
-        <PackageId>J3space.Abp.IdentityServer.HttpApi.Client</PackageId>
-        <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-        <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-        <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-        <RootNamespace />
+      <Description>An extension for Abp vnext IdentityServer module, adds CRUD methods for client, api resources and identity resources</Description>
+      <TargetFramework>netcoreapp3.1</TargetFramework>
+      <AssemblyName>J3space.Abp.IdentityServer.HttpApi.Client</AssemblyName>
+      <PackageId>J3space.Abp.IdentityServer.HttpApi.Client</PackageId>
+      <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+      <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+      <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+      <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+      <RootNamespace/>
     </PropertyGroup>
 
     <ItemGroup>
