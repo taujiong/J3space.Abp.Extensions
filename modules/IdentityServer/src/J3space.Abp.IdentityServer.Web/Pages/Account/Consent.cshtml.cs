@@ -1,18 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
+using J3space.Abp.Account.Web.Pages.Account;
 using J3space.Abp.IdentityServer.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Volo.Abp;
-using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 
 namespace J3space.Abp.IdentityServer.Web.Pages.Account
 {
-    public class ConsentModel : AbpPageModel
+    public class ConsentModel : AccountPageModel
     {
         private readonly IClientStore _clientStore;
 
@@ -112,18 +110,11 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
             }
             else
             {
-                if (!ConsentInput.IdentityScopes.IsNullOrEmpty() || !ConsentInput.ApiScopes.IsNullOrEmpty())
+                grantedConsent = new ConsentResponse
                 {
-                    grantedConsent = new ConsentResponse
-                    {
-                        RememberConsent = ConsentInput.RememberConsent,
-                        ScopesConsented = ConsentInput.GetAllowedScopeNames()
-                    };
-                }
-                else
-                {
-                    throw new UserFriendlyException("You must pick at least one permission"); //TODO: How to handle this
-                }
+                    RememberConsent = ConsentInput.RememberConsent,
+                    ScopesConsented = ConsentInput.GetAllowedScopeNames()
+                };
             }
 
             if (grantedConsent != null)
