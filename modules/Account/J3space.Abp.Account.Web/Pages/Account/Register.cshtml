@@ -114,7 +114,11 @@
       : "warning";
 
     <script type="text/javascript">
-      swal("@exception.Title", "@JavaScriptEncoder.Default.Encode(exception.Text)","@type");
+      swal({
+        title: "@JavaScriptEncoder.Default.Encode(exception.Title)",
+        text: "@JavaScriptEncoder.Default.Encode(exception.Text)",
+        icon: "@type"
+      });
     </script>
   }
 }

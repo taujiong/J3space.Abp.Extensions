@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using J3space.Abp.Account.Web.Models;
@@ -39,7 +40,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnGetAsync(string userName = "", string email = "")
         {
-            await CheckSelfRegistrationAsync();
+            if (!await CheckSelfRegistrationAsync())
+            {
+                MyAlerts.Danger(L["SelfRegistrationDisabledMessage"], L["OperationFailed"]);
+                ExternalProviderHelper.VisibleExternalProviders = new List<ExternalProviderModel>();
+                return Page();
+            }
+
             await ExternalProviderHelper.GetVisibleExternalProviders();
 
             Input = new RegisterInputModel
@@ -55,7 +62,12 @@ namespace J3space.Abp.Account.Web.Pages.Account
         {
             try
             {
-                await CheckSelfRegistrationAsync();
+                if (!await CheckSelfRegistrationAsync())
+                {
+                    MyAlerts.Danger(L["SelfRegistrationDisabledMessage"], L["OperationFailed"]);
+                    ExternalProviderHelper.VisibleExternalProviders = new List<ExternalProviderModel>();
+                    return Page();
+                }
 
                 if (IsExternalLogin)
                 {
@@ -77,7 +89,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
             catch (BusinessException e)
             {
-                MyAlerts.Warning(e.Message, L["OperationFailed"]);
+                var message = e.Message.Replace(",", "\n");
+                MyAlerts.Warning(message, L["OperationFailed"]);
                 return await OnGetAsync();
             }
         }
@@ -131,13 +144,10 @@ namespace J3space.Abp.Account.Web.Pages.Account
             await SignInManager.SignInAsync(user, true);
         }
 
-        protected virtual async Task CheckSelfRegistrationAsync()
+        protected virtual async Task<bool> CheckSelfRegistrationAsync()
         {
-            if (!await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled) ||
-                !await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin))
-            {
-                throw new UserFriendlyException(L["SelfRegistrationDisabledMessage"]);
-            }
+            return await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled)
+                   && await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin);
         }
     }
 }

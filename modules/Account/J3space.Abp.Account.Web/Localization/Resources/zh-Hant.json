@@ -2,6 +2,7 @@
   "culture": "zh-Hant",
   "texts": {
     "OperationFailed": "操作失敗",
-    "UseAnotherServiceToRegister": "使用另一個服務註冊"
+    "UseAnotherServiceToRegister": "使用另一個服務註冊",
+    "Volo.Account:InvalidEmailAddress": "電子信箱 '{0}' 無效."
   }
 }

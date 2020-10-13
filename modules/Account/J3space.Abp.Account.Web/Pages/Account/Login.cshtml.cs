@@ -53,7 +53,11 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            await CheckLocalLoginAsync();
+            if (!await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin))
+            {
+                MyAlerts.Danger(L["LocalLoginDisabledMessage"], L["OperationFailed"]);
+                return await OnGetAsync();
+            }
 
             ValidateModel();
 
@@ -188,15 +192,6 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
 
             Input.UserNameOrEmailAddress = userByEmail.UserName;
-        }
-
-        protected virtual async Task CheckLocalLoginAsync()
-        {
-            if (!await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin))
-            {
-                MyAlerts.Danger(L["LocalLoginDisabledMessage"], L["OperationFailed"]);
-                await OnGetAsync();
-            }
         }
 
         /// <summary>
