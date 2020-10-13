@@ -5,30 +5,9 @@ ProjectSection(SolutionItems) = preProject
 	.gitignore = .gitignore
 	README.md = README.md
 	LICENSE = LICENSE
-	.gitmodules = .gitmodules
 	.github\workflows\main.yml = .github\workflows\dev.yml
 	.github\workflows\release.yml = .github\workflows\release.yml
 EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApp", "SampleApp", "{572028B8-F507-44A0-B3C6-304BAABF6DD3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.Application", "J3space.SampleApp\src\J3space.Sample.Application\J3space.Sample.Application.csproj", "{68744A05-FE2D-4F09-8D96-ED69174F0651}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.Application.Contracts", "J3space.SampleApp\src\J3space.Sample.Application.Contracts\J3space.Sample.Application.Contracts.csproj", "{FF138F0E-3658-4C9E-AA43-4664C0C7F4A4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.DbMigrator", "J3space.SampleApp\src\J3space.Sample.DbMigrator\J3space.Sample.DbMigrator.csproj", "{E3FA5050-629F-4001-B3E1-F931D8907FEB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.Domain", "J3space.SampleApp\src\J3space.Sample.Domain\J3space.Sample.Domain.csproj", "{245C12C7-DE34-4E46-9FB7-EEA9B70D9851}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.Domain.Shared", "J3space.SampleApp\src\J3space.Sample.Domain.Shared\J3space.Sample.Domain.Shared.csproj", "{1AD4C976-7D15-487B-ABA6-354024624ECC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi", "J3space.SampleApp\src\J3space.Sample.HttpApi\J3space.Sample.HttpApi.csproj", "{C5A63266-F000-4AB2-A668-233615D210D7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Client", "J3space.SampleApp\src\J3space.Sample.HttpApi.Client\J3space.Sample.HttpApi.Client.csproj", "{E13879C6-838D-4DAE-AC72-7E7E774BF5CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Web", "J3space.SampleApp\src\J3space.Sample.HttpApi.Web\J3space.Sample.HttpApi.Web.csproj", "{0858F99A-6872-4250-A6D1-DD4857626B6D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.MongoDB", "J3space.SampleApp\src\J3space.Sample.MongoDB\J3space.Sample.MongoDB.csproj", "{00F179DC-3D34-4FFB-9509-BBE73EA2C128}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,52 +15,7 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{68744A05-FE2D-4F09-8D96-ED69174F0651} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
-		{FF138F0E-3658-4C9E-AA43-4664C0C7F4A4} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
-		{E3FA5050-629F-4001-B3E1-F931D8907FEB} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
-		{245C12C7-DE34-4E46-9FB7-EEA9B70D9851} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
-		{1AD4C976-7D15-487B-ABA6-354024624ECC} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
-		{C5A63266-F000-4AB2-A668-233615D210D7} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
-		{E13879C6-838D-4DAE-AC72-7E7E774BF5CA} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
-		{0858F99A-6872-4250-A6D1-DD4857626B6D} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
-		{00F179DC-3D34-4FFB-9509-BBE73EA2C128} = {572028B8-F507-44A0-B3C6-304BAABF6DD3}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{68744A05-FE2D-4F09-8D96-ED69174F0651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68744A05-FE2D-4F09-8D96-ED69174F0651}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68744A05-FE2D-4F09-8D96-ED69174F0651}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68744A05-FE2D-4F09-8D96-ED69174F0651}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF138F0E-3658-4C9E-AA43-4664C0C7F4A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF138F0E-3658-4C9E-AA43-4664C0C7F4A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF138F0E-3658-4C9E-AA43-4664C0C7F4A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF138F0E-3658-4C9E-AA43-4664C0C7F4A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3FA5050-629F-4001-B3E1-F931D8907FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3FA5050-629F-4001-B3E1-F931D8907FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3FA5050-629F-4001-B3E1-F931D8907FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3FA5050-629F-4001-B3E1-F931D8907FEB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{245C12C7-DE34-4E46-9FB7-EEA9B70D9851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{245C12C7-DE34-4E46-9FB7-EEA9B70D9851}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{245C12C7-DE34-4E46-9FB7-EEA9B70D9851}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{245C12C7-DE34-4E46-9FB7-EEA9B70D9851}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1AD4C976-7D15-487B-ABA6-354024624ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AD4C976-7D15-487B-ABA6-354024624ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AD4C976-7D15-487B-ABA6-354024624ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AD4C976-7D15-487B-ABA6-354024624ECC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5A63266-F000-4AB2-A668-233615D210D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5A63266-F000-4AB2-A668-233615D210D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5A63266-F000-4AB2-A668-233615D210D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5A63266-F000-4AB2-A668-233615D210D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E13879C6-838D-4DAE-AC72-7E7E774BF5CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E13879C6-838D-4DAE-AC72-7E7E774BF5CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E13879C6-838D-4DAE-AC72-7E7E774BF5CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E13879C6-838D-4DAE-AC72-7E7E774BF5CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0858F99A-6872-4250-A6D1-DD4857626B6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0858F99A-6872-4250-A6D1-DD4857626B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0858F99A-6872-4250-A6D1-DD4857626B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0858F99A-6872-4250-A6D1-DD4857626B6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00F179DC-3D34-4FFB-9509-BBE73EA2C128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00F179DC-3D34-4FFB-9509-BBE73EA2C128}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00F179DC-3D34-4FFB-9509-BBE73EA2C128}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00F179DC-3D34-4FFB-9509-BBE73EA2C128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
