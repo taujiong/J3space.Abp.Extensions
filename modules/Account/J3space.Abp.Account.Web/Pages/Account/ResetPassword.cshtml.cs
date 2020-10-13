@@ -81,7 +81,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
             {
                 if (!string.IsNullOrWhiteSpace(e.Message))
                 {
-                    MyAlerts.Warning(e.Message, L["OperationFailed"]);
+                    var message = e.Message.Replace(",", "\n");
+                    MyAlerts.Warning(message, L["OperationFailed"]);
                     return await OnGetAsync();
                 }
 

@@ -2,6 +2,7 @@
   "culture": "zh-Hans",
   "texts": {
     "OperationFailed": "操作失败",
-    "UseAnotherServiceToRegister": "使用另一个服务注册"
+    "UseAnotherServiceToRegister": "使用另一个服务注册",
+    "Volo.Account:InvalidEmailAddress": "邮箱 '{0}' 无效."
   }
 }

@@ -51,9 +51,15 @@ namespace J3space.Abp.Account.Web.Pages.Account
                         returnUrlHash = ReturnUrlHash
                     });
             }
-            catch (BusinessException e)
+            catch (UserFriendlyException e)
             {
                 MyAlerts.Warning(e.Message, L["OperationFailed"]);
+                return await OnGetAsync();
+            }
+            catch (BusinessException e)
+            {
+                var message = L[e.Code, e.Data["Email"]];
+                MyAlerts.Warning(message, L["OperationFailed"]);
                 return await OnGetAsync();
             }
         }

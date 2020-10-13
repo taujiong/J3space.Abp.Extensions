@@ -2,6 +2,7 @@
   "culture": "en",
   "texts": {
     "OperationFailed": "Operation Failed",
-    "UseAnotherServiceToRegister": "Use another service to register"
+    "UseAnotherServiceToRegister": "Use another service to register",
+    "Volo.Account:InvalidEmailAddress": "Email '{0}' is invalid."
   }
 }
