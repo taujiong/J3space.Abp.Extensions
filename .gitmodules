@@ -1,6 +1,3 @@
-[submodule "J3space.Abp.Account"]
-	path = J3space.Abp.Account
-	url = https://github.com/taujiong/J3space.Abp.Account.git
 [submodule "J3space.Abp.IdentityServer"]
 	path = J3space.Abp.IdentityServer
 	url = https://github.com/taujiong/J3space.Abp.IdentityServer.git
