@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Volo.Abp;
 using Volo.Abp.Account.Settings;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.AspNetCore;
@@ -18,6 +17,13 @@ namespace J3space.Abp.Account.Web.Pages.Account
 {
     public class LoginModel : AccountPageModel
     {
+        public LoginModel(
+            IAuthenticationSchemeProvider schemeProvider,
+            IOptions<AbpAccountOptions> accountOptions)
+        {
+            ExternalProviderHelper = new ExternalProviderHelper(schemeProvider, accountOptions.Value);
+        }
+
         [HiddenInput]
         [BindProperty(SupportsGet = true)]
         public string ReturnUrl { get; set; }
@@ -30,13 +36,6 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public bool EnableLocalLogin { get; set; }
         public ExternalProviderHelper ExternalProviderHelper { get; }
-
-        public LoginModel(
-            IAuthenticationSchemeProvider schemeProvider,
-            IOptions<AbpAccountOptions> accountOptions)
-        {
-            ExternalProviderHelper = new ExternalProviderHelper(schemeProvider, accountOptions.Value);
-        }
 
         public virtual async Task<IActionResult> OnGetAsync()
         {
@@ -81,20 +80,20 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
             if (result.IsLockedOut)
             {
-                Alerts.Warning(L["UserLockedOutMessage"]);
-                return Page();
+                MyAlerts.Danger(L["UserLockedOutMessage"], L["OperationFailed"]);
+                return await OnGetAsync();
             }
 
             if (result.IsNotAllowed)
             {
-                Alerts.Warning(L["LoginIsNotAllowed"]);
-                return Page();
+                MyAlerts.Danger(L["LoginIsNotAllowed"], L["OperationFailed"]);
+                return await OnGetAsync();
             }
 
             if (!result.Succeeded)
             {
-                Alerts.Danger(L["InvalidUserNameOrPassword"]);
-                return Page();
+                MyAlerts.Warning(L["InvalidUserNameOrPassword"], L["OperationFailed"]);
+                return await OnGetAsync();
             }
 
             //TODO: Find a way of getting user's id from the logged in user and do not query it again like that!
@@ -104,14 +103,6 @@ namespace J3space.Abp.Account.Web.Pages.Account
             Debug.Assert(user != null, nameof(user) + " != null");
 
             return RedirectSafely(ReturnUrl, ReturnUrlHash);
-        }
-
-        /// <summary>
-        /// Override this method to add 2FA for your application.
-        /// </summary>
-        protected virtual Task<IActionResult> TwoFactorLoginResultAsync()
-        {
-            throw new NotImplementedException();
         }
 
         public virtual async Task<IActionResult> OnGetExternalLoginAsync(string provider)
@@ -158,7 +149,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
             if (result.IsLockedOut)
             {
-                throw new UserFriendlyException("Cannot proceed because user is locked out!");
+                MyAlerts.Danger(L["UserLockedOutMessage"], L["OperationFailed"]);
+                return await OnGetAsync();
             }
 
             if (result.Succeeded)
@@ -202,8 +194,17 @@ namespace J3space.Abp.Account.Web.Pages.Account
         {
             if (!await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin))
             {
-                throw new UserFriendlyException(L["LocalLoginDisabledMessage"]);
+                MyAlerts.Danger(L["LocalLoginDisabledMessage"], L["OperationFailed"]);
+                await OnGetAsync();
             }
+        }
+
+        /// <summary>
+        /// Override this method to add 2FA for your application.
+        /// </summary>
+        protected virtual Task<IActionResult> TwoFactorLoginResultAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

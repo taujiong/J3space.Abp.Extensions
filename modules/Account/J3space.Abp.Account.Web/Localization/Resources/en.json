@@ -1,6 +1,7 @@
 {
   "culture": "en",
   "texts": {
+    "OperationFailed": "Operation Failed",
     "UseAnotherServiceToRegister": "Use another service to register"
   }
 }
