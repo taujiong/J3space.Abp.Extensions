@@ -1,5 +1,6 @@
 @page
 @using Volo.Abp.AspNetCore.Mvc.UI.Alerts
+@using System.Text.Encodings.Web
 @model J3space.Abp.Account.Web.Pages.Account.RegisterModel
 
 <form class="box"
@@ -113,7 +114,7 @@
       : "warning";
 
     <script type="text/javascript">
-      swal("@exception.Title", "@exception.Text","@type");
+      swal("@exception.Title", "@JavaScriptEncoder.Default.Encode(exception.Text)","@type");
     </script>
   }
 }
