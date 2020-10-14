@@ -25,9 +25,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\modules\IdentityServer\src\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj"/>
-    <ProjectReference Include="..\J3space.Sample.Application\J3space.Sample.Application.csproj" />
-    <ProjectReference Include="..\J3space.Sample.HttpApi\J3space.Sample.HttpApi.csproj" />
-    <ProjectReference Include="..\J3space.Sample.MongoDB\J3space.Sample.MongoDB.csproj" />
+    <ProjectReference Include="..\J3space.Sample.Application\J3space.Sample.Application.csproj"/>
+    <ProjectReference Include="..\J3space.Sample.HttpApi\J3space.Sample.HttpApi.csproj"/>
+    <ProjectReference Include="..\J3space.Sample.MongoDB\J3space.Sample.MongoDB.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
