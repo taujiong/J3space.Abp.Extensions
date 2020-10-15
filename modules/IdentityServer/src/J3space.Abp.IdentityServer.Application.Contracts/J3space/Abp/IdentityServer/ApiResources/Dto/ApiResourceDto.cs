@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Domain.Entities;
 
-namespace J3space.Abp.IdentityServer.ApiResources
+namespace J3space.Abp.IdentityServer.ApiResources.Dto
 {
-    public class ApiResourceDto : EntityDto<Guid>, IHasConcurrencyStamp
+    public class ApiResourceDto : FullAuditedEntityDto<Guid>
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
@@ -13,6 +12,5 @@ namespace J3space.Abp.IdentityServer.ApiResources
         public bool Enabled { get; set; }
         public List<string> Scopes { get; set; }
         public List<string> UserClaims { get; set; }
-        public string ConcurrencyStamp { get; set; }
     }
 }
