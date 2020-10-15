@@ -8,6 +8,7 @@
     "Permission:Delete": "删除",
     "Permission:Edit": "编辑",
     "Permission:IdentityResourceManagement": "身份资源管理",
-    "Permission:IdentityServerManagement": "身份服务器管理"
+    "Permission:IdentityServerManagement": "身份服务器管理",
+    "EntityExisted": "实体 {0} 已存在, {1} = {2}!"
   }
 }

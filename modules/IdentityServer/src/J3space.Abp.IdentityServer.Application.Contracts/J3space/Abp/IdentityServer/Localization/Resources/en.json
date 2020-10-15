@@ -8,6 +8,7 @@
     "Permission:Delete": "Delete",
     "Permission:Edit": "Edit",
     "Permission:IdentityResourceManagement": "Identity Resource Management",
-    "Permission:IdentityServerManagement": "Identity Server Management"
+    "Permission:IdentityServerManagement": "Identity Server Management",
+    "EntityExisted": "Entity {0} already exists, {1} = {2}!"
   }
 }
