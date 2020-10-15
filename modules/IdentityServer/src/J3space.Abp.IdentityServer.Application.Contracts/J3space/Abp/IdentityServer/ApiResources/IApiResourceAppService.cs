@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using J3space.Abp.IdentityServer.ApiResources.Dto;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using J3space.Abp.IdentityServer.ApiResources;
+using J3space.Abp.IdentityServer.ApiResources.Dto;
 using Microsoft.AspNetCore.Authorization;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
-using Volo.Abp.Guids;
 using Volo.Abp.IdentityServer.ApiResources;
 
 namespace J3space.Abp.IdentityServer
@@ -14,24 +14,20 @@ namespace J3space.Abp.IdentityServer
     [Authorize(IdentityServerPermissions.ApiResource.Default)]
     public class ApiResourceAppService : IdentityServerAppServiceBase, IApiResourceAppService
     {
-        private readonly IApiResourceRepository _apiResourceRepository;
-        private readonly IGuidGenerator _guidGenerator;
+        private readonly IApiResourceRepository _resourceRepository;
 
-        public ApiResourceAppService(
-            IApiResourceRepository apiResourceRepository,
-            IGuidGenerator guidGenerator
+        public ApiResourceAppService(IApiResourceRepository resourceRepository
         )
         {
-            _apiResourceRepository = apiResourceRepository;
-            _guidGenerator = guidGenerator;
+            _resourceRepository = resourceRepository;
         }
 
         public virtual async Task<PagedResultDto<ApiResourceDto>> GetListAsync(
             PagedAndSortedResultRequestDto input)
         {
-            var list = await _apiResourceRepository.GetListAsync(input.Sorting, input.SkipCount,
+            var list = await _resourceRepository.GetListAsync(input.Sorting, input.SkipCount,
                 input.MaxResultCount);
-            var totalCount = await _apiResourceRepository.GetCountAsync();
+            var totalCount = await _resourceRepository.GetCountAsync();
 
             return new PagedResultDto<ApiResourceDto>(
                 totalCount,
@@ -41,8 +37,7 @@ namespace J3space.Abp.IdentityServer
 
         public virtual async Task<ApiResourceDto> GetAsync(Guid id)
         {
-            var apiResource = await _apiResourceRepository.FindAsync(id);
-            if (apiResource == null) throw new EntityNotFoundException(typeof(ApiResource), id);
+            var apiResource = await _resourceRepository.GetAsync(id);
 
             return ObjectMapper.Map<ApiResource, ApiResourceDto>(apiResource);
         }
@@ -50,54 +45,47 @@ namespace J3space.Abp.IdentityServer
         [Authorize(IdentityServerPermissions.ApiResource.Create)]
         public virtual async Task<ApiResourceDto> CreateAsync(ApiResourceCreateUpdateDto input)
         {
-            var apiResource = await _apiResourceRepository.FindByNameAsync(input.Name);
-            if (apiResource == null)
+            var existed = await _resourceRepository.CheckNameExistAsync(input.Name);
+            if (existed)
             {
-                apiResource = new ApiResource(_guidGenerator.Create(), input.Name);
-                await _apiResourceRepository.InsertAsync(apiResource, true);
+                throw new UserFriendlyException(L["EntityExisted", nameof(ApiResource),
+                    nameof(ApiResource.Name),
+                    input.Name]);
             }
 
-            return await UpdateAsync(apiResource.Id, input);
+            var apiResource = new ApiResource(GuidGenerator.Create(), input.Name);
+            apiResource = ObjectMapper.Map(input, apiResource);
+            input.UserClaims.ForEach(x => apiResource.AddUserClaim(x));
+            input.Scopes.ForEach(x => apiResource.AddScope(x));
+
+            apiResource = await _resourceRepository.InsertAsync(apiResource, true);
+
+            return ObjectMapper.Map<ApiResource, ApiResourceDto>(apiResource);
         }
 
         [Authorize(IdentityServerPermissions.ApiResource.Update)]
         public virtual async Task<ApiResourceDto> UpdateAsync(Guid id, ApiResourceCreateUpdateDto input)
         {
-            var apiResource = await _apiResourceRepository.FindAsync(id);
-            if (apiResource == null) throw new EntityNotFoundException(typeof(ApiResource), id);
+            var apiResource = await _resourceRepository.GetAsync(id);
 
-            apiResource.Description = input.Description.IsNullOrEmpty()
-                ? input.Name
-                : input.Description;
-            apiResource.DisplayName = input.Description.IsNullOrEmpty()
-                ? input.Name
-                : input.DisplayName;
-            apiResource.Enabled = input.Enabled;
-
-            if (input.Scopes != null)
+            var existed = await _resourceRepository.CheckNameExistAsync(input.Name, id);
+            if (existed)
             {
-                var oldList = ObjectMapper.Map<List<ApiScope>, List<string>>(apiResource.Scopes);
-
-                var toBeRemoved = oldList.Except(input.Scopes);
-                foreach (var scope in toBeRemoved) apiResource.RemoveScope(scope);
-
-                var toBeAdd = input.Scopes.Except(oldList);
-                foreach (var scope in toBeAdd) apiResource.AddScope(scope);
+                throw new UserFriendlyException(L["EntityExisted", nameof(ApiResource),
+                    nameof(ApiResource.Name),
+                    input.Name]);
             }
 
-            if (input.UserClaims != null)
-            {
-                var oldList =
-                    ObjectMapper.Map<List<ApiResourceClaim>, List<string>>(apiResource.UserClaims);
+            apiResource = ObjectMapper.Map(input, apiResource);
 
-                var toBeRemoved = oldList.Except(input.UserClaims);
-                foreach (var claim in toBeRemoved) apiResource.RemoveClaim(claim);
+            apiResource.UserClaims.Clear();
+            input.UserClaims
+                .ForEach(x => apiResource.AddUserClaim(x));
+            apiResource.Scopes.Clear();
+            input.Scopes
+                .ForEach(x => apiResource.AddScope(x));
 
-                var toBeAdd = input.UserClaims.Except(oldList);
-                foreach (var claim in toBeAdd) apiResource.AddUserClaim(claim);
-            }
-
-            apiResource = await _apiResourceRepository.UpdateAsync(apiResource);
+            apiResource = await _resourceRepository.UpdateAsync(apiResource);
 
             return ObjectMapper.Map<ApiResource, ApiResourceDto>(apiResource);
         }
@@ -105,10 +93,10 @@ namespace J3space.Abp.IdentityServer
         [Authorize(IdentityServerPermissions.ApiResource.Delete)]
         public virtual async Task DeleteAsync(Guid id)
         {
-            var client = await _apiResourceRepository.FindAsync(id);
+            var client = await _resourceRepository.FindAsync(id);
             if (client == null) throw new EntityNotFoundException(typeof(ApiResource), id);
 
-            await _apiResourceRepository.DeleteAsync(id);
+            await _resourceRepository.DeleteAsync(id);
         }
     }
 }

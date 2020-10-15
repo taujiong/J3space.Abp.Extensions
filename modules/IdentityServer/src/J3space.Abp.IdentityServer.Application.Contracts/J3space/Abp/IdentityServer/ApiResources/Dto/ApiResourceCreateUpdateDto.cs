@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.IdentityServer.ApiResources;
 
-namespace J3space.Abp.IdentityServer.ApiResources
+namespace J3space.Abp.IdentityServer.ApiResources.Dto
 {
     public class ApiResourceCreateUpdateDto
     {
