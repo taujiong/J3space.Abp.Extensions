@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using J3space.Abp.IdentityServer.Clients;
+using J3space.Abp.IdentityServer.Clients.Dto;
 using J3space.Abp.IdentityServer.TestBase;
 using Shouldly;
 using Volo.Abp.Application.Dtos;
@@ -21,14 +22,14 @@ namespace J3space.Abp.IdentityServer.Application.Test
             _testData = GetRequiredService<AbpIdentityServerTestData>();
         }
 
-        // [Fact]
-        // public async Task Should_Get_Client_By_Id()
-        // {
-        //     var result = await _clientAppService.GetAsync(_testData.Client1Id);
-        //     result.ShouldNotBeNull();
-        //     result.ClientId.ShouldBe("ClientId1");
-        //     result.AllowedCorsOrigins.ShouldContain("https://client1-origin.com");
-        // }
+        [Fact]
+        public async Task Should_Get_Client_By_Id()
+        {
+            var result = await _clientAppService.GetAsync(_testData.Client1Id);
+            result.ShouldNotBeNull();
+            result.ClientId.ShouldBe("ClientId1");
+            result.AllowedCorsOrigins.ShouldContain("https://client1-origin.com");
+        }
 
         [Fact]
         public async Task Should_Throw_Exception_With_Wrong_Id()
@@ -44,15 +45,16 @@ namespace J3space.Abp.IdentityServer.Application.Test
             e.EntityType.ShouldBe(typeof(Client));
         }
 
-        // [Fact]
-        // public async Task Should_Create_Update_Success()
-        // {
-        //     var input = new ClientCreateUpdateDto
-        //     {
-        //         ClientId = "test"
-        //     };
-        //     (await _clientAppService.CreateAsync(input)).ShouldNotBeNull();
-        // }
+        [Fact]
+        public async Task Should_Create_Update_Success()
+        {
+            var input = new ClientCreateDto
+            {
+                ClientId = "test",
+                ClientName = "test-name"
+            };
+            (await _clientAppService.CreateAsync(input)).ShouldNotBeNull();
+        }
 
         [Fact]
         public async Task Should_Get_List_Of_Clients()

@@ -20,8 +20,6 @@ namespace J3space.Abp.IdentityServer.Clients.Dto
 
         public string LogoUri { get; set; }
 
-        public string LogoutUri { get; set; }
-
         public ClientType ClientType { get; set; } = ClientType.Empty;
     }
 }

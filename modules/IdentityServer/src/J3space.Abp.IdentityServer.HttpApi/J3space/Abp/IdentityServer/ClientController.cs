@@ -21,27 +21,27 @@ namespace J3space.Abp.IdentityServer
         }
 
         [HttpGet]
-        public virtual Task<PagedResultDto<ClientGetUpdateDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        public virtual Task<PagedResultDto<ClientDto>> GetListAsync(PagedAndSortedResultRequestDto input)
         {
             return _clientAppService.GetListAsync(input);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public virtual Task<ClientGetUpdateDto> GetAsync(Guid id)
+        public virtual Task<ClientDto> GetAsync(Guid id)
         {
             return _clientAppService.GetAsync(id);
         }
 
         [HttpPost]
-        public virtual Task<ClientGetUpdateDto> CreateAsync(ClientCreateDto input)
+        public virtual Task<ClientDto> CreateAsync(ClientCreateDto input)
         {
             return _clientAppService.CreateAsync(input);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public virtual Task<ClientGetUpdateDto> UpdateAsync(Guid id, ClientGetUpdateDto input)
+        public virtual Task<ClientDto> UpdateAsync(Guid id, ClientUpdateDto input)
         {
             return _clientAppService.UpdateAsync(id, input);
         }

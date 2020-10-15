@@ -16,7 +16,7 @@ namespace J3space.Abp.IdentityServer
         {
             #region Client
 
-            CreateMap<Client, ClientGetUpdateDto>()
+            CreateMap<Client, ClientDto>()
                 .ForMember(des => des.IdentityProviderRestrictions,
                     opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => x.Provider))
                 )
@@ -40,7 +40,7 @@ namespace J3space.Abp.IdentityServer
             CreateMap<ClientProperty, ClientPropertyDto>().ReverseMap();
             CreateMap<ClientClaim, ClientClaimDto>().ReverseMap();
 
-            CreateMap<ClientGetUpdateDto, Client>()
+            CreateMap<ClientUpdateDto, Client>()
                 .Ignore(des => des.IdentityProviderRestrictions)
                 .Ignore(des => des.PostLogoutRedirectUris)
                 .Ignore(des => des.RedirectUris)

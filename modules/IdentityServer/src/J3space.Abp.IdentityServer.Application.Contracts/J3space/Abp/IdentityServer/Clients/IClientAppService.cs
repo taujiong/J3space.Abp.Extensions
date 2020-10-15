@@ -8,10 +8,10 @@ namespace J3space.Abp.IdentityServer.Clients
 {
     public interface IClientAppService : IApplicationService
     {
-        public Task<PagedResultDto<ClientGetUpdateDto>> GetListAsync(PagedAndSortedResultRequestDto input);
-        public Task<ClientGetUpdateDto> GetAsync(Guid id);
-        public Task<ClientGetUpdateDto> CreateAsync(ClientCreateDto input);
-        public Task<ClientGetUpdateDto> UpdateAsync(Guid id, ClientGetUpdateDto input);
+        public Task<PagedResultDto<ClientDto>> GetListAsync(PagedAndSortedResultRequestDto input);
+        public Task<ClientDto> GetAsync(Guid id);
+        public Task<ClientDto> CreateAsync(ClientCreateDto input);
+        public Task<ClientDto> UpdateAsync(Guid id, ClientUpdateDto input);
         public Task DeleteAsync(Guid id);
     }
 }
