@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using J3space.Abp.IdentityServer.IdentityResources.Dto;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 

@@ -2,7 +2,7 @@
 using AutoMapper;
 using J3space.Abp.IdentityServer.ApiResources;
 using J3space.Abp.IdentityServer.Clients.Dto;
-using J3space.Abp.IdentityServer.IdentityResources;
+using J3space.Abp.IdentityServer.IdentityResources.Dto;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.IdentityServer.ApiResources;
 using Volo.Abp.IdentityServer.Clients;
@@ -55,10 +55,25 @@ namespace J3space.Abp.IdentityServer
 
             #endregion
 
+            #region Identity Resource
+
+            CreateMap<IdentityResource, IdentityResourceDto>()
+                .ForMember(des => des.UserClaims,
+                    opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)));
+
+            CreateMap<IdentityResourceCreateUpdateDto, IdentityResource>()
+                .Ignore(des => des.UserClaims)
+                .Ignore(des => des.Id)
+                .Ignore(des => des.Properties)
+                .Ignore(des => des.ExtraProperties)
+                .Ignore(des => des.ConcurrencyStamp)
+                .IgnoreFullAuditedObjectProperties();
+
+            #endregion
+
             CreateMap<ApiScope, string>().ConstructUsing(src => src.Name);
             CreateMap<ApiResourceClaim, string>().ConstructUsing(src => src.Type);
             CreateMap<ApiResource, ApiResourceDto>();
-            CreateMap<IdentityResource, IdentityResourceDto>();
         }
     }
 }

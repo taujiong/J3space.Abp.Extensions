@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using J3space.Abp.IdentityServer.IdentityResources;
+using J3space.Abp.IdentityServer.IdentityResources.Dto;
 using J3space.Abp.IdentityServer.TestBase;
 using Shouldly;
 using Volo.Abp.Application.Dtos;

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using J3space.Abp.IdentityServer.IdentityResources;
+using J3space.Abp.IdentityServer.IdentityResources.Dto;
 using Microsoft.AspNetCore.Authorization;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
-using Volo.Abp.Guids;
 using Volo.Abp.IdentityServer.IdentityResources;
 
 namespace J3space.Abp.IdentityServer
@@ -14,15 +14,11 @@ namespace J3space.Abp.IdentityServer
     [Authorize(IdentityServerPermissions.IdentityResource.Default)]
     public class IdentityResourceAppService : IdentityServerAppServiceBase, IIdentityResourceAppService
     {
-        private readonly IGuidGenerator _guidGenerator;
         private readonly IIdentityResourceRepository _resourceRepository;
 
-        public IdentityResourceAppService(
-            IIdentityResourceRepository resourceRepository,
-            IGuidGenerator guidGenerator)
+        public IdentityResourceAppService(IIdentityResourceRepository resourceRepository)
         {
             _resourceRepository = resourceRepository;
-            _guidGenerator = guidGenerator;
         }
 
         public virtual async Task<PagedResultDto<IdentityResourceDto>> GetListAsync(
@@ -41,8 +37,7 @@ namespace J3space.Abp.IdentityServer
 
         public virtual async Task<IdentityResourceDto> GetAsync(Guid id)
         {
-            var identityResource = await _resourceRepository.FindAsync(id);
-            if (identityResource == null) throw new EntityNotFoundException(typeof(IdentityResource), id);
+            var identityResource = await _resourceRepository.GetAsync(id);
 
             return ObjectMapper.Map<IdentityResource, IdentityResourceDto>(identityResource);
         }
@@ -50,46 +45,41 @@ namespace J3space.Abp.IdentityServer
         [Authorize(IdentityServerPermissions.IdentityResource.Create)]
         public virtual async Task<IdentityResourceDto> CreateAsync(IdentityResourceCreateUpdateDto input)
         {
-            var identityResource = await _resourceRepository.FindByNameAsync(input.Name);
-            if (identityResource == null)
+            var existed = await _resourceRepository.CheckNameExistAsync(input.Name);
+            if (existed)
             {
-                identityResource = new IdentityResource(_guidGenerator.Create(), input.Name);
-                await _resourceRepository.InsertAsync(identityResource, true);
+                throw new UserFriendlyException(L["EntityExisted", nameof(IdentityResource),
+                    nameof(IdentityResource.Name),
+                    input.Name]);
             }
 
-            return await UpdateAsync(identityResource.Id, input);
+            var identityResource = new IdentityResource(GuidGenerator.Create(), input.Name);
+            identityResource = ObjectMapper.Map(input, identityResource);
+            input.UserClaims.ForEach(x => identityResource.AddUserClaim(x));
+
+            identityResource = await _resourceRepository.InsertAsync(identityResource, true);
+
+            return ObjectMapper.Map<IdentityResource, IdentityResourceDto>(identityResource);
         }
 
         [Authorize(IdentityServerPermissions.IdentityResource.Update)]
         public virtual async Task<IdentityResourceDto> UpdateAsync(Guid id,
             IdentityResourceCreateUpdateDto input)
         {
-            var identityResource = await _resourceRepository.FindAsync(id);
-            if (identityResource == null) throw new EntityNotFoundException(typeof(IdentityResource), id);
+            var identityResource = await _resourceRepository.GetAsync(id);
 
-            identityResource.Description = input.Description.IsNullOrEmpty()
-                ? input.Name
-                : input.Description;
-            identityResource.DisplayName = input.Description.IsNullOrEmpty()
-                ? input.Name
-                : input.DisplayName;
-            identityResource.Emphasize = input.Emphasize;
-            identityResource.Enabled = input.Enabled;
-            identityResource.Required = input.Required;
-            identityResource.ShowInDiscoveryDocument = input.ShowInDiscoveryDocument;
-
-            if (input.UserClaims != null)
+            var existed = await _resourceRepository.CheckNameExistAsync(input.Name, id);
+            if (existed)
             {
-                var oldList =
-                    ObjectMapper.Map<List<IdentityClaim>, List<string>>(identityResource
-                        .UserClaims);
-
-                var toBeRemoved = oldList.Except(input.UserClaims);
-                foreach (var claim in toBeRemoved) identityResource.RemoveUserClaim(claim);
-
-                var toBeAdd = input.UserClaims.Except(oldList);
-                foreach (var claim in toBeAdd) identityResource.AddUserClaim(claim);
+                throw new UserFriendlyException(L["EntityExisted", nameof(IdentityResource),
+                    nameof(IdentityResource.Name),
+                    input.Name]);
             }
+
+            identityResource = ObjectMapper.Map(input, identityResource);
+            identityResource.UserClaims.Clear();
+            input.UserClaims
+                .ForEach(x => identityResource.AddUserClaim(x));
 
             identityResource = await _resourceRepository.UpdateAsync(identityResource);
 
