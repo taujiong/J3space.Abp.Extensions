@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using J3space.Abp.IdentityServer.Clients;
+using J3space.Abp.IdentityServer.Clients.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -20,27 +21,27 @@ namespace J3space.Abp.IdentityServer
         }
 
         [HttpGet]
-        public virtual Task<PagedResultDto<ClientDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        public virtual Task<PagedResultDto<ClientGetUpdateDto>> GetListAsync(PagedAndSortedResultRequestDto input)
         {
             return _clientAppService.GetListAsync(input);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public virtual Task<ClientDto> GetAsync(Guid id)
+        public virtual Task<ClientGetUpdateDto> GetAsync(Guid id)
         {
             return _clientAppService.GetAsync(id);
         }
 
         [HttpPost]
-        public virtual Task<ClientDto> CreateAsync(ClientCreateUpdateDto input)
+        public virtual Task<ClientGetUpdateDto> CreateAsync(ClientCreateDto input)
         {
             return _clientAppService.CreateAsync(input);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public virtual Task<ClientDto> UpdateAsync(Guid id, ClientCreateUpdateDto input)
+        public virtual Task<ClientGetUpdateDto> UpdateAsync(Guid id, ClientGetUpdateDto input)
         {
             return _clientAppService.UpdateAsync(id, input);
         }

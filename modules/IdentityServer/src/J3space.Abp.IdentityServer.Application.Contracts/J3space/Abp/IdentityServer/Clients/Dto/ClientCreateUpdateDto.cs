@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.IdentityServer.Clients;
 
-namespace J3space.Abp.IdentityServer.Clients
+namespace J3space.Abp.IdentityServer.Clients.Dto
 {
     public class ClientCreateUpdateDto
     {
