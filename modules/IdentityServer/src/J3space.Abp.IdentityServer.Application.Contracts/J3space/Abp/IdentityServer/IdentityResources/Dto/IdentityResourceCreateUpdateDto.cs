@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Volo.Abp.IdentityServer.IdentityResources;
 using Volo.Abp.Validation;
 
-namespace J3space.Abp.IdentityServer.IdentityResources
+namespace J3space.Abp.IdentityServer.IdentityResources.Dto
 {
     public class IdentityResourceCreateUpdateDto
     {
