@@ -72,6 +72,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7241D649-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.TestBase", "modules\SettingManagement\test\J3space.Abp.SettingManagement.TestBase\J3space.Abp.SettingManagement.TestBase.csproj", "{5912F2D3-DA4E-4117-8167-4A5443A028B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.Application.Test", "modules\SettingManagement\test\J3space.Abp.SettingManagement.Application.Test\J3space.Abp.SettingManagement.Application.Test.csproj", "{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,7 @@ Global
 		{A59FDD53-7719-40D5-B74F-614BDC74C666} = {175DEFBD-F98B-49F6-A91A-45C88BF7BBD5}
 		{7241D649-ECEF-4829-AFE4-428FFD6715EC} = {2A3DFA0C-A7BD-4052-BD41-4FB833A79AB4}
 		{5912F2D3-DA4E-4117-8167-4A5443A028B4} = {7241D649-ECEF-4829-AFE4-428FFD6715EC}
+		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126} = {7241D649-ECEF-4829-AFE4-428FFD6715EC}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{19003593-6A06-4926-8440-E41E74C219F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -197,5 +200,9 @@ Global
 		{5912F2D3-DA4E-4117-8167-4A5443A028B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5912F2D3-DA4E-4117-8167-4A5443A028B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5912F2D3-DA4E-4117-8167-4A5443A028B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
