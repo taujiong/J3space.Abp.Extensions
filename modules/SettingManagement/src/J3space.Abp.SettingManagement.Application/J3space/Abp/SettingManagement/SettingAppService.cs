@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using J3space.Abp.SettingManagement.Permissions;
 using J3space.Abp.SettingManagement.Setting;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Localization;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
 
 namespace J3space.Abp.SettingManagement
 {
+    [Authorize(SettingManagementPermissions.Setting.Default)]
     public class SettingAppService : SettingManagementAppServiceBase, ISettingAppService
     {
         private readonly IStringLocalizerFactory _factory;
@@ -43,6 +46,7 @@ namespace J3space.Abp.SettingManagement
                 .ToList();
         }
 
+        [Authorize(SettingManagementPermissions.Setting.Manage)]
         public async Task<Dictionary<string, string>> UpdateAsync(Dictionary<string, string> settings)
         {
             foreach (var (key, value) in settings)
@@ -53,6 +57,7 @@ namespace J3space.Abp.SettingManagement
             return settings;
         }
 
+        [Authorize(SettingManagementPermissions.Setting.Manage)]
         public async Task DeleteAsync(List<string> settingNames)
         {
             foreach (var name in settingNames)
