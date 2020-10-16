@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
+using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
 
 namespace J3space.Abp.SettingManagement
@@ -9,12 +11,15 @@ namespace J3space.Abp.SettingManagement
     {
         private readonly IStringLocalizerFactory _factory;
         private readonly ISettingDefinitionManager _manager;
+        private readonly ISettingManager _settingManager;
 
         public SettingAppService(
             ISettingDefinitionManager manager,
+            ISettingManager settingManager,
             IStringLocalizerFactory factory)
         {
             _manager = manager;
+            _settingManager = settingManager;
             _factory = factory;
         }
 
@@ -35,6 +40,30 @@ namespace J3space.Abp.SettingManagement
                         : "General"
                 })
                 .ToList();
+        }
+
+        public async Task<Dictionary<string, string>> UpdateAsync(Dictionary<string, string> settings)
+        {
+            foreach (var (key, value) in settings)
+            {
+                await _settingManager.SetForCurrentTenantAsync(key, value);
+            }
+
+            return settings;
+        }
+
+        public async Task DeleteAsync(List<string> settingNames)
+        {
+            foreach (var name in settingNames)
+            {
+                var setting = _manager.GetOrNull(name);
+                if (setting == null)
+                {
+                    continue;
+                }
+
+                await _settingManager.SetForCurrentTenantAsync(name, setting.DefaultValue);
+            }
         }
     }
 }
