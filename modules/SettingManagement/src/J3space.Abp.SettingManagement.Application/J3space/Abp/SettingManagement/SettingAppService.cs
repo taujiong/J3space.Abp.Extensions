@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using J3space.Abp.SettingManagement.Setting;
 using Microsoft.Extensions.Localization;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;

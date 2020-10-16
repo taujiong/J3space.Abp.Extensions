@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace J3space.Abp.SettingManagement
+namespace J3space.Abp.SettingManagement.Setting
 {
     public interface ISettingAppService
     {

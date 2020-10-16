@@ -1,4 +1,4 @@
-namespace J3space.Abp.SettingManagement
+﻿namespace J3space.Abp.SettingManagement.Setting
 {
     public class SettingDefinitionDto
     {
