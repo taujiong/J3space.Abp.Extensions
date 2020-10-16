@@ -1,4 +1,5 @@
 ﻿using J3space.Abp.IdentityServer;
+using J3space.Abp.SettingManagement;
 using J3space.Sample.Constants;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Account;
@@ -15,6 +16,7 @@ namespace J3space.Sample
         typeof(AbpIdentityHttpApiClientModule),
         typeof(AbpIdentityServerHttpApiClientModule),
         typeof(AbpPermissionManagementHttpApiClientModule),
+        typeof(AbpSettingManagementHttpApiClientModule),
         typeof(AbpFeatureManagementHttpApiClientModule)
     )]
     public class SampleHttpApiClientModule : AbpModule

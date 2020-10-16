@@ -56,6 +56,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Clie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Web", "demo\J3space.Sample.HttpApi.Web\J3space.Sample.HttpApi.Web.csproj", "{10F414F9-1408-4184-A45E-3AF84C5B2B3D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingManagement", "SettingManagement", "{2A3DFA0C-A7BD-4052-BD41-4FB833A79AB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{175DEFBD-F98B-49F6-A91A-45C88BF7BBD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.Application.Contracts", "modules\SettingManagement\src\J3space.Abp.SettingManagement.Application.Contracts\J3space.Abp.SettingManagement.Application.Contracts.csproj", "{26A39829-D00F-4804-B0E1-757761DEFAFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.Application", "modules\SettingManagement\src\J3space.Abp.SettingManagement.Application\J3space.Abp.SettingManagement.Application.csproj", "{3DDFDF69-DDA7-4577-A66E-750B00ABBDEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.HttpApi", "modules\SettingManagement\src\J3space.Abp.SettingManagement.HttpApi\J3space.Abp.SettingManagement.HttpApi.csproj", "{55F56FC2-580D-4DA7-A5BF-0C6CCDB856A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.HttpApi.Client", "modules\SettingManagement\src\J3space.Abp.SettingManagement.HttpApi.Client\J3space.Abp.SettingManagement.HttpApi.Client.csproj", "{A59FDD53-7719-40D5-B74F-614BDC74C666}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +95,12 @@ Global
 		{29B16571-36C5-4C8F-9F3E-77157E487FD6} = {4040EA66-1662-4721-9CF2-5D4E7FAD77B4}
 		{3F60C6E9-8969-4819-B520-F2DE1809035F} = {4040EA66-1662-4721-9CF2-5D4E7FAD77B4}
 		{10F414F9-1408-4184-A45E-3AF84C5B2B3D} = {4040EA66-1662-4721-9CF2-5D4E7FAD77B4}
+		{2A3DFA0C-A7BD-4052-BD41-4FB833A79AB4} = {242D1C9F-ADE6-4B87-B0F3-DA18742937FA}
+		{175DEFBD-F98B-49F6-A91A-45C88BF7BBD5} = {2A3DFA0C-A7BD-4052-BD41-4FB833A79AB4}
+		{26A39829-D00F-4804-B0E1-757761DEFAFC} = {175DEFBD-F98B-49F6-A91A-45C88BF7BBD5}
+		{3DDFDF69-DDA7-4577-A66E-750B00ABBDEE} = {175DEFBD-F98B-49F6-A91A-45C88BF7BBD5}
+		{55F56FC2-580D-4DA7-A5BF-0C6CCDB856A8} = {175DEFBD-F98B-49F6-A91A-45C88BF7BBD5}
+		{A59FDD53-7719-40D5-B74F-614BDC74C666} = {175DEFBD-F98B-49F6-A91A-45C88BF7BBD5}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{19003593-6A06-4926-8440-E41E74C219F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -153,5 +171,21 @@ Global
 		{10F414F9-1408-4184-A45E-3AF84C5B2B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10F414F9-1408-4184-A45E-3AF84C5B2B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10F414F9-1408-4184-A45E-3AF84C5B2B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26A39829-D00F-4804-B0E1-757761DEFAFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26A39829-D00F-4804-B0E1-757761DEFAFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26A39829-D00F-4804-B0E1-757761DEFAFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26A39829-D00F-4804-B0E1-757761DEFAFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DDFDF69-DDA7-4577-A66E-750B00ABBDEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DDFDF69-DDA7-4577-A66E-750B00ABBDEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DDFDF69-DDA7-4577-A66E-750B00ABBDEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DDFDF69-DDA7-4577-A66E-750B00ABBDEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55F56FC2-580D-4DA7-A5BF-0C6CCDB856A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55F56FC2-580D-4DA7-A5BF-0C6CCDB856A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55F56FC2-580D-4DA7-A5BF-0C6CCDB856A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55F56FC2-580D-4DA7-A5BF-0C6CCDB856A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59FDD53-7719-40D5-B74F-614BDC74C666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59FDD53-7719-40D5-B74F-614BDC74C666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59FDD53-7719-40D5-B74F-614BDC74C666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59FDD53-7719-40D5-B74F-614BDC74C666}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
