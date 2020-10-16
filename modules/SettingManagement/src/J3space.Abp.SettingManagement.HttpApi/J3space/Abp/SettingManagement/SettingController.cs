@@ -6,7 +6,7 @@ namespace J3space.Abp.SettingManagement
 {
     [RemoteService(Name = SettingManagementRemoteServiceConstants.RemoteServiceName)]
     [Area("Setting")]
-    [Route("api/setting")]
+    [Route("api/setting-management/settings")]
     public class SettingController : SettingManagementControllerBase, ISettingAppService
     {
         private readonly ISettingAppService _settingAppService;

@@ -10,11 +10,12 @@ namespace J3space.Sample.Settings
         {
             context.Add(
                 new SettingDefinition(
-                    SampleSettings.App.Name,
-                    "MyApplication",
-                    L($"DisplayName:{SampleSettings.App.Name}"),
-                    L($"Description:{SampleSettings.App.Name}"),
-                    true),
+                        SampleSettings.App.Name,
+                        "MyApplication",
+                        L($"DisplayName:{SampleSettings.App.Name}"),
+                        L($"Description:{SampleSettings.App.Name}"),
+                        true)
+                    .WithProperty("MainGroup", "App"),
                 new SettingDefinition(
                     SampleSettings.App.Url,
                     null,
