@@ -1,8 +1,15 @@
-﻿namespace J3space.Abp.IdentityServer
+﻿using Volo.Abp.Reflection;
+
+namespace J3space.Abp.IdentityServer.Permissions
 {
     public static class IdentityServerPermissions
     {
         public const string GroupName = "IdentityServer";
+
+        public static string[] GetAll()
+        {
+            return ReflectionHelper.GetPublicConstantsRecursively(typeof(IdentityServerPermissions));
+        }
 
         public static class Client
         {

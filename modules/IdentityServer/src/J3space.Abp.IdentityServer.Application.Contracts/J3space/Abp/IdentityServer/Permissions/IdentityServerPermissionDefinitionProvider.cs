@@ -3,7 +3,7 @@ using Volo.Abp.IdentityServer.Localization;
 using Volo.Abp.Localization;
 using Volo.Abp.MultiTenancy;
 
-namespace J3space.Abp.IdentityServer
+namespace J3space.Abp.IdentityServer.Permissions
 {
     public class IdentityServerPermissionDefinitionProvider : PermissionDefinitionProvider
     {

@@ -6,8 +6,8 @@ using Volo.Abp.PermissionManagement;
 namespace J3space.Abp.IdentityServer
 {
     [DependsOn(
-        typeof(AbpIdentityServerApplicationContractsModule),
         typeof(AbpAutoMapperModule),
+        typeof(AbpIdentityServerApplicationContractsModule),
         typeof(AbpPermissionManagementApplicationModule)
     )]
     public class AbpIdentityServerApplicationModule : AbpModule

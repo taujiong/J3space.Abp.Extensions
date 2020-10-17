@@ -1,0 +1,14 @@
+{
+  "culture": "zh-Hant",
+  "texts": {
+    "Permission:ApiResourceManagement": "Api 資源管理",
+    "Permission:ChangePermissions": "更改權限",
+    "Permission:ClientManagement": "客戶端管理",
+    "Permission:Create": "創建",
+    "Permission:Delete": "删除",
+    "Permission:Edit": "刪除",
+    "Permission:IdentityResourceManagement": "身份資源管理",
+    "Permission:IdentityServerManagement": "身份服務器管理",
+    "EntityExisted": "實體 {0} 已存在, {1} = {2}!"
+  }
+}

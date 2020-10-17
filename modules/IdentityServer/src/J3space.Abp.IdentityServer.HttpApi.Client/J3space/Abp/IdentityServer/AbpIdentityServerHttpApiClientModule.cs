@@ -5,8 +5,9 @@ using Volo.Abp.Modularity;
 namespace J3space.Abp.IdentityServer
 {
     [DependsOn(
-        typeof(AbpIdentityServerApplicationContractsModule),
-        typeof(AbpHttpClientModule))]
+        typeof(AbpHttpClientModule),
+        typeof(AbpIdentityServerApplicationContractsModule)
+    )]
     public class AbpIdentityServerHttpApiClientModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
