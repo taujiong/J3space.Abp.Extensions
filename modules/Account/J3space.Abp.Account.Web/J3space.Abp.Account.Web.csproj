@@ -17,13 +17,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="wwwroot\**\*.css"/>
-    <EmbeddedResource Include="wwwroot\**\*.jpg"/>
-    <EmbeddedResource Include="wwwroot\**\*.js"/>
+    <EmbeddedResource Include="wwwroot\**\*"/>
     <EmbeddedResource Include="Localization\Resources\*.json"/>
-    <Content Remove="wwwroot\**\*.css"/>
-    <Content Remove="wwwroot\**\*.jpg"/>
-    <Content Remove="wwwroot\**\*.js"/>
+    <Content Remove="wwwroot\**\*"/>
     <Content Remove="Localization\Resources\*.json"/>
   </ItemGroup>
 

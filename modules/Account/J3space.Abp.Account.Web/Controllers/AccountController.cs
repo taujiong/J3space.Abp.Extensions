@@ -1,6 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using J3space.Abp.Account.Web.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp;
 using Volo.Abp.Account;
@@ -11,14 +11,12 @@ using Volo.Abp.Identity;
 using Volo.Abp.Identity.AspNetCore;
 using Volo.Abp.Settings;
 using Volo.Abp.Validation;
-using IdentityUser = Volo.Abp.Identity.IdentityUser;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace J3space.Abp.Account.Web.Controllers
 {
     [RemoteService(Name = AccountRemoteServiceConsts.RemoteServiceName)]
     [Controller]
-    [ControllerName("Account")]
     [Route("api/account")]
     public class AccountController : AbpController
     {
@@ -42,11 +40,9 @@ namespace J3space.Abp.Account.Web.Controllers
 
         [HttpPost]
         [Route("login")]
-        public virtual async Task<LoginResult> Login(LoginInputModel login)
+        public virtual async Task<IActionResult> Login(LoginInputModel login)
         {
             await CheckLocalLoginAsync();
-
-            ValidateLoginInfo(login);
 
             await ReplaceEmailToUsernameOfInputIfNeeds(login);
             var signInResult = await SignInManager.PasswordSignInAsync(
@@ -81,17 +77,19 @@ namespace J3space.Abp.Account.Web.Controllers
 
         [HttpPost]
         [Route("check-password")]
-        public virtual async Task<LoginResult> CheckPassword(LoginInputModel login)
+        public virtual async Task<IActionResult> CheckPassword(LoginInputModel login)
         {
-            ValidateLoginInfo(login);
-
             await ReplaceEmailToUsernameOfInputIfNeeds(login);
 
             var identityUser = await UserManager.FindByNameAsync(login.UserNameOrEmailAddress);
 
             if (identityUser == null)
             {
-                return new LoginResult(LoginResultType.InvalidUserNameOrPassword);
+                return StatusCode(StatusCodes.Status401Unauthorized, new
+                {
+                    result = L["LoginFailed"],
+                    detail = L["InvalidUserNameOrPassword"]
+                });
             }
 
             return GetAbpLoginResult(await SignInManager.CheckPasswordSignInAsync(identityUser, login.Password, true));
@@ -119,47 +117,36 @@ namespace J3space.Abp.Account.Web.Controllers
             login.UserNameOrEmailAddress = userByEmail.UserName;
         }
 
-        private static LoginResult GetAbpLoginResult(SignInResult result)
+        private IActionResult GetAbpLoginResult(SignInResult result)
         {
             if (result.IsLockedOut)
             {
-                return new LoginResult(LoginResultType.LockedOut);
-            }
-
-            if (result.RequiresTwoFactor)
-            {
-                return new LoginResult(LoginResultType.RequiresTwoFactor);
+                return StatusCode(StatusCodes.Status403Forbidden, new
+                {
+                    result = L["LoginFailed"].Value,
+                    detail = L["UserLockedOutMessage"].Value
+                });
             }
 
             if (result.IsNotAllowed)
             {
-                return new LoginResult(LoginResultType.NotAllowed);
+                return StatusCode(StatusCodes.Status403Forbidden, new
+                {
+                    result = L["LoginFailed"].Value,
+                    detail = L["LoginIsNotAllowed"].Value
+                });
             }
 
             if (!result.Succeeded)
             {
-                return new LoginResult(LoginResultType.InvalidUserNameOrPassword);
+                return StatusCode(StatusCodes.Status401Unauthorized, new
+                {
+                    result = L["LoginFailed"].Value,
+                    detail = L["InvalidUserNameOrPassword"].Value
+                });
             }
 
-            return new LoginResult(LoginResultType.Success);
-        }
-
-        protected virtual void ValidateLoginInfo(LoginInputModel login)
-        {
-            if (login == null)
-            {
-                throw new ArgumentException(nameof(login));
-            }
-
-            if (login.UserNameOrEmailAddress.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException(nameof(login.UserNameOrEmailAddress));
-            }
-
-            if (login.Password.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException(nameof(login.Password));
-            }
+            return Ok();
         }
 
         protected virtual async Task CheckLocalLoginAsync()
