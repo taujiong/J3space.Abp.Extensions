@@ -12,11 +12,7 @@ namespace J3space.Sample
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-#if DEBUG
                 .MinimumLevel.Debug()
-#else
-                .MinimumLevel.Information()
-#endif
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
@@ -24,7 +20,7 @@ namespace J3space.Sample
 
             try
             {
-                Log.Information("Starting J3space.Sample.HttpApi.Web.");
+                Log.Information("Starting J3space.Sample.HttpApi.Host.");
                 CreateHostBuilder(args).Build().Run();
                 return 0;
             }

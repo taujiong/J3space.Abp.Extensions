@@ -5,8 +5,8 @@ using Volo.Abp.Modularity;
 namespace J3space.Abp.IdentityServer
 {
     [DependsOn(
-        typeof(AbpIdentityServerApplicationContractsModule),
-        typeof(AbpAspNetCoreMvcModule)
+        typeof(AbpAspNetCoreMvcModule),
+        typeof(AbpIdentityServerApplicationContractsModule)
     )]
     public class AbpIdentityServerHttpApiModule : AbpModule
     {

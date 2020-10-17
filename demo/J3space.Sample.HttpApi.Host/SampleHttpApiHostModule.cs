@@ -1,17 +1,13 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using J3space.Abp.IdentityServer;
 using J3space.Abp.IdentityServer.Web;
 using J3space.Sample.MongoDb;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
@@ -26,15 +22,14 @@ using Volo.Abp.VirtualFileSystem;
 namespace J3space.Sample
 {
     [DependsOn(
-        typeof(SampleHttpApiModule),
-        typeof(AbpAutofacModule),
-        typeof(SampleApplicationModule),
-        typeof(SampleMongoDbModule),
-        // typeof(AbpAccountWebWrapperModule),
-        typeof(AbpIdentityServerWebModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
+        typeof(AbpAspNetCoreSerilogModule),
+        typeof(AbpAutofacModule),
         typeof(AbpIdentityAspNetCoreModule),
-        typeof(AbpAspNetCoreSerilogModule)
+        typeof(AbpIdentityServerWebModule),
+        typeof(SampleApplicationModule),
+        typeof(SampleHttpApiModule),
+        typeof(SampleMongoDbModule)
     )]
     public class SampleHttpApiHostModule : AbpModule
     {
@@ -64,23 +59,16 @@ namespace J3space.Sample
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-            if (hostingEnvironment.IsDevelopment())
-                Configure<AbpVirtualFileSystemOptions>(options =>
-                {
-                    options.FileSets.ReplaceEmbeddedByPhysical<SampleDomainSharedModule>(
+            Configure<AbpVirtualFileSystemOptions>(options =>
+            {
+                options.FileSets.ReplaceEmbeddedByPhysical<SampleDomainSharedModule>(
+                    Path.Combine(hostingEnvironment.ContentRootPath,
+                        $"..{Path.DirectorySeparatorChar}J3space.Sample.Domain.Shared"));
+                options.FileSets
+                    .ReplaceEmbeddedByPhysical<SampleHttpApiHostModule>(
                         Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}J3space.Sample.Domain.Shared"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<SampleDomainModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}J3space.Sample.Domain"));
-                    options.FileSets
-                        .ReplaceEmbeddedByPhysical<SampleApplicationContractsModule>(
-                            Path.Combine(hostingEnvironment.ContentRootPath,
-                                $"..{Path.DirectorySeparatorChar}J3space.Sample.Application.Contracts"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<SampleApplicationModule>(
-                        Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}J3space.Sample.Application"));
-                });
+                            $"..{Path.DirectorySeparatorChar}J3space.Sample.HttpApi.Host"));
+            });
         }
 
         private void ConfigureAuthentication(ServiceConfigurationContext context,
@@ -94,28 +82,12 @@ namespace J3space.Sample
                     options.ClientId = configuration["ExternalIdentityProvider:GitHub:ClientId"];
                     options.ClientSecret = configuration["ExternalIdentityProvider:GitHub:ClientSecret"];
                 })
-                .AddIdentityServerAuthentication(options =>
+                .AddJwtBearer(options =>
                 {
                     options.Authority = configuration["Sample:Authority"];
                     options.RequireHttpsMetadata = false;
-                    options.ApiName = "Sample";
-                    options.JwtBackChannelHandler = new HttpClientHandler
-                    {
-                        ServerCertificateCustomValidationCallback = HttpClientHandler
-                            .DangerousAcceptAnyServerCertificateValidator
-                    };
+                    options.Audience = "Sample";
                 });
-
-            Configure<RazorPagesOptions>(options =>
-            {
-                options.Conventions.AuthorizePage("/Account/Manage");
-                options.Conventions.AuthorizePage("/Ids/Client",
-                    IdentityServerPermissions.Client.Delete);
-                options.Conventions.AuthorizePage("/Ids/ApiResource",
-                    IdentityServerPermissions.ApiResource.Default);
-                options.Conventions.AuthorizePage("/Ids/IdentityResource",
-                    IdentityServerPermissions.IdentityResource.Default);
-            });
         }
 
         private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
@@ -135,6 +107,7 @@ namespace J3space.Sample
             {
                 options.Languages.Add(new LanguageInfo("en", "en", "English"));
                 options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+                options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
         }
 
@@ -166,17 +139,16 @@ namespace J3space.Sample
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
 
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-
-            app.UseStaticFiles();
+            app.UseDeveloperExceptionPage();
+            app.UseAbpRequestLocalization();
+            app.UseCors(DefaultCorsPolicyName);
             app.UseCorrelationId();
             app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(DefaultCorsPolicyName);
+
             app.UseAuthentication();
             app.UseJwtTokenMiddleware();
-
-            app.UseAbpRequestLocalization();
             app.UseIdentityServer();
             app.UseAuthorization();
 

@@ -6,7 +6,7 @@
 
         public static class App
         {
-            private const string AppPrefix = "App";
+            private const string AppPrefix = Prefix + ".App";
             public const string Name = AppPrefix + ".Name";
             public const string Url = AppPrefix + ".Url";
             public const string LogoUrl = AppPrefix + ".LogoUrl";

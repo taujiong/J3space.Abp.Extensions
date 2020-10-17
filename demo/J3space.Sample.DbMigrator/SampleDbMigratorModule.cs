@@ -7,8 +7,7 @@ namespace J3space.Sample.DbMigrator
 {
     [DependsOn(
         typeof(AbpAutofacModule),
-        typeof(SampleMongoDbModule),
-        typeof(SampleApplicationContractsModule)
+        typeof(SampleMongoDbModule)
     )]
     public class SampleDbMigratorModule : AbpModule
     {

@@ -2,7 +2,6 @@
 using Volo.Abp.IdentityServer;
 using Volo.Abp.IdentityServer.Localization;
 using Volo.Abp.Localization;
-using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
 
@@ -10,8 +9,8 @@ namespace J3space.Abp.IdentityServer
 {
     [DependsOn(
         typeof(AbpDddApplicationModule),
-        typeof(AbpIdentityServerDomainSharedModule),
-        typeof(AbpIdentityServerDomainModule)
+        typeof(AbpIdentityServerDomainModule),
+        typeof(AbpIdentityServerDomainSharedModule)
     )]
     public class AbpIdentityServerApplicationContractsModule : AbpModule
     {
@@ -27,11 +26,6 @@ namespace J3space.Abp.IdentityServer
                 options.Resources
                     .Get<AbpIdentityServerResource>()
                     .AddVirtualJson("/J3space/Abp/IdentityServer/Localization/Resources");
-            });
-
-            Configure<AbpExceptionLocalizationOptions>(options =>
-            {
-                options.MapCodeNamespace("J3space.IdentityServer", typeof(AbpIdentityServerResource));
             });
         }
     }

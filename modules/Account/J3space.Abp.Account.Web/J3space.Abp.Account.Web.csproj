@@ -17,20 +17,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="wwwroot\**\*.css"/>
-    <EmbeddedResource Include="wwwroot\**\*.jpg"/>
-    <EmbeddedResource Include="wwwroot\**\*.js"/>
+    <EmbeddedResource Include="wwwroot\**\*"/>
     <EmbeddedResource Include="Localization\Resources\*.json"/>
-    <Content Remove="wwwroot\**\*.css"/>
-    <Content Remove="wwwroot\**\*.jpg"/>
-    <Content Remove="wwwroot\**\*.js"/>
+    <Content Remove="wwwroot\**\*"/>
     <Content Remove="Localization\Resources\*.json"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Account.HttpApi" Version="3.2.0"/>
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI" Version="3.2.0"/>
-    <PackageReference Include="Volo.Abp.Identity.AspNetCore" Version="3.2.0"/>
+    <PackageReference Include="Volo.Abp.Account.HttpApi" Version="3.2.1"/>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI" Version="3.2.1"/>
+    <PackageReference Include="Volo.Abp.Identity.AspNetCore" Version="3.2.1"/>
   </ItemGroup>
 
 </Project>

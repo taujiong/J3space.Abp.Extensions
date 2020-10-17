@@ -15,7 +15,7 @@ using Volo.Abp.Uow;
 using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
 using Client = Volo.Abp.IdentityServer.Clients.Client;
 
-namespace J3space.Sample.IdentityServer
+namespace J3space.Sample.DbMigrator
 {
     public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
@@ -113,20 +113,9 @@ namespace J3space.Sample.IdentityServer
                     new[] {"authorization_code"},
                     (configurationSection["Sample_Web:ClientSecret"] ?? "1q2w3e*").Sha256(),
                     $"{webClientRootUrl}signin-oidc",
-                    $"{webClientRootUrl}signout-callback-oidc",
-                    $"{webClientRootUrl}Account/FrontChannelLogout"
+                    $"{webClientRootUrl}signout-callback-oidc"
                 );
             }
-
-            //Console Test Client
-            var consoleClientId = configurationSection["Sample_App:ClientId"];
-            if (!consoleClientId.IsNullOrWhiteSpace())
-                await CreateClientAsync(
-                    consoleClientId,
-                    commonScopes,
-                    new[] {"password", "client_credentials"},
-                    (configurationSection["Sample_App:ClientSecret"] ?? "1q2w3e*").Sha256()
-                );
         }
 
         private async Task<Client> CreateClientAsync(

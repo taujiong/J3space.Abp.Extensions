@@ -1,6 +1,7 @@
 {
   "culture": "en",
   "texts": {
+    "LoginFailed": "Login Failed",
     "OperationFailed": "Operation Failed",
     "UseAnotherServiceToRegister": "Use another service to register",
     "Volo.Account:InvalidEmailAddress": "Email '{0}' is invalid."

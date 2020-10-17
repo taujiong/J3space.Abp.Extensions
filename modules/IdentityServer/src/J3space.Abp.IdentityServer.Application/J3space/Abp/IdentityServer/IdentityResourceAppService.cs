@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using J3space.Abp.IdentityServer.IdentityResources;
 using J3space.Abp.IdentityServer.IdentityResources.Dto;
+using J3space.Abp.IdentityServer.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
