@@ -5,8 +5,9 @@ using Volo.Abp.Modularity;
 namespace J3space.Abp.SettingManagement
 {
     [DependsOn(
-        typeof(AbpSettingManagementApplicationContractsModule),
-        typeof(AbpAspNetCoreMvcModule))]
+        typeof(AbpAspNetCoreMvcModule),
+        typeof(AbpSettingManagementApplicationContractsModule)
+    )]
     public class AbpSettingManagementHttpApiModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
