@@ -33,8 +33,8 @@ namespace J3space.Abp.SettingManagement
                 .Select(x => new SettingDefinitionDto
                 {
                     Name = x.Name,
-                    DisplayName = x.DisplayName.Localize(_factory),
-                    Description = x.Description.Localize(_factory),
+                    DisplayName = x.DisplayName?.Localize(_factory),
+                    Description = x.Description?.Localize(_factory),
                     DefaultValue = x.DefaultValue,
                     MainGroup = x.Properties.ContainsKey(SettingDefinitionPropertyConstants.MainGroup)
                         ? x.Properties[SettingDefinitionPropertyConstants.MainGroup] as string
