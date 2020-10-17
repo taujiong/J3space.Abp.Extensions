@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Account;
+﻿using J3space.Abp.SettingManagement;
+using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
@@ -13,6 +14,7 @@ namespace J3space.Sample
         typeof(AbpFeatureManagementApplicationContractsModule),
         typeof(AbpIdentityApplicationContractsModule),
         typeof(AbpPermissionManagementApplicationContractsModule),
+        typeof(AbpSettingManagementApplicationContractsModule),
         typeof(AbpObjectExtendingModule)
     )]
     public class SampleApplicationContractsModule : AbpModule

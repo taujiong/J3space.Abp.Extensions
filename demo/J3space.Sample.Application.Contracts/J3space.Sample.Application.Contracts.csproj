@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\modules\SettingManagement\src\J3space.Abp.SettingManagement.Application.Contracts\J3space.Abp.SettingManagement.Application.Contracts.csproj"/>
     <ProjectReference Include="..\J3space.Sample.Domain.Shared\J3space.Sample.Domain.Shared.csproj" />
   </ItemGroup>
 

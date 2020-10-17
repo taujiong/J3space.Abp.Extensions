@@ -1,4 +1,5 @@
 ﻿using J3space.Abp.IdentityServer;
+using J3space.Abp.SettingManagement;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -13,6 +14,7 @@ namespace J3space.Sample
         typeof(AbpIdentityServerHttpApiModule),
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),
+        typeof(AbpSettingManagementHttpApiModule),
         typeof(AbpFeatureManagementHttpApiModule)
     )]
     public class SampleHttpApiModule : AbpModule
