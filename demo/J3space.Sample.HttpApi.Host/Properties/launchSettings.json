@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "J3space.Sample.HttpApi.Web": {
+    "J3space.Sample.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:44373",

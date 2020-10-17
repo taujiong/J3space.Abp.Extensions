@@ -12,14 +12,14 @@ using Volo.Abp.Uow;
 namespace J3space.Sample.MongoDb
 {
     [DependsOn(
-        typeof(SampleDomainModule),
-        typeof(AbpPermissionManagementMongoDbModule),
-        typeof(AbpSettingManagementMongoDbModule),
+        typeof(AbpAuditLoggingMongoDbModule),
+        typeof(AbpBackgroundJobsMongoDbModule),
+        typeof(AbpFeatureManagementMongoDbModule),
         typeof(AbpIdentityMongoDbModule),
         typeof(AbpIdentityServerMongoDbModule),
-        typeof(AbpBackgroundJobsMongoDbModule),
-        typeof(AbpAuditLoggingMongoDbModule),
-        typeof(AbpFeatureManagementMongoDbModule)
+        typeof(AbpPermissionManagementMongoDbModule),
+        typeof(AbpSettingManagementMongoDbModule),
+        typeof(SampleDomainModule)
     )]
     public class SampleMongoDbModule : AbpModule
     {

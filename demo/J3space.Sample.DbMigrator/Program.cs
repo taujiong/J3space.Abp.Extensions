@@ -29,7 +29,7 @@ namespace J3space.Sample.DbMigrator
             await CreateHostBuilder(args).RunConsoleAsync();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
+        private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
                 .ConfigureLogging((context, logging) => logging.ClearProviders())

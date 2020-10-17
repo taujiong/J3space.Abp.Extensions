@@ -24,11 +24,6 @@ namespace J3space.Sample
     )]
     public class SampleDomainSharedModule : AbpModule
     {
-        public override void PreConfigureServices(ServiceConfigurationContext context)
-        {
-            SampleModulePropertyConfigurator.Configure();
-        }
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
@@ -39,7 +34,7 @@ namespace J3space.Sample
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<SampleResource>("zh-Hans")
+                    .Add<SampleResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/Sample");
 

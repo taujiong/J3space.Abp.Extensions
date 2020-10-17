@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi", "d
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Client", "demo\J3space.Sample.HttpApi.Client\J3space.Sample.HttpApi.Client.csproj", "{3F60C6E9-8969-4819-B520-F2DE1809035F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Web", "demo\J3space.Sample.HttpApi.Web\J3space.Sample.HttpApi.Web.csproj", "{10F414F9-1408-4184-A45E-3AF84C5B2B3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Sample.HttpApi.Host", "demo\J3space.Sample.HttpApi.Host\J3space.Sample.HttpApi.Host.csproj", "{10F414F9-1408-4184-A45E-3AF84C5B2B3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingManagement", "SettingManagement", "{2A3DFA0C-A7BD-4052-BD41-4FB833A79AB4}"
 EndProject

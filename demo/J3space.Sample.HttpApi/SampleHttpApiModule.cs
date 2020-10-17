@@ -9,13 +9,13 @@ using Volo.Abp.PermissionManagement.HttpApi;
 namespace J3space.Sample
 {
     [DependsOn(
-        typeof(SampleApplicationContractsModule),
         typeof(AbpAccountHttpApiModule),
-        typeof(AbpIdentityServerHttpApiModule),
+        typeof(AbpFeatureManagementHttpApiModule),
         typeof(AbpIdentityHttpApiModule),
+        typeof(AbpIdentityServerHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),
         typeof(AbpSettingManagementHttpApiModule),
-        typeof(AbpFeatureManagementHttpApiModule)
+        typeof(SampleApplicationContractsModule)
     )]
     public class SampleHttpApiModule : AbpModule
     {

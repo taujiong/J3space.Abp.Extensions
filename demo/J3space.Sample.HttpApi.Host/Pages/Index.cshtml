@@ -1,0 +1,70 @@
+@page
+@using System.Globalization
+@using J3space.Sample.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.AntiForgery
+@using Volo.Abp.Localization
+@using Volo.Abp.Ui.Branding
+@using Volo.Abp.Users
+@model J3space.Sample.Pages.Index
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IBrandingProvider BrandingProvider
+@inject ICurrentUser CurrentUser
+@inject IHtmlLocalizer<SampleResource> L
+
+@{
+  Layout = null;
+  AbpAntiForgeryManager.SetCookie();
+
+  var pageTitle = ViewBag.Title == null ? BrandingProvider.AppName : ViewBag.Title;
+  var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+}
+
+<!DOCTYPE html>
+
+<html dir="@rtl"
+      lang="@CultureInfo.CurrentCulture.Name">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="viewport">
+  <meta content="ie=edge"
+        http-equiv="X-UA-Compatible">
+
+  <title>@pageTitle</title>
+  @if (ViewBag.Description != null)
+  {
+    <meta content="@ViewBag.Description"
+          name="description" />
+  }
+
+  <link rel="shortcut icon"
+        href="/favicon.ico"
+        type="image/x-icon">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css"
+        rel="stylesheet" />
+</head>
+<body class="@rtl">
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div>
+        @if (!CurrentUser.IsAuthenticated)
+        {
+          <a asp-page="/Account/Login">
+            @L["Login"]
+          </a>
+        }
+        else
+        {
+          <span>@CurrentUser.UserName</span>
+          <a asp-page="/Account/Logout">
+            @L["Logout"]
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

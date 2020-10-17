@@ -31,10 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\**.*">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+    <EmbeddedResource Include="wwwroot\**\*"/>
+    <Content Remove="wwwroot\**\*"/>
   </ItemGroup>
 
 </Project>

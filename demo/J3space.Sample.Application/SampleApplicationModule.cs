@@ -1,7 +1,6 @@
 using J3space.Abp.IdentityServer;
 using J3space.Abp.SettingManagement;
 using Volo.Abp.Account;
-using Volo.Abp.AutoMapper;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
@@ -10,20 +9,16 @@ using Volo.Abp.PermissionManagement;
 namespace J3space.Sample
 {
     [DependsOn(
-        typeof(SampleDomainModule),
         typeof(AbpAccountApplicationModule),
-        typeof(SampleApplicationContractsModule),
+        typeof(AbpFeatureManagementApplicationModule),
         typeof(AbpIdentityApplicationModule),
         typeof(AbpIdentityServerApplicationModule),
         typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpSettingManagementApplicationModule),
-        typeof(AbpFeatureManagementApplicationModule)
+        typeof(SampleApplicationContractsModule),
+        typeof(SampleDomainModule)
     )]
     public class SampleApplicationModule : AbpModule
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            Configure<AbpAutoMapperOptions>(options => { options.AddMaps<SampleApplicationModule>(); });
-        }
     }
 }
