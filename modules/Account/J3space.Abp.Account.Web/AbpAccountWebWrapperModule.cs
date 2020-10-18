@@ -9,7 +9,7 @@ using Volo.Abp.VirtualFileSystem;
 namespace J3space.Abp.Account.Web
 {
     [DependsOn(
-        typeof(AbpAccountHttpApiModule),
+        typeof(AbpAccountApplicationContractsModule),
         typeof(AbpIdentityAspNetCoreModule)
     )]
     public class AbpAccountWebWrapperModule : AbpModule
