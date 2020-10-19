@@ -1,40 +1,20 @@
 @page
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@inject IAbpAntiForgeryManager AbpAntiForgeryManager
-@inject IBrandingProvider BrandingProvider
-@using System.Globalization
-@using Volo.Abp.AspNetCore.Mvc.AntiForgery
-@using Volo.Abp.Localization
-@using Volo.Abp.Ui.Branding
 @model J3space.Abp.IdentityServer.Web.Pages.Account.ConsentModel
-@{
-  Layout = null;
-  AbpAntiForgeryManager.SetCookie();
 
-  var pageTitle = ViewBag.Title == null ? BrandingProvider.AppName : ViewBag.Title;
-  var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+@{
+  Layout = "../_Layout";
 }
 
-<!DOCTYPE html>
-
-<html dir="@rtl"
-      lang="@CultureInfo.CurrentCulture.Name">
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        name="viewport">
-  <meta content="ie=edge"
-        http-equiv="X-UA-Compatible">
-
-  <title>@pageTitle</title>
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css"
-        rel="stylesheet" />
+@section Head
+{
+  <link asp-append-version="true"
+        href="~/pages/common/bulma.css"
+        rel="stylesheet">
   <link asp-append-version="true"
         href="~/pages/consent/consent.css"
         rel="stylesheet">
-</head>
-<body class="@rtl">
+}
+
 <section class="hero is-fullheight">
   <div class="hero-body">
     <div class="container">
@@ -177,5 +157,3 @@
 </section>
 
 <script src="~/pages/common/iconfont.js"></script>
-</body>
-</html>

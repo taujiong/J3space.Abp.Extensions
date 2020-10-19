@@ -1,43 +1,19 @@
-@using Volo.Abp.AspNetCore.Mvc.AntiForgery
-@using Volo.Abp.Localization
-@using Volo.Abp.Ui.Branding
-@using System.Globalization
-@inject IAbpAntiForgeryManager AbpAntiForgeryManager
-@inject IBrandingProvider BrandingProvider
 @{
-  Layout = null;
-  AbpAntiForgeryManager.SetCookie();
-
-  var pageTitle = ViewBag.Title == null ? BrandingProvider.AppName : ViewBag.Title;
-  var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+  Layout = "../_Layout";
 }
 
-<!DOCTYPE html>
-
-<html dir="@rtl"
-      lang="@CultureInfo.CurrentCulture.Name">
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        name="viewport">
-  <meta content="ie=edge"
-        http-equiv="X-UA-Compatible">
-
-  <title>@pageTitle</title>
-  @if (ViewBag.Description != null)
-  {
-    <meta content="@ViewBag.Description"
-          name="description" />
-  }
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.1/css/bulma.min.css"
-        rel="stylesheet" />
+@section Head
+{
+  <link asp-append-version="true"
+        href="~/pages/common/bulma.css"
+        rel="stylesheet"
+        type="text/css" />
   <link asp-append-version="true"
         href="~/pages/account/account.css"
         rel="stylesheet"
         type="text/css" />
-</head>
-<body class="@rtl">
+}
+
 <ul class="bg-bubbles">
   @for (var n = 0; n < 10; n++)
   {
@@ -58,8 +34,6 @@
 </section>
 
 <script src="~/pages/common/iconfont.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/pages/common/sweetalert.js"></script>
 
 @await RenderSectionAsync("AlertScript", false)
-</body>
-</html>

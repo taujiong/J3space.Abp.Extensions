@@ -1,0 +1,43 @@
+﻿@using System.Globalization
+@using Volo.Abp.AspNetCore.Mvc.AntiForgery
+@using Volo.Abp.Localization
+@using Volo.Abp.Ui.Branding
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IBrandingProvider BrandingProvider
+
+@{
+  Layout = null;
+  AbpAntiForgeryManager.SetCookie();
+
+  var pageTitle = ViewBag.Title == null
+    ? BrandingProvider.AppName
+    : $"{ViewBag.Title} - {BrandingProvider.AppName}";
+  var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+}
+
+<!DOCTYPE html>
+
+<html dir="@rtl"
+      lang="@CultureInfo.CurrentCulture.Name">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="viewport">
+  <meta content="ie=edge"
+        http-equiv="X-UA-Compatible">
+
+  <title>@pageTitle</title>
+  @if (ViewBag.Description != null)
+  {
+    <meta content="@ViewBag.Description"
+          name="description" />
+  }
+
+  @await Html.PartialAsync("Shared/_Favicons")
+
+  @await RenderSectionAsync("Head", false)
+</head>
+<body class="@rtl">
+@RenderBody()
+</body>
+</html>
