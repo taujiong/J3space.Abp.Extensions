@@ -1,0 +1,44 @@
+﻿@page
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.Account.Localization
+@using Volo.Abp.Users
+@inject ICurrentUser CurrentUser
+@inject IStringLocalizer<AccountResource> L
+
+@{
+  Layout = "_Layout";
+}
+
+@section Head
+{
+  <link asp-append-version="true"
+        href="~/common/bulma.css"
+        rel="stylesheet">
+}
+
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered is-flex-mobile">
+        <div class="column has-text-centered">
+          <h1 class="is-size-1 mb-3">Welcome</h1>
+          @if (CurrentUser.IsAuthenticated)
+          {
+            <div class="is-size-4">@CurrentUser.UserName</div>
+            <a class="button"
+               href="/Account/Logout">
+              @L["Logout"]
+            </a>
+          }
+          else
+          {
+            <a class="button"
+               href="/Account/Login">
+              @L["Login"]
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

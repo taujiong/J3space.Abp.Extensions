@@ -251,4 +251,4 @@ paket-files/
 
 # secret
 **/secrets.json
-.
+tempkey.rsa
