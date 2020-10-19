@@ -33,9 +33,11 @@ abp vnext 框架是 C# 平台优秀的开源项目，其模块化的设计，基
 
 以下内容建立在你已经了解 [Abp vnext](https://docs.abp.io/en/abp/latest) 的基础上。
 
-1. 建立数据库，SampleApp 使用的是 MongoDB
-2. 克隆本仓库，在 appsettings.json 中配置 GitHub 的 ClientId 以及 Client Secret
-3. 运行 demo 目录下的 J3space.Sample.HttpApi.Host 项目，此时可查看用户相关功能及 Swagger 页面
+1. 建立数据库，SampleApp 使用的是 MySQL
+2. 克隆本仓库，填写所有 appsettings.json 文件中 “空缺” 的字段
+3. 运行 demo/J3Auth 目录下的 J3space.Auth.Web 项目，此时可在 https://localhost:5001 查看用户登录相关功能
 4. 克隆 [CodeLearner](https://github.com/taujiong/CodeLearner) 仓库
 5. 配置 IdentityServer 目录下的 Data.Shared 项目中的 IdsConstants 类，设置相应参数
 6. 依次运行 IdentityServer 目录下的 Api1、ConsoleClient、WpfClient、MvcClient 项目
+7. 运行 demo/J3Admin 目录下的 J3space.Admin.HttpApi.Host 项目，此时可访问 https://localhost:5002 查看 swagger 页面
+8. 通过 Postman 等工具可以查看 IdentityServer 的授权功能
