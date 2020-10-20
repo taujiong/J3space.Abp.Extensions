@@ -84,7 +84,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.DbMigrator", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.HttpApi", "demo\J3Admin\J3space.Admin.HttpApi\J3space.Admin.HttpApi.csproj", "{3DFF0C15-96C5-4FBA-9426-738B37BF0CFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3Space.Admin.HttpApi.Host", "demo\J3Admin\J3Space.Admin.HttpApi.Host\J3Space.Admin.HttpApi.Host.csproj", "{32ECDA27-EB8C-4922-BD7C-07FEC0532C97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.HttpApi.Host", "demo\J3Admin\J3space.Admin.HttpApi.Host\J3space.Admin.HttpApi.Host.csproj", "{32ECDA27-EB8C-4922-BD7C-07FEC0532C97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
