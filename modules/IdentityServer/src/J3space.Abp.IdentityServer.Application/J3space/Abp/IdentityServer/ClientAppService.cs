@@ -26,7 +26,7 @@ namespace J3space.Abp.IdentityServer
             PagedAndSortedResultRequestDto input)
         {
             var list = await _clientRepository.GetListAsync(input.Sorting, input.SkipCount,
-                input.MaxResultCount);
+                input.MaxResultCount, includeDetails: true);
             var totalCount = await _clientRepository.GetCountAsync();
 
             return new PagedResultDto<ClientDto>(
