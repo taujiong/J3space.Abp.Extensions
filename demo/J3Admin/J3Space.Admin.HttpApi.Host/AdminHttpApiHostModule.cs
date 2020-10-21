@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using J3space.Admin.Application;
 using J3space.Admin.EntityFrameworkCore.DbMigrations;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Serilog;
@@ -38,7 +40,7 @@ namespace J3Space.Admin.HttpApi.Host
             ConfigureCors(context, configuration);
             ConfigureConventionalControllers();
             ConfigureLocalization();
-            ConfigureSwaggerServices(context);
+            ConfigureSwaggerServices(context, configuration);
         }
 
         private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
@@ -92,13 +94,45 @@ namespace J3Space.Admin.HttpApi.Host
             });
         }
 
-        private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
+        private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)
         {
             context.Services.AddSwaggerGen(
                 options =>
                 {
                     options.SwaggerDoc("v1", new OpenApiInfo {Title = "J3space Admin API", Version = "v1"});
                     options.DocInclusionPredicate((docName, description) => true);
+
+                    options.AddSecurityDefinition("J3Auth", new OpenApiSecurityScheme
+                    {
+                        Type = SecuritySchemeType.OAuth2,
+                        In = ParameterLocation.Header,
+                        Name = "Authorization",
+                        BearerFormat = JwtBearerDefaults.AuthenticationScheme,
+                        Flows = new OpenApiOAuthFlows
+                        {
+                            AuthorizationCode = new OpenApiOAuthFlow
+                            {
+                                AuthorizationUrl =
+                                    new Uri($"{configuration["AuthServer:Authority"]}/connect/authorize"),
+                                TokenUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/token"),
+                                Scopes = new Dictionary<string, string>
+                                {
+                                    {"J3Admin", "Manage all the settings for the authorization server"}
+                                }
+                            }
+                        }
+                    });
+
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "J3Auth"}
+                            },
+                            new[] {"J3Admin"}
+                        }
+                    });
                 });
         }
 
@@ -106,6 +140,7 @@ namespace J3Space.Admin.HttpApi.Host
         {
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
+            var configuration = context.GetConfiguration();
 
             if (env.IsDevelopment())
             {
@@ -121,7 +156,16 @@ namespace J3Space.Admin.HttpApi.Host
             app.UseAuthorization();
 
             app.UseSwagger();
-            app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Admin API"); });
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Admin API");
+                options.OAuthConfigObject = new OAuthConfigObject
+                {
+                    ClientId = configuration["AuthServer:Audience"],
+                    ClientSecret = configuration["AuthServer:ClientSecret"],
+                    AppName = configuration["AuthServer:Audience"]
+                };
+            });
 
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
