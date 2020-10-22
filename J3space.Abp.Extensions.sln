@@ -8,6 +8,8 @@ ProjectSection(SolutionItems) = preProject
 	.github\workflows\main.yml = .github\workflows\dev.yml
 	.github\workflows\release.yml = .github\workflows\release.yml
 	common.props = common.props
+	.dockerignore = .dockerignore
+	docker-compose.yml = docker-compose.yml
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{242D1C9F-ADE6-4B87-B0F3-DA18742937FA}"
@@ -57,6 +59,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.Application.Test", "modules\SettingManagement\test\J3space.Abp.SettingManagement.Application.Test\J3space.Abp.SettingManagement.Application.Test.csproj", "{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "J3Auth", "J3Auth", "{B4860E51-9B7D-4B94-9E2B-941FEB7C98D0}"
+ProjectSection(SolutionItems) = preProject
+	demo\J3Auth\Dockerfile = demo\J3Auth\Dockerfile
+EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Auth.EntityFrameworkCore", "demo\J3Auth\J3space.Auth.EntityFrameworkCore\J3space.Auth.EntityFrameworkCore.csproj", "{E0702BBE-EDFE-4B14-918A-83B00A952089}"
 EndProject
@@ -67,6 +72,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Auth.Web", "demo\J3Auth\J3space.Auth.Web\J3space.Auth.Web.csproj", "{DD9A8BB3-DE26-44BF-B119-73CCBFC3C1D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "J3Admin", "J3Admin", "{6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}"
+ProjectSection(SolutionItems) = preProject
+	demo\J3Admin\Dockerfile = demo\J3Admin\Dockerfile
+EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.Domain.Shared", "demo\J3Admin\J3space.Admin.Domain.Shared\J3space.Admin.Domain.Shared.csproj", "{564AE9C4-3169-4C1F-B902-5178DE736C51}"
 EndProject
