@@ -18,7 +18,7 @@ services:
     build:
       context: .
       dockerfile: demo/J3Auth/Dockerfile
-    image: j3auth
+    image: taujiong/j3auth
     container_name: J3Auth
     volumes:
       - ./deploy/j3auth/appsettings.json:/app/appsettings.json
@@ -36,7 +36,7 @@ services:
     build:
       context: .
       dockerfile: demo/J3Admin/Dockerfile
-    image: j3admin
+    image: taujiong/j3admin
     container_name: J3Admin
     volumes:
       - ./deploy/j3admin/appsettings.json:/app/appsettings.json
