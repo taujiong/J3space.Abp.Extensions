@@ -4,13 +4,16 @@ using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.Modularity;
+using Volo.Abp.SettingManagement;
+using Volo.Abp.SettingManagement.EntityFrameworkCore;
 
 namespace J3space.Auth.EntityFrameworkCore
 {
     [DependsOn(
         typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
-        typeof(AbpIdentityServerEntityFrameworkCoreModule)
+        typeof(AbpIdentityServerEntityFrameworkCoreModule),
+        typeof(AbpSettingManagementEntityFrameworkCoreModule)
     )]
     public class AuthEntityFrameworkCoreModule : AbpModule
     {

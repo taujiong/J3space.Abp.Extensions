@@ -7,23 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="3.1.4"/>
-    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0"/>
-    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0"/>
-    <PackageReference Include="Volo.Abp.Account.Application" Version="3.2.1"/>
-    <PackageReference Include="Volo.Abp.Account.HttpApi" Version="3.2.1"/>
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="3.2.1"/>
-    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="3.2.1"/>
-    <PackageReference Include="Volo.Abp.Autofac" Version="3.2.1"/>
+    <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="3.1.4" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+    <PackageReference Include="Volo.Abp.Account.Application" Version="3.2.1" />
+    <PackageReference Include="Volo.Abp.Account.HttpApi" Version="3.2.1" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="3.2.1" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="3.2.1" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="3.2.1" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\modules\IdentityServer\src\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj"/>
-    <ProjectReference Include="..\J3space.Auth.EntityFrameworkCore.DbMigrations\J3space.Auth.EntityFrameworkCore.DbMigrations.csproj"/>
+    <ProjectReference Include="..\..\..\modules\IdentityServer\src\J3space.Abp.IdentityServer.Web\J3space.Abp.IdentityServer.Web.csproj" />
+    <ProjectReference Include="..\J3space.Auth.EntityFrameworkCore.DbMigrations\J3space.Auth.EntityFrameworkCore.DbMigrations.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="tempkey.rsa"/>
+    <None Remove="tempkey.rsa" />
   </ItemGroup>
 
 </Project>

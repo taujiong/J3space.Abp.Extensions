@@ -11,7 +11,11 @@ namespace J3space.Auth.Web
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
+#if DEBUG
+                .MinimumLevel.Debug()
+#else
                 .MinimumLevel.Information()
+#endif
                 .Enrich.FromLogContext()
                 .WriteTo.Async(c => c.Console())
                 .CreateLogger();

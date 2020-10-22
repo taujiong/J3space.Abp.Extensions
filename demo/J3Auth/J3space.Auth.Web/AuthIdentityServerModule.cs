@@ -13,8 +13,11 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Auditing;
 using Volo.Abp.Autofac;
+using Volo.Abp.Emailing;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
+using Volo.Abp.SettingManagement;
+using Volo.Abp.UI.Navigation.Urls;
 
 namespace J3space.Auth.Web
 {
@@ -25,7 +28,8 @@ namespace J3space.Auth.Web
         typeof(AbpAspNetCoreMvcModule),
         typeof(AbpAspNetCoreSerilogModule),
         typeof(AuthEntityFrameworkCoreDbMigrationsModule),
-        typeof(AbpIdentityServerWebModule)
+        typeof(AbpIdentityServerWebModule),
+        typeof(AbpSettingManagementDomainModule)
     )]
     public class AuthIdentityServerModule : AbpModule
     {
@@ -42,7 +46,12 @@ namespace J3space.Auth.Web
                 options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
 
-            Configure<AbpAuditingOptions>(options => { options.ApplicationName = "AuthServer"; });
+            Configure<AbpAuditingOptions>(options => { options.ApplicationName = "J3Auth"; });
+
+            Configure<AppUrlOptions>(options =>
+            {
+                options.Applications["MVC"].RootUrl = configuration["App:RootUrl"];
+            });
 
             context.Services.AddAuthentication()
                 .AddGitHub(options =>
@@ -77,6 +86,13 @@ namespace J3space.Auth.Web
         {
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
+            var configuration = context.GetConfiguration();
+            var settingManager = context.ServiceProvider.GetService<SettingManager>();
+
+            // 确保 Abp.Mailing.Smtp.Password 的 setting 值被加密
+            var smtpPasswordName = EmailSettingNames.Smtp.Password;
+            var password = configuration[$"Settings:{smtpPasswordName}"];
+            settingManager.SetGlobalAsync(smtpPasswordName, password);
 
             if (env.IsDevelopment())
             {
