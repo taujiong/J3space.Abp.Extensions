@@ -23,12 +23,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
             });
 
             await SignInManager.SignOutAsync();
-            if (ReturnUrl != null)
-            {
-                return RedirectSafely(ReturnUrl, ReturnUrlHash);
-            }
 
-            return RedirectToPage("/Account/Login");
+            return RedirectSafely(ReturnUrl, ReturnUrlHash);
         }
 
         public virtual Task<IActionResult> OnPostAsync()

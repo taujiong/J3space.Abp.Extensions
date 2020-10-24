@@ -43,7 +43,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
 
             Logger.LogInformation(
                 $"{nameof(IdentityServerSupportedLogoutModel)} couldn't find postLogoutUri... Redirecting to:/Account/Login..");
-            return RedirectToPage("/Account/Login");
+            return RedirectToPage("/");
         }
     }
 }
