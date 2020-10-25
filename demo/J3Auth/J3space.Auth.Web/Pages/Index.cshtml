@@ -39,8 +39,10 @@
 
       @if (!CurrentUser.IsAuthenticated)
       {
-        <a class="button is-light mt-2"
-           asp-page="/Account/Login">Login</a>
+        <a asp-page="/Account/Login"
+           class="button is-light mt-2">
+          @L["Login"]
+        </a>
       }
       else
       {
@@ -48,8 +50,10 @@
           <span id="greeting"></span>
           <span id="name">@CurrentUser.UserName</span>
         </h1>
-        <a class="button is-light mt-5"
-           asp-page="/Account/Logout">Logout</a>
+        <a asp-page="/Account/Logout"
+           class="button is-light mt-5">
+          @L["Logout"]
+        </a>
       }
     </div>
   </div>
