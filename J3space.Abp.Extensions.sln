@@ -9,7 +9,6 @@ ProjectSection(SolutionItems) = preProject
 	.github\workflows\release.yml = .github\workflows\release.yml
 	common.props = common.props
 	.dockerignore = .dockerignore
-	docker-compose.yml = docker-compose.yml
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{242D1C9F-ADE6-4B87-B0F3-DA18742937FA}"
