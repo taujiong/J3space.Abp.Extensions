@@ -3,6 +3,7 @@
     "J3space.Auth": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "https://j3space.dev",
       "applicationUrl": "https://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
