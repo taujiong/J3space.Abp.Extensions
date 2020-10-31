@@ -252,3 +252,6 @@ paket-files/
 # secret
 **/secrets.json
 tempkey.rsa
+
+env/dev/mysql
+env/dev/ssl
