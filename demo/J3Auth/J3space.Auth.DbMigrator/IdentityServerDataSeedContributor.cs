@@ -120,6 +120,7 @@ namespace J3space.Auth.DbMigrator
                 if (client.FindRedirectUri(clientUrl) == null)
                 {
                     client.AddRedirectUri(clientUrl);
+                    client.AddRedirectUri($"{clientUrl}/swagger/oauth2-redirect.html");
                 }
             }
 
