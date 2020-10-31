@@ -1,4 +1,7 @@
 @page
+@inject ISettingProvider SettingProvider
+@using Volo.Abp.Settings
+@using Volo.Abp.Account.Settings
 @using Volo.Abp.AspNetCore.Mvc.UI.Alerts
 @using System.Text.Encodings.Web
 @model J3space.Abp.Account.Web.Pages.Account.LoginModel
@@ -82,12 +85,15 @@
   }
 
   <div class="has-text-centered">
-    <a asp-page="/Account/Register"
-       asp-route-returnUrl="@Model.ReturnUrl"
-       asp-route-returnUrlHash="@Model.ReturnUrlHash"
-       class="is-size-6 mx-1">
-      @L["Register"]
-    </a>
+    @if (await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled))
+    {
+      <a asp-page="/Account/Register"
+         asp-route-returnUrl="@Model.ReturnUrl"
+         asp-route-returnUrlHash="@Model.ReturnUrlHash"
+         class="is-size-6 mx-1">
+        @L["Register"]
+      </a>
+    }
     <a asp-page="./Login"
        asp-page-handler="Cancel"
        asp-route-returnUrl="@Model.ReturnUrl"
