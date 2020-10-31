@@ -1,12 +1,14 @@
 ﻿using System.Linq;
 using AutoMapper;
+using IdentityServer4.Models;
 using J3space.Abp.IdentityServer.ApiResources.Dto;
 using J3space.Abp.IdentityServer.Clients.Dto;
 using J3space.Abp.IdentityServer.IdentityResources.Dto;
 using Volo.Abp.AutoMapper;
-using Volo.Abp.IdentityServer.ApiResources;
 using Volo.Abp.IdentityServer.Clients;
-using Volo.Abp.IdentityServer.IdentityResources;
+using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
+using Client = Volo.Abp.IdentityServer.Clients.Client;
+using IdentityResource = Volo.Abp.IdentityServer.IdentityResources.IdentityResource;
 
 namespace J3space.Abp.IdentityServer
 {
@@ -36,7 +38,10 @@ namespace J3space.Abp.IdentityServer
                     opt => opt.MapFrom(src => src.AllowedScopes.Select(x => x.Scope))
                 );
 
-            CreateMap<ClientSecret, ClientSecretDto>().ReverseMap();
+            CreateMap<ClientSecret, ClientSecretDto>()
+                .ReverseMap()
+                .ForPath(des => des.Value,
+                    opt => opt.MapFrom(src => HashExtensions.Sha256(src.Value)));
             CreateMap<ClientProperty, ClientPropertyDto>().ReverseMap();
             CreateMap<ClientClaim, ClientClaimDto>().ReverseMap();
 

@@ -121,11 +121,6 @@ namespace J3space.Auth.DbMigrator
                 {
                     client.AddRedirectUri(clientUrl);
                 }
-
-                if (client.FindCorsOrigin(clientUrl) == null)
-                {
-                    client.AddCorsOrigin(clientUrl);
-                }
             }
 
             foreach (var scope in scopes)
