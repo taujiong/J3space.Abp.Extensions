@@ -37,12 +37,14 @@ namespace J3space.Auth.Web
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+#if DEBUG
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.AddJsonFile("secrets.json",
                         true,
                         true);
                 })
+#endif
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
                 .UseAutofac()
                 .UseSerilog();
