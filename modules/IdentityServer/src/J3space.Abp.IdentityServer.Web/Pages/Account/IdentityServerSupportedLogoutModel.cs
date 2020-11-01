@@ -38,12 +38,12 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
 
             if (ReturnUrl != null)
             {
-                return Redirect(ReturnUrl);
+                return RedirectSafely(ReturnUrl, ReturnUrlHash);
             }
 
             Logger.LogInformation(
-                $"{nameof(IdentityServerSupportedLogoutModel)} couldn't find postLogoutUri... Redirecting to:/Account/Login..");
-            return RedirectToPage("/");
+                $"{nameof(IdentityServerSupportedLogoutModel)} couldn't find postLogoutUri... Redirecting to the index page");
+            return RedirectSafely(ReturnUrl, ReturnUrlHash);
         }
     }
 }
