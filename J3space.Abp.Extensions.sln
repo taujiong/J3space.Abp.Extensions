@@ -5,8 +5,6 @@ ProjectSection(SolutionItems) = preProject
 	.gitignore = .gitignore
 	README.md = README.md
 	LICENSE = LICENSE
-	.github\workflows\main.yml = .github\workflows\dev.yml
-	.github\workflows\release.yml = .github\workflows\release.yml
 	common.props = common.props
 	.dockerignore = .dockerignore
 EndProjectSection
