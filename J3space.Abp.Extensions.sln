@@ -37,8 +37,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.IdentityServer.Application.Test", "modules\IdentityServer\test\J3space.Abp.IdentityServer.Application.Test\J3space.Abp.IdentityServer.Application.Test.csproj", "{19DCBE68-B65E-4FB0-BA71-647CDFB78CA0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{4040EA66-1662-4721-9CF2-5D4E7FAD77B4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SettingManagement", "SettingManagement", "{2A3DFA0C-A7BD-4052-BD41-4FB833A79AB4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{175DEFBD-F98B-49F6-A91A-45C88BF7BBD5}"
@@ -56,42 +54,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.TestBase", "modules\SettingManagement\test\J3space.Abp.SettingManagement.TestBase\J3space.Abp.SettingManagement.TestBase.csproj", "{5912F2D3-DA4E-4117-8167-4A5443A028B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Abp.SettingManagement.Application.Test", "modules\SettingManagement\test\J3space.Abp.SettingManagement.Application.Test\J3space.Abp.SettingManagement.Application.Test.csproj", "{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "J3Auth", "J3Auth", "{B4860E51-9B7D-4B94-9E2B-941FEB7C98D0}"
-ProjectSection(SolutionItems) = preProject
-	demo\J3Auth\Dockerfile = demo\J3Auth\Dockerfile
-EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Auth.EntityFrameworkCore", "demo\J3Auth\J3space.Auth.EntityFrameworkCore\J3space.Auth.EntityFrameworkCore.csproj", "{E0702BBE-EDFE-4B14-918A-83B00A952089}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Auth.EntityFrameworkCore.DbMigrations", "demo\J3Auth\J3space.Auth.EntityFrameworkCore.DbMigrations\J3space.Auth.EntityFrameworkCore.DbMigrations.csproj", "{208A5CE3-B33E-4045-9308-4A53811266AF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Auth.DbMigrator", "demo\J3Auth\J3space.Auth.DbMigrator\J3space.Auth.DbMigrator.csproj", "{79F12353-CCEF-4789-9A7F-81C6BA2093DF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Auth.Web", "demo\J3Auth\J3space.Auth.Web\J3space.Auth.Web.csproj", "{DD9A8BB3-DE26-44BF-B119-73CCBFC3C1D9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "J3Admin", "J3Admin", "{6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}"
-ProjectSection(SolutionItems) = preProject
-	demo\J3Admin\Dockerfile = demo\J3Admin\Dockerfile
-EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.Domain.Shared", "demo\J3Admin\J3space.Admin.Domain.Shared\J3space.Admin.Domain.Shared.csproj", "{564AE9C4-3169-4C1F-B902-5178DE736C51}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.Domain", "demo\J3Admin\J3space.Admin.Domain\J3space.Admin.Domain.csproj", "{E3535966-7A18-47FC-B6E3-0CEF4BD669CD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.Application.Contracts", "demo\J3Admin\J3space.Admin.Application.Contracts\J3space.Admin.Application.Contracts.csproj", "{BA7A997A-CAF7-4BD4-8659-79A8544D4CA4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.Application", "demo\J3Admin\J3space.Admin.Application\J3space.Admin.Application.csproj", "{F3C88D8B-30DA-418F-8CA2-2D792E91AF64}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.EntityFrameworkCore", "demo\J3Admin\J3space.Admin.EntityFrameworkCore\J3space.Admin.EntityFrameworkCore.csproj", "{6A69A9B4-3FF7-4567-99EC-EE881DBC74DB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.EntityFrameworkCore.DbMigrations", "demo\J3Admin\J3space.Admin.EntityFrameworkCore.DbMigrations\J3space.Admin.EntityFrameworkCore.DbMigrations.csproj", "{16652C7E-3DD2-42EC-BBC5-44D517136971}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.DbMigrator", "demo\J3Admin\J3space.Admin.DbMigrator\J3space.Admin.DbMigrator.csproj", "{076A6DDF-E296-45A9-9AD0-7FE1DA818527}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.HttpApi", "demo\J3Admin\J3space.Admin.HttpApi\J3space.Admin.HttpApi.csproj", "{3DFF0C15-96C5-4FBA-9426-738B37BF0CFB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin.HttpApi.Host", "demo\J3Admin\J3space.Admin.HttpApi.Host\J3space.Admin.HttpApi.Host.csproj", "{32ECDA27-EB8C-4922-BD7C-07FEC0532C97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,21 +82,6 @@ Global
 		{7241D649-ECEF-4829-AFE4-428FFD6715EC} = {2A3DFA0C-A7BD-4052-BD41-4FB833A79AB4}
 		{5912F2D3-DA4E-4117-8167-4A5443A028B4} = {7241D649-ECEF-4829-AFE4-428FFD6715EC}
 		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126} = {7241D649-ECEF-4829-AFE4-428FFD6715EC}
-		{B4860E51-9B7D-4B94-9E2B-941FEB7C98D0} = {4040EA66-1662-4721-9CF2-5D4E7FAD77B4}
-		{E0702BBE-EDFE-4B14-918A-83B00A952089} = {B4860E51-9B7D-4B94-9E2B-941FEB7C98D0}
-		{208A5CE3-B33E-4045-9308-4A53811266AF} = {B4860E51-9B7D-4B94-9E2B-941FEB7C98D0}
-		{79F12353-CCEF-4789-9A7F-81C6BA2093DF} = {B4860E51-9B7D-4B94-9E2B-941FEB7C98D0}
-		{DD9A8BB3-DE26-44BF-B119-73CCBFC3C1D9} = {B4860E51-9B7D-4B94-9E2B-941FEB7C98D0}
-		{6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5} = {4040EA66-1662-4721-9CF2-5D4E7FAD77B4}
-		{564AE9C4-3169-4C1F-B902-5178DE736C51} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
-		{E3535966-7A18-47FC-B6E3-0CEF4BD669CD} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
-		{BA7A997A-CAF7-4BD4-8659-79A8544D4CA4} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
-		{F3C88D8B-30DA-418F-8CA2-2D792E91AF64} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
-		{6A69A9B4-3FF7-4567-99EC-EE881DBC74DB} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
-		{16652C7E-3DD2-42EC-BBC5-44D517136971} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
-		{076A6DDF-E296-45A9-9AD0-7FE1DA818527} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
-		{3DFF0C15-96C5-4FBA-9426-738B37BF0CFB} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
-		{32ECDA27-EB8C-4922-BD7C-07FEC0532C97} = {6651D5D2-1427-45CC-AC0D-C97A8A0AF4F5}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{19003593-6A06-4926-8440-E41E74C219F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -193,57 +140,5 @@ Global
 		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0702BBE-EDFE-4B14-918A-83B00A952089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0702BBE-EDFE-4B14-918A-83B00A952089}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0702BBE-EDFE-4B14-918A-83B00A952089}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0702BBE-EDFE-4B14-918A-83B00A952089}.Release|Any CPU.Build.0 = Release|Any CPU
-		{208A5CE3-B33E-4045-9308-4A53811266AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{208A5CE3-B33E-4045-9308-4A53811266AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{208A5CE3-B33E-4045-9308-4A53811266AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{208A5CE3-B33E-4045-9308-4A53811266AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79F12353-CCEF-4789-9A7F-81C6BA2093DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79F12353-CCEF-4789-9A7F-81C6BA2093DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79F12353-CCEF-4789-9A7F-81C6BA2093DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79F12353-CCEF-4789-9A7F-81C6BA2093DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD9A8BB3-DE26-44BF-B119-73CCBFC3C1D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD9A8BB3-DE26-44BF-B119-73CCBFC3C1D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD9A8BB3-DE26-44BF-B119-73CCBFC3C1D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD9A8BB3-DE26-44BF-B119-73CCBFC3C1D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{564AE9C4-3169-4C1F-B902-5178DE736C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{564AE9C4-3169-4C1F-B902-5178DE736C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{564AE9C4-3169-4C1F-B902-5178DE736C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{564AE9C4-3169-4C1F-B902-5178DE736C51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3535966-7A18-47FC-B6E3-0CEF4BD669CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3535966-7A18-47FC-B6E3-0CEF4BD669CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3535966-7A18-47FC-B6E3-0CEF4BD669CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3535966-7A18-47FC-B6E3-0CEF4BD669CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA7A997A-CAF7-4BD4-8659-79A8544D4CA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA7A997A-CAF7-4BD4-8659-79A8544D4CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA7A997A-CAF7-4BD4-8659-79A8544D4CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA7A997A-CAF7-4BD4-8659-79A8544D4CA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3C88D8B-30DA-418F-8CA2-2D792E91AF64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3C88D8B-30DA-418F-8CA2-2D792E91AF64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3C88D8B-30DA-418F-8CA2-2D792E91AF64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3C88D8B-30DA-418F-8CA2-2D792E91AF64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A69A9B4-3FF7-4567-99EC-EE881DBC74DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A69A9B4-3FF7-4567-99EC-EE881DBC74DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A69A9B4-3FF7-4567-99EC-EE881DBC74DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A69A9B4-3FF7-4567-99EC-EE881DBC74DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16652C7E-3DD2-42EC-BBC5-44D517136971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16652C7E-3DD2-42EC-BBC5-44D517136971}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16652C7E-3DD2-42EC-BBC5-44D517136971}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16652C7E-3DD2-42EC-BBC5-44D517136971}.Release|Any CPU.Build.0 = Release|Any CPU
-		{076A6DDF-E296-45A9-9AD0-7FE1DA818527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{076A6DDF-E296-45A9-9AD0-7FE1DA818527}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{076A6DDF-E296-45A9-9AD0-7FE1DA818527}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{076A6DDF-E296-45A9-9AD0-7FE1DA818527}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3DFF0C15-96C5-4FBA-9426-738B37BF0CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DFF0C15-96C5-4FBA-9426-738B37BF0CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DFF0C15-96C5-4FBA-9426-738B37BF0CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DFF0C15-96C5-4FBA-9426-738B37BF0CFB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{32ECDA27-EB8C-4922-BD7C-07FEC0532C97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32ECDA27-EB8C-4922-BD7C-07FEC0532C97}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32ECDA27-EB8C-4922-BD7C-07FEC0532C97}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32ECDA27-EB8C-4922-BD7C-07FEC0532C97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
