@@ -1,0 +1,63 @@
+﻿@page
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.Account.Localization
+@using Volo.Abp.Users
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject ICurrentUser CurrentUser
+@inject IStringLocalizer<AccountResource> L
+
+@{
+  Layout = "_Layout";
+}
+
+@section Head
+{
+  <link asp-append-version="true"
+        href="~/common/bulma.css"
+        rel="stylesheet">
+  <link asp-append-version="true"
+        href="~/pages/index/index.css"
+        rel="stylesheet">
+}
+
+<section class="hero is-fullheight">
+  <div class="video-container">
+    <video autoplay
+           loop
+           muted
+           src="https://6a33-j3space-1712dd-1258451814.tcb.qcloud.la/night-cut.mp4?sign=416c78f4f6db31521b19220d6b7e558f&t=1603554273">
+    </video>
+  </div>
+
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div>
+        <time class="has-text-grey-lighter is-size-1"
+              id="time">
+        </time>
+      </div>
+
+      @if (!CurrentUser.IsAuthenticated)
+      {
+        <a asp-page="/Account/Login"
+           class="button is-light mt-2">
+          @L["Login"]
+        </a>
+      }
+      else
+      {
+        <h1 class="has-text-grey-lighter is-size-4">
+          <span id="greeting"></span>
+          <span id="name">@CurrentUser.UserName</span>
+        </h1>
+        <a asp-page="/Account/Logout"
+           class="button is-light mt-5">
+          @L["Logout"]
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<script src="~/pages/index/index.js"
+        type="text/javascript"></script>
