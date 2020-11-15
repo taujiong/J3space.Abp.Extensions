@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "applications", "application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Auth", "applications\J3space.Auth\J3space.Auth.csproj", "{402B4892-C495-4512-AB07-56F8F467F671}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "J3space.Admin", "applications\J3space.Admin\J3space.Admin.csproj", "{674EBECF-4CB8-4325-A7DF-3EBB7A88D18F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,7 @@ Global
 		{5912F2D3-DA4E-4117-8167-4A5443A028B4} = {7241D649-ECEF-4829-AFE4-428FFD6715EC}
 		{1D0EA3FB-C3DF-42FA-BB9F-CA83FD9E7126} = {7241D649-ECEF-4829-AFE4-428FFD6715EC}
 		{402B4892-C495-4512-AB07-56F8F467F671} = {7D2AA76E-0E57-4A9C-8850-DE40B224CBD1}
+		{674EBECF-4CB8-4325-A7DF-3EBB7A88D18F} = {7D2AA76E-0E57-4A9C-8850-DE40B224CBD1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{19003593-6A06-4926-8440-E41E74C219F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -147,5 +150,9 @@ Global
 		{402B4892-C495-4512-AB07-56F8F467F671}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{402B4892-C495-4512-AB07-56F8F467F671}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{402B4892-C495-4512-AB07-56F8F467F671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{674EBECF-4CB8-4325-A7DF-3EBB7A88D18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{674EBECF-4CB8-4325-A7DF-3EBB7A88D18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{674EBECF-4CB8-4325-A7DF-3EBB7A88D18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{674EBECF-4CB8-4325-A7DF-3EBB7A88D18F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
