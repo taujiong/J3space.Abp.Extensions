@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
 using Volo.Abp.Autofac;
+using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
@@ -27,6 +28,7 @@ using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Threading;
 
 namespace J3space.Admin
 {
@@ -167,16 +169,26 @@ namespace J3space.Admin
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Admin API");
+
+                var swaggerSection = configuration.GetSection("SeedData:IdentityServer:Clients:Swagger");
                 options.OAuthConfigObject = new OAuthConfigObject
                 {
-                    ClientId = configuration["AuthServer:Audience"],
-                    ClientSecret = configuration["AuthServer:ClientSecret"],
+                    ClientId = swaggerSection["ClientId"],
+                    ClientSecret = swaggerSection["ClientSecret"],
                     AppName = configuration["AuthServer:Audience"]
                 };
             });
 
             app.UseAuditing();
             app.UseConfiguredEndpoints();
+
+            AsyncHelper.RunSync(async () =>
+            {
+                using var scope = context.ServiceProvider.CreateScope();
+                await scope.ServiceProvider
+                    .GetRequiredService<IDataSeeder>()
+                    .SeedAsync();
+            });
         }
     }
 }
