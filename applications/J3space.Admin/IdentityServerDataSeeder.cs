@@ -124,6 +124,7 @@ namespace J3space.Admin
         {
             var client = await _clientRepository.FindByCliendIdAsync(name);
             if (client == null)
+            {
                 client = await _clientRepository.InsertAsync(
                     new Client(
                         _guidGenerator.Create(),
@@ -145,32 +146,33 @@ namespace J3space.Admin
                     true
                 );
 
-            foreach (var scope in scopes)
-                if (client.FindScope(scope) == null)
-                    client.AddScope(scope);
+                foreach (var scope in scopes)
+                    if (client.FindScope(scope) == null)
+                        client.AddScope(scope);
 
-            foreach (var grantType in grantTypes)
-                if (client.FindGrantType(grantType) == null)
-                    client.AddGrantType(grantType);
+                foreach (var grantType in grantTypes)
+                    if (client.FindGrantType(grantType) == null)
+                        client.AddGrantType(grantType);
 
-            if (client.FindSecret(secret) == null) client.AddSecret(secret);
+                if (client.FindSecret(secret) == null) client.AddSecret(secret);
 
-            if (redirectUri != null)
-                if (client.FindRedirectUri(redirectUri) == null)
-                    client.AddRedirectUri(redirectUri);
+                if (redirectUri != null)
+                    if (client.FindRedirectUri(redirectUri) == null)
+                        client.AddRedirectUri(redirectUri);
 
-            if (postLogoutRedirectUri != null)
-                if (client.FindPostLogoutRedirectUri(postLogoutRedirectUri) == null)
-                    client.AddPostLogoutRedirectUri(postLogoutRedirectUri);
+                if (postLogoutRedirectUri != null)
+                    if (client.FindPostLogoutRedirectUri(postLogoutRedirectUri) == null)
+                        client.AddPostLogoutRedirectUri(postLogoutRedirectUri);
 
-            if (permissions != null)
-                await _permissionDataSeeder.SeedAsync(
-                    ClientPermissionValueProvider.ProviderName,
-                    name,
-                    permissions
-                );
+                if (permissions != null)
+                    await _permissionDataSeeder.SeedAsync(
+                        ClientPermissionValueProvider.ProviderName,
+                        name,
+                        permissions
+                    );
 
-            await _clientRepository.UpdateAsync(client);
+                await _clientRepository.UpdateAsync(client);
+            }
         }
     }
 }
