@@ -107,7 +107,14 @@ namespace J3space.Auth
             // 确保 Abp.Mailing.Smtp.Password 的 setting 值被加密
             var settingManager = context.ServiceProvider.GetService<SettingManager>();
             var smtpPasswordName = EmailSettingNames.Smtp.Password;
-            var password = configuration[$"Settings:{smtpPasswordName}"];
+
+            /* 需要加密的内容不能放在 appsettings.json 的 Settings 下面
+             * 因为在加密过程中会依次查询该 SettingProvider 次序之前（优先级更低）的设置项是否存在该字段的值并进行比较
+             * 当在 GlobalProvider 设置值，程序会在 ConfigurationProvider 发现该字段的未加密内容
+             * 由于 appsettings.json 中保存的是未加密的值，所以进行解密操作时会报错
+             */
+            // TODO: 寻找更优的获取方式
+            var password = "password_should_be_here";
             settingManager.SetGlobalAsync(smtpPasswordName, password);
 
             if (env.IsDevelopment())
