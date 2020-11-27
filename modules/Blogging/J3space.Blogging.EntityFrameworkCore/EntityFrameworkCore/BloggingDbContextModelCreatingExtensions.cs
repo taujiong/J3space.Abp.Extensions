@@ -25,12 +25,12 @@ namespace J3space.Blogging.EntityFrameworkCore
             {
                 //Configure table & schema name
                 b.ToTable(options.TablePrefix + "Questions", options.Schema);
-            
+
                 b.ConfigureByConvention();
-            
+
                 //Properties
                 b.Property(q => q.Title).IsRequired().HasMaxLength(QuestionConsts.MaxTitleLength);
-                
+
                 //Relations
                 b.HasMany(question => question.Tags).WithOne().HasForeignKey(qt => qt.QuestionId);
 
