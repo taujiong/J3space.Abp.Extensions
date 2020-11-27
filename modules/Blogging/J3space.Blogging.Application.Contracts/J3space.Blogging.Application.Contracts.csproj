@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\..\common.props"/>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>J3space.Blogging</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.Authorization" Version="3.3.1"/>
+    <ProjectReference Include="..\J3space.Blogging.Domain.Shared\J3space.Blogging.Domain.Shared.csproj"/>
+  </ItemGroup>
+
+</Project>
