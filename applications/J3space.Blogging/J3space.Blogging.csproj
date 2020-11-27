@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\modules\Blogging\J3space.Blogging.Application\J3space.Blogging.Application.csproj"/>
+    <ProjectReference Include="..\..\modules\Blogging\J3space.Blogging.EntityFrameworkCore\J3space.Blogging.EntityFrameworkCore.csproj"/>
+    <ProjectReference Include="..\..\modules\Blogging\J3space.Blogging.HttpApi\J3space.Blogging.HttpApi.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0"/>
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
+    <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.Autofac" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="3.3.1"/>
+  </ItemGroup>
+
+</Project>

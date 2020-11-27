@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using J3space.Abp.IdentityServer;
-using J3space.Abp.SettingManagement;
+using J3space.Blogging.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
@@ -15,46 +14,20 @@ using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.Autofac;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.FeatureManagement;
-using Volo.Abp.FeatureManagement.EntityFrameworkCore;
-using Volo.Abp.Identity;
-using Volo.Abp.Identity.EntityFrameworkCore;
-using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.PermissionManagement;
-using Volo.Abp.PermissionManagement.EntityFrameworkCore;
-using Volo.Abp.PermissionManagement.HttpApi;
-using Volo.Abp.SettingManagement.EntityFrameworkCore;
-using Volo.Abp.TenantManagement;
-using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 
-namespace J3space.Admin
+namespace J3space.Blogging
 {
     [DependsOn(
         typeof(AbpAutofacModule),
-        typeof(AbpFeatureManagementApplicationModule),
-        typeof(AbpFeatureManagementEntityFrameworkCoreModule),
-        typeof(AbpFeatureManagementHttpApiModule),
-        typeof(AbpIdentityApplicationModule),
-        typeof(AbpIdentityEntityFrameworkCoreModule),
-        typeof(AbpIdentityHttpApiModule),
-        typeof(AbpIdentityServerApplicationModule),
-        typeof(AbpIdentityServerEntityFrameworkCoreModule),
-        typeof(AbpIdentityServerHttpApiModule),
-        typeof(AbpPermissionManagementApplicationModule),
-        typeof(AbpPermissionManagementEntityFrameworkCoreModule),
-        typeof(AbpPermissionManagementHttpApiModule),
-        typeof(AbpSettingManagementApplicationModule),
-        typeof(AbpSettingManagementEntityFrameworkCoreModule),
-        typeof(AbpSettingManagementHttpApiModule),
-        typeof(AbpTenantManagementApplicationModule),
-        typeof(AbpTenantManagementEntityFrameworkCoreModule),
-        typeof(AbpTenantManagementHttpApiModule)
+        typeof(BloggingApplicationModule),
+        typeof(BloggingEntityFrameworkCoreModule),
+        typeof(BloggingHttpApiModule)
     )]
-    public class J3AdminModule : AbpModule
+    public class J3BloggingModule : AbpModule
     {
         private const string DefaultCorsPolicyName = "Default";
 
@@ -90,9 +63,9 @@ namespace J3space.Admin
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "J3space Admin Api",
+                    Title = "J3space Blogging Api",
                     Description =
-                        "Contains feature management, identity, identity server, permission management, setting management and multi-tenant management",
+                        "Management of blog system",
                     Version = "v1"
                 });
                 options.DocInclusionPredicate((docName, description) => true);
@@ -111,7 +84,7 @@ namespace J3space.Admin
                             TokenUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"J3Admin", "Manage all the settings for the authorization server"}
+                                {"J3Blogging", "Manage all the settings for the blogging server"}
                             }
                         }
                     }
@@ -124,7 +97,7 @@ namespace J3space.Admin
                         {
                             Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "J3Auth"}
                         },
-                        new[] {"J3Admin"}
+                        new[] {"J3Blogging"}
                     }
                 });
             });
@@ -173,11 +146,10 @@ namespace J3space.Admin
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Admin API");
 
-                var swaggerSection = configuration.GetSection("SeedData:IdentityServer:Clients:AdminSwagger");
                 options.OAuthConfigObject = new OAuthConfigObject
                 {
-                    ClientId = swaggerSection["ClientId"],
-                    ClientSecret = swaggerSection["ClientSecret"],
+                    ClientId = configuration["AuthServer:ClientId"],
+                    ClientSecret = configuration["AuthServer:ClientSecret"],
                     AppName = configuration["AuthServer:Audience"]
                 };
             });
