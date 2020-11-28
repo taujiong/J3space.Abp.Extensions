@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace J3space.Blogging.Posts.Dto
 {
-    public class PostWithDetailDto : FullAuditedEntityDto<Guid>
+    public class PostWithDetailDto : AuditedEntityDto<Guid>
     {
         public string Title { get; set; }
         public string Content { get; set; }
