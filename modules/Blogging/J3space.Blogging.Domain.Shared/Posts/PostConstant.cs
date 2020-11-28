@@ -1,6 +1,6 @@
 ﻿namespace J3space.Blogging.Posts
 {
-    public static class PostConsts
+    public static class PostConstant
     {
         /// <summary>
         /// Default value: 512

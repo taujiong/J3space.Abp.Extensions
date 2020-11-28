@@ -14,9 +14,7 @@ namespace J3space.Blogging.EntityFrameworkCore
         {
             context.Services.AddAbpDbContext<BloggingDbContext>(options =>
             {
-                /* Add custom repositories here. Example:
-                 * options.AddRepository<Question, EfCoreQuestionRepository>();
-                 */
+                context.Services.AddAbpDbContext<BloggingDbContext>();
             });
         }
     }

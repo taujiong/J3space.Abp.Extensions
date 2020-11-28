@@ -1,6 +1,6 @@
 ﻿namespace J3space.Blogging.Tags
 {
-    public static class TagConsts
+    public static class TagConstant
     {
         /// <summary>
         /// Default value: 64
