@@ -118,50 +118,10 @@ namespace J3space.Blogging.Migrations
                     .ValueGeneratedOnAdd()
                     .HasColumnType("char(36)");
 
-                b.Property<string>("ConcurrencyStamp")
-                    .IsConcurrencyToken()
-                    .HasColumnName("ConcurrencyStamp")
-                    .HasColumnType("varchar(40) CHARACTER SET utf8mb4")
-                    .HasMaxLength(40);
-
-                b.Property<DateTime>("CreationTime")
-                    .HasColumnName("CreationTime")
-                    .HasColumnType("datetime(6)");
-
-                b.Property<Guid?>("CreatorId")
-                    .HasColumnName("CreatorId")
-                    .HasColumnType("char(36)");
-
-                b.Property<Guid?>("DeleterId")
-                    .HasColumnName("DeleterId")
-                    .HasColumnType("char(36)");
-
-                b.Property<DateTime?>("DeletionTime")
-                    .HasColumnName("DeletionTime")
-                    .HasColumnType("datetime(6)");
-
                 b.Property<string>("Description")
                     .HasColumnName("Description")
                     .HasColumnType("varchar(512) CHARACTER SET utf8mb4")
                     .HasMaxLength(512);
-
-                b.Property<string>("ExtraProperties")
-                    .HasColumnName("ExtraProperties")
-                    .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                b.Property<bool>("IsDeleted")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("IsDeleted")
-                    .HasColumnType("tinyint(1)")
-                    .HasDefaultValue(false);
-
-                b.Property<DateTime?>("LastModificationTime")
-                    .HasColumnName("LastModificationTime")
-                    .HasColumnType("datetime(6)");
-
-                b.Property<Guid?>("LastModifierId")
-                    .HasColumnName("LastModifierId")
-                    .HasColumnType("char(36)");
 
                 b.Property<string>("Name")
                     .IsRequired()

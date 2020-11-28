@@ -1,12 +1,13 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Volo.Abp;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Domain.Entities;
 
 namespace J3space.Blogging.Tags
 {
-    public class Tag : FullAuditedAggregateRoot<Guid>
+    public class Tag : BasicAggregateRoot<Guid>
     {
+        // TODO: 保证 Name 的唯一性，去除 Description
         protected Tag()
         {
         }

@@ -62,9 +62,10 @@ namespace J3space.Blogging.Posts
 
             var tagList = SplitTags(input.Tags);
             await AddNewTags(tagList, post);
-            await _postRepository.InsertAsync(post);
+            var newPost = await _postRepository.InsertAsync(post);
 
-            return ObjectMapper.Map<Post, PostWithDetailDto>(post);
+            // Bug: 返回中不包含 tag 和 审计信息
+            return ObjectMapper.Map<Post, PostWithDetailDto>(newPost);
         }
 
         public async Task<PostWithDetailDto> UpdateAsync(Guid id, PostUpdateDto input)
@@ -78,9 +79,9 @@ namespace J3space.Blogging.Posts
             var tagList = SplitTags(input.Tags);
             await RemoveOldTags(tagList, post);
             await AddNewTags(tagList, post);
-            await _postRepository.UpdateAsync(post);
+            var newPost = await _postRepository.UpdateAsync(post);
 
-            return ObjectMapper.Map<Post, PostWithDetailDto>(post);
+            return ObjectMapper.Map<Post, PostWithDetailDto>(newPost);
         }
 
         public async Task DeleteAsync(Guid id)
