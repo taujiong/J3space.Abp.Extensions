@@ -1,4 +1,6 @@
-﻿using Volo.Abp.Data;
+﻿using J3space.Blogging.Posts;
+using MongoDB.Driver;
+using Volo.Abp.Data;
 using Volo.Abp.MongoDB;
 
 namespace J3space.Blogging.MongoDB
@@ -6,9 +8,8 @@ namespace J3space.Blogging.MongoDB
     [ConnectionStringName(BloggingDbProperties.ConnectionStringName)]
     public class BloggingMongoDbContext : AbpMongoDbContext, IBloggingMongoDbContext
     {
-        /* Add mongo collections here. Example:
-         * public IMongoCollection<Question> Questions => Collection<Question>();
-         */
+        public IMongoCollection<Post> Posts => Collection<Post>();
+        public IMongoCollection<Tags.Tag> Tags => Collection<Tags.Tag>();
 
         protected override void CreateModel(IMongoModelBuilder modelBuilder)
         {

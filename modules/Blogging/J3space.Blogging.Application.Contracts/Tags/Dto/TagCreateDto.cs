@@ -6,11 +6,11 @@ namespace J3space.Blogging.Tags.Dto
     public class TagCreateDto
     {
         [Required]
-        [DynamicStringLength(typeof(TagConsts), nameof(TagConsts.MaxNameLength))]
+        [DynamicStringLength(typeof(TagConstant), nameof(TagConstant.MaxNameLength))]
         public string Name { get; set; }
 
         [Required]
-        [DynamicStringLength(typeof(TagConsts), nameof(TagConsts.MaxDescriptionLength))]
+        [DynamicStringLength(typeof(TagConstant), nameof(TagConstant.MaxDescriptionLength))]
         public string Description { get; set; }
     }
 }

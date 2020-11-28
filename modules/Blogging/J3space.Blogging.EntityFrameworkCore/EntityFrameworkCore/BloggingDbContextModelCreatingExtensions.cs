@@ -1,6 +1,9 @@
 ﻿using System;
+using J3space.Blogging.Posts;
+using J3space.Blogging.Tags;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace J3space.Blogging.EntityFrameworkCore
 {
@@ -19,25 +22,53 @@ namespace J3space.Blogging.EntityFrameworkCore
 
             optionsAction?.Invoke(options);
 
-            /* Configure all entities here. Example:
-
-            builder.Entity<Question>(b =>
+            builder.Entity<Post>(b =>
             {
-                //Configure table & schema name
-                b.ToTable(options.TablePrefix + "Questions", options.Schema);
+                b.ToTable(options.TablePrefix + "Posts", options.Schema);
 
                 b.ConfigureByConvention();
 
-                //Properties
-                b.Property(q => q.Title).IsRequired().HasMaxLength(QuestionConsts.MaxTitleLength);
+                b.Property(p => p.Title)
+                    .IsRequired()
+                    .HasMaxLength(PostConstant.MaxTitleLength)
+                    .HasColumnName(nameof(Post.Title));
+                b.Property(p => p.Description)
+                    .HasMaxLength(PostConstant.MaxDescriptionLength)
+                    .HasColumnName(nameof(Post.Description));
+                b.Property(p => p.Content)
+                    .IsRequired()
+                    .HasMaxLength(PostConstant.MaxContentLength)
+                    .HasColumnName(nameof(Post.Content));
 
-                //Relations
-                b.HasMany(question => question.Tags).WithOne().HasForeignKey(qt => qt.QuestionId);
-
-                //Indexes
-                b.HasIndex(q => q.CreationTime);
+                b.HasMany(p => p.Tags).WithOne().HasForeignKey(pt => pt.PostId);
             });
-            */
+
+            builder.Entity<Tag>(b =>
+            {
+                b.ToTable(options.TablePrefix + "Tags", options.Schema);
+
+                b.ConfigureByConvention();
+
+                b.Property(x => x.Name).IsRequired().HasMaxLength(TagConstant.MaxNameLength)
+                    .HasColumnName(nameof(Tag.Name));
+                b.Property(x => x.Description).HasMaxLength(TagConstant.MaxDescriptionLength)
+                    .HasColumnName(nameof(Tag.Description));
+                b.Property(x => x.UsageCount).HasColumnName(nameof(Tag.UsageCount));
+
+                b.HasMany<PostTag>().WithOne().HasForeignKey(pt => pt.TagId);
+            });
+
+            builder.Entity<PostTag>(b =>
+            {
+                b.ToTable(options.TablePrefix + "PostTags", options.Schema);
+
+                b.ConfigureByConvention();
+
+                b.Property(x => x.PostId).HasColumnName(nameof(PostTag.PostId));
+                b.Property(x => x.TagId).HasColumnName(nameof(PostTag.TagId));
+
+                b.HasKey(x => new {x.PostId, x.TagId});
+            });
         }
     }
 }

@@ -6,16 +6,16 @@ namespace J3space.Blogging.Posts.Dto
     public class PostUpdateDto
     {
         [Required]
-        [DynamicStringLength(typeof(PostConsts), nameof(PostConsts.MaxTitleLength))]
+        [DynamicStringLength(typeof(PostConstant), nameof(PostConstant.MaxTitleLength))]
         public string Title { get; set; }
 
         [Required]
-        [DynamicStringLength(typeof(PostConsts), nameof(PostConsts.MaxContentLength))]
+        [DynamicStringLength(typeof(PostConstant), nameof(PostConstant.MaxContentLength))]
         public string Content { get; set; }
 
         public string Tags { get; set; }
 
-        [DynamicStringLength(typeof(PostConsts), nameof(PostConsts.MaxDescriptionLength))]
+        [DynamicStringLength(typeof(PostConstant), nameof(PostConstant.MaxDescriptionLength))]
         public string Description { get; set; }
     }
 }
