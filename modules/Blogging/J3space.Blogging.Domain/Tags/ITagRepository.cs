@@ -10,5 +10,6 @@ namespace J3space.Blogging.Tags
     {
         Task<List<Tag>> GetListAsync(IEnumerable<Guid> ids);
         Task DecreaseUsageCountOfTagsAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+        Task<Tag> FindByNameAsync(string tagName);
     }
 }

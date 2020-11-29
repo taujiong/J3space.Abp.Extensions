@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using J3space.Blogging.Posts;
 using J3space.Blogging.Posts.Dto;
@@ -51,6 +52,13 @@ namespace J3space.Blogging
         public Task DeleteAsync(Guid id)
         {
             return _postAppService.DeleteAsync(id);
+        }
+
+        [HttpGet]
+        [Route("by-tag/{tagName}")]
+        public Task<List<PostDto>> GetPostsByTag(string tagName)
+        {
+            return _postAppService.GetPostsByTag(tagName);
         }
     }
 }
