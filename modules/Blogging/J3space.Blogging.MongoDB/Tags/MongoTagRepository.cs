@@ -35,5 +35,10 @@ namespace J3space.Blogging.Tags
                 await UpdateAsync(tag, cancellationToken: GetCancellationToken(cancellationToken));
             }
         }
+
+        public async Task<Tag> FindByNameAsync(string tagName)
+        {
+            return await GetMongoQueryable().FirstOrDefaultAsync(t => t.Name == tagName);
+        }
     }
 }

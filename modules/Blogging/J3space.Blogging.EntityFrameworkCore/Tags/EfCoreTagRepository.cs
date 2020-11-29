@@ -32,5 +32,10 @@ namespace J3space.Blogging.Tags
                 tag.DecreaseUsageCount();
             }
         }
+
+        public async Task<Tag> FindByNameAsync(string tagName)
+        {
+            return await DbSet.FirstOrDefaultAsync(t => t.Name == tagName);
+        }
     }
 }

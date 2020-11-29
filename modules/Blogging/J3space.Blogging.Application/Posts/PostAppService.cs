@@ -91,6 +91,27 @@ namespace J3space.Blogging.Posts
             await _postRepository.DeleteAsync(id);
         }
 
+        public async Task<List<PostDto>> GetPostsByTag(string tagName)
+        {
+            var posts = await _postRepository.GetListAsync();
+            var postDtos = new List<PostDto>(ObjectMapper.Map<List<Post>, List<PostDto>>(posts));
+
+            foreach (var postDto in postDtos)
+            {
+                postDto.Tags = await GetTagsFromPost(postDto.Id);
+            }
+
+            var tag = tagName.IsNullOrWhiteSpace() ? null : await _tagRepository.FindByNameAsync(tagName);
+            if (tag != null)
+            {
+                return postDtos
+                    .Where(p => p.Tags.Any(t => t.Id == tag.Id))
+                    .ToList();
+            }
+
+            return null;
+        }
+
         private async Task<List<TagDto>> GetTagsFromPost(Guid postId)
         {
             var tagIds = (await _postRepository.GetAsync(postId)).Tags;
