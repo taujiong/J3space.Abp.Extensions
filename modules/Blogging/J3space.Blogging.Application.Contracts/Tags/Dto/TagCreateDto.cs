@@ -8,9 +8,5 @@ namespace J3space.Blogging.Tags.Dto
         [Required]
         [DynamicStringLength(typeof(TagConstant), nameof(TagConstant.MaxNameLength))]
         public string Name { get; set; }
-
-        [Required]
-        [DynamicStringLength(typeof(TagConstant), nameof(TagConstant.MaxDescriptionLength))]
-        public string Description { get; set; }
     }
 }

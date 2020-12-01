@@ -153,6 +153,7 @@ namespace J3space.Blogging.Posts
 
         private async Task RemoveOldTags(ICollection<string> newTags, Post post)
         {
+            var decreaseUsageCountTagIdList = new List<Guid>();
             foreach (var oldTag in post.Tags.ToList())
             {
                 var tag = await _tagRepository.GetAsync(oldTag.TagId);
@@ -162,15 +163,15 @@ namespace J3space.Blogging.Posts
                 if (oldTagNameInNewTags == null)
                 {
                     post.RemoveTag(oldTag.TagId);
-
-                    tag.DecreaseUsageCount();
-                    await _tagRepository.UpdateAsync(tag);
+                    decreaseUsageCountTagIdList.Add(oldTag.TagId);
                 }
                 else
                 {
                     newTags.Remove(oldTagNameInNewTags);
                 }
             }
+
+            await _tagRepository.DecreaseUsageCountOfTagsAsync(decreaseUsageCountTagIdList);
         }
     }
 }

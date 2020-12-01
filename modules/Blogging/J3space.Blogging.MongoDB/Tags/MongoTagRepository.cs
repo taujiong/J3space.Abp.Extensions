@@ -18,6 +18,11 @@ namespace J3space.Blogging.Tags
         {
         }
 
+        public async Task<List<Tag>> GetListAsync()
+        {
+            return await GetMongoQueryable().ToListAsync();
+        }
+
         public async Task<List<Tag>> GetListAsync(IEnumerable<Guid> ids)
         {
             return await GetMongoQueryable().Where(t => ids.Contains(t.Id)).ToListAsync();

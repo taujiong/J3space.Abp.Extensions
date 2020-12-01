@@ -7,22 +7,19 @@ namespace J3space.Blogging.Tags
 {
     public class Tag : BasicAggregateRoot<Guid>
     {
-        // TODO: 保证 Name 的唯一性，去除 Description
+        // TODO: 保证 Name 的唯一性
         protected Tag()
         {
         }
 
-        public Tag(Guid id, [NotNull] string name, int usageCount = 0, string description = null)
+        public Tag(Guid id, [NotNull] string name, int usageCount = 0)
         {
             Id = id;
             Name = Check.NotNullOrWhiteSpace(name, nameof(name));
-            Description = description;
             UsageCount = usageCount;
         }
 
         public virtual string Name { get; protected set; }
-
-        public virtual string Description { get; protected set; }
 
         public virtual int UsageCount { get; protected internal set; }
 
@@ -50,11 +47,6 @@ namespace J3space.Blogging.Tags
             }
 
             UsageCount -= number;
-        }
-
-        public virtual void SetDescription(string description)
-        {
-            Description = description;
         }
     }
 }

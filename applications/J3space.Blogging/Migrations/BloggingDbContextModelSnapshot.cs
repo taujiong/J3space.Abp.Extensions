@@ -118,11 +118,6 @@ namespace J3space.Blogging.Migrations
                     .ValueGeneratedOnAdd()
                     .HasColumnType("char(36)");
 
-                b.Property<string>("Description")
-                    .HasColumnName("Description")
-                    .HasColumnType("varchar(512) CHARACTER SET utf8mb4")
-                    .HasMaxLength(512);
-
                 b.Property<string>("Name")
                     .IsRequired()
                     .HasColumnName("Name")
