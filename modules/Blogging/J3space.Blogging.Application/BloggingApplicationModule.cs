@@ -1,15 +1,17 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Application;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.BlobStoring;
 using Volo.Abp.Modularity;
 
 namespace J3space.Blogging
 {
     [DependsOn(
-        typeof(BloggingDomainModule),
-        typeof(BloggingApplicationContractsModule),
+        typeof(AbpAutoMapperModule),
         typeof(AbpDddApplicationModule),
-        typeof(AbpAutoMapperModule)
+        typeof(AbpBlobStoringModule),
+        typeof(BloggingDomainModule),
+        typeof(BloggingApplicationContractsModule)
     )]
     public class BloggingApplicationModule : AbpModule
     {
