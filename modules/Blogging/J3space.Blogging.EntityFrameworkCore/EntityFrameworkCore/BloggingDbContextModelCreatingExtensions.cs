@@ -51,8 +51,6 @@ namespace J3space.Blogging.EntityFrameworkCore
 
                 b.Property(x => x.Name).IsRequired().HasMaxLength(TagConstant.MaxNameLength)
                     .HasColumnName(nameof(Tag.Name));
-                b.Property(x => x.Description).HasMaxLength(TagConstant.MaxDescriptionLength)
-                    .HasColumnName(nameof(Tag.Description));
                 b.Property(x => x.UsageCount).HasColumnName(nameof(Tag.UsageCount));
 
                 b.HasMany<PostTag>().WithOne().HasForeignKey(pt => pt.TagId);

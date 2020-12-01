@@ -16,6 +16,7 @@ namespace J3space.Blogging
             CreateMap<Post, PostWithDetailDto>()
                 .Ignore(p => p.Tags);
             CreateMap<Tag, TagDto>();
+            CreateMap<Tag, TagListDto>();
         }
     }
 }

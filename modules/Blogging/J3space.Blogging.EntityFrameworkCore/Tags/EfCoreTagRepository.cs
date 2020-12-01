@@ -16,6 +16,11 @@ namespace J3space.Blogging.Tags
         {
         }
 
+        public async Task<List<Tag>> GetListAsync()
+        {
+            return await DbSet.ToListAsync();
+        }
+
         public async Task<List<Tag>> GetListAsync(IEnumerable<Guid> ids)
         {
             return await DbSet.Where(t => ids.Contains(t.Id)).ToListAsync();
@@ -30,6 +35,10 @@ namespace J3space.Blogging.Tags
             foreach (var tag in tags)
             {
                 tag.DecreaseUsageCount();
+                if (tag.UsageCount <= 0)
+                {
+                    await DeleteAsync(tag.Id, cancellationToken: GetCancellationToken(cancellationToken));
+                }
             }
         }
 
