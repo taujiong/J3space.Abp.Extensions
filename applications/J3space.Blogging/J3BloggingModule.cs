@@ -12,6 +12,8 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.Autofac;
+using Volo.Abp.BlobStoring;
+using Volo.Abp.BlobStoring.FileSystem;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Localization;
@@ -23,19 +25,26 @@ namespace J3space.Blogging
 {
     [DependsOn(
         typeof(AbpAutofacModule),
+        typeof(AbpBlobStoringFileSystemModule),
         typeof(BloggingApplicationModule),
         typeof(BloggingEntityFrameworkCoreModule),
         typeof(BloggingHttpApiModule)
     )]
     public class J3BloggingModule : AbpModule
     {
-        private const string DefaultCorsPolicyName = "Default";
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var configuration = context.Services.GetConfiguration();
 
             Configure<AbpAntiForgeryOptions>(options => { options.AutoValidate = false; });
+
+            Configure<AbpBlobStoringOptions>(options =>
+            {
+                options.Containers.Configure<BloggingFileBlobContainer>(container =>
+                {
+                    container.UseFileSystem(fs => { fs.BasePath = configuration["Blob:J3Blogging"]; });
+                });
+            });
 
             Configure<AbpDbContextOptions>(options => { options.UseMySQL(); });
 
@@ -104,7 +113,7 @@ namespace J3space.Blogging
 
             context.Services.AddCors(options =>
             {
-                options.AddPolicy(DefaultCorsPolicyName, builder =>
+                options.AddDefaultPolicy(builder =>
                 {
                     builder
                         .WithOrigins(
@@ -137,7 +146,7 @@ namespace J3space.Blogging
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
-            app.UseCors(DefaultCorsPolicyName);
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 

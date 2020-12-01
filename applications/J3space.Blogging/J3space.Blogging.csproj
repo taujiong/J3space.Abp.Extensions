@@ -21,6 +21,7 @@
     <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="3.3.1"/>
     <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="3.3.1"/>
     <PackageReference Include="Volo.Abp.Autofac" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.BlobStoring.FileSystem" Version="3.3.1"/>
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="3.3.1"/>
   </ItemGroup>
 
