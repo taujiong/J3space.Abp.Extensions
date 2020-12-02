@@ -79,7 +79,7 @@ namespace J3space.Gateway
                         {
                             Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "J3Auth"}
                         },
-                        new[] {"J3Blogging"}
+                        new[] {"J3Admin", "J3Auth", "J3Blogging"}
                     }
                 });
             });
