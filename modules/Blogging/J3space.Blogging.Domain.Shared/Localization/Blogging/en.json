@@ -1,7 +1,11 @@
 {
   "culture": "en",
   "texts": {
-    "ManageYourProfile": "Manage your profile",
-    "SamplePageMessage": "A sample page for the Blogging module"
+    "Permission:Blogging": "Blog Management",
+    "Permission:Posts": "Post Management",
+    "Permission:Blobs": "Blob Management",
+    "Permission:Edit": "Edit",
+    "Permission:Delete": "Delete",
+    "Permission:Create": "Create"
   }
 }

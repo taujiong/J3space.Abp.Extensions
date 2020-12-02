@@ -19,6 +19,7 @@ using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 
 namespace J3space.Blogging
@@ -26,6 +27,7 @@ namespace J3space.Blogging
     [DependsOn(
         typeof(AbpAutofacModule),
         typeof(AbpBlobStoringFileSystemModule),
+        typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(BloggingApplicationModule),
         typeof(BloggingEntityFrameworkCoreModule),
         typeof(BloggingHttpApiModule)
