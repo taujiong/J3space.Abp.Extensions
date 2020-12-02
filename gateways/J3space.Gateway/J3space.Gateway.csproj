@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ocelot" Version="16.0.1"/>
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0"/>
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
+    <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.Autofac" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.Identity.HttpApi" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi" Version="3.3.1"/>
+    <PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="3.3.1"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\modules\Blogging\J3space.Blogging.HttpApi\J3space.Blogging.HttpApi.csproj"/>
+    <ProjectReference Include="..\..\modules\IdentityServer\src\J3space.Abp.IdentityServer.HttpApi\J3space.Abp.IdentityServer.HttpApi.csproj"/>
+    <ProjectReference Include="..\..\modules\SettingManagement\src\J3space.Abp.SettingManagement.HttpApi\J3space.Abp.SettingManagement.HttpApi.csproj"/>
+  </ItemGroup>
+
+</Project>
