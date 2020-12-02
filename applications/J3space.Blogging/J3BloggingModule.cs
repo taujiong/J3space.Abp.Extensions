@@ -11,6 +11,8 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
+using Volo.Abp.Auditing;
+using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.BlobStoring.FileSystem;
@@ -26,6 +28,7 @@ using Volo.Abp.Threading;
 namespace J3space.Blogging
 {
     [DependsOn(
+        typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpAutofacModule),
         typeof(AbpBlobStoringFileSystemModule),
         typeof(AbpEntityFrameworkCoreMySQLModule),
@@ -41,6 +44,8 @@ namespace J3space.Blogging
             var configuration = context.Services.GetConfiguration();
 
             Configure<AbpAntiForgeryOptions>(options => { options.AutoValidate = false; });
+
+            Configure<AbpAuditingOptions>(options => { options.ApplicationName = "J3Blogging"; });
 
             Configure<AbpBlobStoringOptions>(options =>
             {
@@ -169,7 +174,10 @@ namespace J3space.Blogging
 
             app.UseAuditing();
             app.UseConfiguredEndpoints();
+        }
 
+        public override void OnPostApplicationInitialization(ApplicationInitializationContext context)
+        {
             AsyncHelper.RunSync(async () =>
             {
                 using var scope = context.ServiceProvider.CreateScope();

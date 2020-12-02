@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
-using Volo.Abp.IdentityServer.EntityFrameworkCore;
+using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
 namespace J3space.Auth.EfCore
@@ -18,7 +18,7 @@ namespace J3space.Auth.EfCore
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ConfigureIdentity();
-            modelBuilder.ConfigureIdentityServer();
+            modelBuilder.ConfigurePermissionManagement();
             modelBuilder.ConfigureTenantManagement();
         }
     }

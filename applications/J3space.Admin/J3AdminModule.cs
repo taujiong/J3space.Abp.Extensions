@@ -12,49 +12,42 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
+using Volo.Abp.Auditing;
+using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
-using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.PermissionManagement;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
-using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
-using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 
 namespace J3space.Admin
 {
     [DependsOn(
+        typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpAutofacModule),
         typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpFeatureManagementApplicationModule),
         typeof(AbpFeatureManagementEntityFrameworkCoreModule),
         typeof(AbpFeatureManagementHttpApiModule),
-        typeof(AbpIdentityApplicationModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
-        typeof(AbpIdentityHttpApiModule),
         typeof(AbpIdentityServerApplicationModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpIdentityServerHttpApiModule),
-        typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
-        typeof(AbpPermissionManagementHttpApiModule),
         typeof(AbpSettingManagementApplicationModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementHttpApiModule),
-        typeof(AbpTenantManagementApplicationModule),
-        typeof(AbpTenantManagementEntityFrameworkCoreModule),
-        typeof(AbpTenantManagementHttpApiModule)
+        typeof(AbpTenantManagementEntityFrameworkCoreModule)
     )]
     public class J3AdminModule : AbpModule
     {
@@ -65,6 +58,8 @@ namespace J3space.Admin
             var configuration = context.Services.GetConfiguration();
 
             Configure<AbpAntiForgeryOptions>(options => { options.AutoValidate = false; });
+
+            Configure<AbpAuditingOptions>(options => { options.ApplicationName = "J3Admin"; });
 
             Configure<AbpDbContextOptions>(options => { options.UseMySQL(); });
 
@@ -94,7 +89,7 @@ namespace J3space.Admin
                 {
                     Title = "J3space Admin Api",
                     Description =
-                        "Contains feature management, identity, identity server, permission management, setting management and multi-tenant management",
+                        "Contains audit logging, feature management, identity server and setting management",
                     Version = "v1"
                 });
                 options.DocInclusionPredicate((docName, description) => true);
@@ -113,7 +108,7 @@ namespace J3space.Admin
                             TokenUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"J3Admin", "Manage all the settings for the authorization server"}
+                                {"J3Admin", "Manage the features, identity server resources and settings"}
                             }
                         }
                     }
@@ -186,7 +181,10 @@ namespace J3space.Admin
 
             app.UseAuditing();
             app.UseConfiguredEndpoints();
+        }
 
+        public override void OnPostApplicationInitialization(ApplicationInitializationContext context)
+        {
             AsyncHelper.RunSync(async () =>
             {
                 using var scope = context.ServiceProvider.CreateScope();
