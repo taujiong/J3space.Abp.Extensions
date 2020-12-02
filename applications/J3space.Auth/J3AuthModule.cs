@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using J3space.Abp.IdentityServer.Web;
 using J3space.Auth.EfCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.AspNetCore.MultiTenancy;
@@ -116,37 +113,6 @@ namespace J3space.Auth
                     Version = "v1"
                 });
                 options.DocInclusionPredicate((docName, description) => true);
-
-                options.AddSecurityDefinition("J3Auth", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.OAuth2,
-                    BearerFormat = JwtBearerDefaults.AuthenticationScheme,
-                    In = ParameterLocation.Header,
-                    Name = "Authorization",
-                    Flows = new OpenApiOAuthFlows
-                    {
-                        AuthorizationCode = new OpenApiOAuthFlow
-                        {
-                            AuthorizationUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/authorize"),
-                            TokenUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                {"J3Auth", "Manage the identity, tenancy and permission"}
-                            }
-                        }
-                    }
-                });
-
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "J3Auth"}
-                        },
-                        new[] {"J3Auth"}
-                    }
-                });
             });
 
             context.Services.AddCors(options =>
@@ -207,13 +173,6 @@ namespace J3space.Auth
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Authorization API");
-
-                options.OAuthConfigObject = new OAuthConfigObject
-                {
-                    ClientId = configuration["AuthServer:ClientId"],
-                    ClientSecret = configuration["AuthServer:ClientSecret"],
-                    AppName = configuration["AuthServer:Audience"]
-                };
             });
 
             app.UseCors(DefaultCorsPolicyName);
