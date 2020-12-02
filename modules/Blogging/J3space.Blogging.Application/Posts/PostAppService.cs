@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using J3space.Blogging.Permissions;
 using J3space.Blogging.Posts.Dto;
 using J3space.Blogging.Tags;
 using J3space.Blogging.Tags.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 
 namespace J3space.Blogging.Posts
 {
+    [Authorize(BloggingPermissions.Posts.Default)]
     public class PostAppService : BloggingAppService, IPostAppService
     {
         private readonly IPostRepository _postRepository;
@@ -51,6 +54,7 @@ namespace J3space.Blogging.Posts
             };
         }
 
+        [Authorize(BloggingPermissions.Posts.Create)]
         public async Task<PostWithDetailDto> CreateAsync(PostCreateDto input)
         {
             // TODO: Title 是否可以重复？
@@ -68,6 +72,7 @@ namespace J3space.Blogging.Posts
             return ObjectMapper.Map<Post, PostWithDetailDto>(newPost);
         }
 
+        [Authorize(BloggingPermissions.Posts.Update)]
         public async Task<PostWithDetailDto> UpdateAsync(Guid id, PostUpdateDto input)
         {
             var post = await _postRepository.GetAsync(id);
@@ -84,6 +89,7 @@ namespace J3space.Blogging.Posts
             return ObjectMapper.Map<Post, PostWithDetailDto>(newPost);
         }
 
+        [Authorize(BloggingPermissions.Posts.Delete)]
         public async Task DeleteAsync(Guid id)
         {
             var tags = await GetTagsFromPost(id);

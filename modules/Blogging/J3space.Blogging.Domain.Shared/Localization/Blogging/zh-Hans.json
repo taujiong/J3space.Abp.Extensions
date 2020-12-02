@@ -1,7 +1,11 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "ManageYourProfile": "管理个人资料",
-    "SamplePageMessage": "Blogging模块的示例页面"
+    "Permission:Blogging": "博客管理",
+    "Permission:Posts": "文章管理",
+    "Permission:Blobs": "附件管理",
+    "Permission:Create": "创建",
+    "Permission:Delete": "删除",
+    "Permission:Edit": "编辑"
   }
 }
