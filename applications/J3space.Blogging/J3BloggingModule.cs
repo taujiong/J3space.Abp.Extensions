@@ -16,6 +16,7 @@ using Volo.Abp.BlobStoring;
 using Volo.Abp.BlobStoring.FileSystem;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
@@ -27,6 +28,7 @@ namespace J3space.Blogging
     [DependsOn(
         typeof(AbpAutofacModule),
         typeof(AbpBlobStoringFileSystemModule),
+        typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(BloggingApplicationModule),
         typeof(BloggingEntityFrameworkCoreModule),
