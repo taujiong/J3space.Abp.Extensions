@@ -14,6 +14,8 @@ using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
+using Volo.Abp.Auditing;
+using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.MySQL;
@@ -30,11 +32,12 @@ using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 
-namespace J3space.Gateway
+namespace J3space.Guard
 {
     [DependsOn(
         typeof(AbpAccountApplicationModule),
         typeof(AbpAspNetCoreMultiTenancyModule),
+        typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpAutofacModule),
         typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpFeatureManagementApplicationModule),
@@ -53,13 +56,15 @@ namespace J3space.Gateway
         typeof(AbpTenantManagementHttpApiModule),
         typeof(BloggingHttpApiModule)
     )]
-    public class J3GatewayModule : AbpModule
+    public class J3GuardModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var configuration = context.Services.GetConfiguration();
 
             Configure<AbpAntiForgeryOptions>(options => { options.AutoValidate = false; });
+
+            Configure<AbpAuditingOptions>(options => { options.ApplicationName = "J3Guard"; });
 
             Configure<AbpDbContextOptions>(options => { options.UseMySQL(); });
 
@@ -104,7 +109,7 @@ namespace J3space.Gateway
                             Scopes = new Dictionary<string, string>
                             {
                                 {"J3Admin", "Manage the features, identity server resources and settings"},
-                                {"J3Auth", "Manage the identity, tenancy and permission"},
+                                {"J3Guard", "Manage the identity, tenancy and permission"},
                                 {"J3Blogging", "Manage all the settings for the blogging server"}
                             }
                         }
@@ -118,7 +123,7 @@ namespace J3space.Gateway
                         {
                             Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "J3Auth"}
                         },
-                        new[] {"J3Admin", "J3Auth", "J3Blogging"}
+                        new[] {"J3Admin", "J3Guard", "J3Blogging"}
                     }
                 });
             });

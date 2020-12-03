@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-namespace J3space.Gateway
+namespace J3space.Guard
 {
     public class Program
     {
@@ -18,20 +18,20 @@ namespace J3space.Gateway
 #endif
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
-                .Enrich.WithProperty("Application", "J3Gateway")
+                .Enrich.WithProperty("Application", "J3Guard")
                 .Enrich.FromLogContext()
                 .WriteTo.Async(c => c.Console())
                 .CreateLogger();
 
             try
             {
-                Log.Information("Starting J3Gateway.");
+                Log.Information("Starting J3Guard.");
                 CreateHostBuilder(args).Build().Run();
                 return 0;
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "J3Gateway terminated unexpectedly!");
+                Log.Fatal(ex, "J3Guard terminated unexpectedly!");
                 return 1;
             }
             finally
