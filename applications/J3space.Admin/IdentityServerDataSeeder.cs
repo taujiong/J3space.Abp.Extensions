@@ -63,7 +63,7 @@ namespace J3space.Admin
             };
 
             await CreateApiResourceAsync("J3Admin", commonApiUserClaims);
-            await CreateApiResourceAsync("J3Auth", commonApiUserClaims);
+            await CreateApiResourceAsync("J3Guard", commonApiUserClaims);
             await CreateApiResourceAsync("J3Blogging", commonApiUserClaims);
         }
 
