@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using J3space.Abp.IdentityServer;
-using J3space.Abp.SettingManagement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
+using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -18,8 +15,8 @@ using Volo.Abp.Autofac;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.MySQL;
-using Volo.Abp.FeatureManagement;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
+using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.Localization;
@@ -27,6 +24,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
+using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 
@@ -34,20 +32,21 @@ namespace J3space.Admin
 {
     [DependsOn(
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
+        typeof(AbpAspNetCoreMultiTenancyModule),
         typeof(AbpAutofacModule),
         typeof(AbpEntityFrameworkCoreMySQLModule),
-        typeof(AbpFeatureManagementApplicationModule),
         typeof(AbpFeatureManagementEntityFrameworkCoreModule),
-        typeof(AbpFeatureManagementHttpApiModule),
+        typeof(AbpIdentityApplicationModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
+        typeof(AbpIdentityHttpApiModule),
         typeof(AbpIdentityServerApplicationModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpIdentityServerHttpApiModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
-        typeof(AbpSettingManagementApplicationModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
-        typeof(AbpSettingManagementHttpApiModule),
-        typeof(AbpTenantManagementEntityFrameworkCoreModule)
+        typeof(AbpTenantManagementApplicationModule),
+        typeof(AbpTenantManagementEntityFrameworkCoreModule),
+        typeof(AbpTenantManagementHttpApiModule)
     )]
     public class J3AdminModule : AbpModule
     {
@@ -82,49 +81,6 @@ namespace J3space.Admin
                     options.RequireHttpsMetadata = bool.Parse(configuration["AuthServer:RequireHttpsMetadata"]);
                     options.Audience = configuration["AuthServer:Audience"];
                 });
-
-            context.Services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "J3space Admin Api",
-                    Description =
-                        "Contains audit logging, feature management, identity server and setting management",
-                    Version = "v1"
-                });
-                options.DocInclusionPredicate((docName, description) => true);
-
-                options.AddSecurityDefinition("J3Auth", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.OAuth2,
-                    BearerFormat = JwtBearerDefaults.AuthenticationScheme,
-                    In = ParameterLocation.Header,
-                    Name = "Authorization",
-                    Flows = new OpenApiOAuthFlows
-                    {
-                        AuthorizationCode = new OpenApiOAuthFlow
-                        {
-                            AuthorizationUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/authorize"),
-                            TokenUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                {"J3Admin", "Manage the features, identity server resources and settings"}
-                            }
-                        }
-                    }
-                });
-
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "J3Auth"}
-                        },
-                        new[] {"J3Admin"}
-                    }
-                });
-            });
 
             context.Services.AddCors(options =>
             {
@@ -165,19 +121,10 @@ namespace J3space.Admin
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
+            if (bool.Parse(configuration["MultiTenancy"]))
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Admin API");
-
-                var swaggerSection = configuration.GetSection("SeedData:IdentityServer:Clients:AdminSwagger");
-                options.OAuthConfigObject = new OAuthConfigObject
-                {
-                    ClientId = swaggerSection["ClientId"],
-                    ClientSecret = swaggerSection["ClientSecret"],
-                    AppName = configuration["AuthServer:Audience"]
-                };
-            });
+                app.UseMultiTenancy();
+            }
 
             app.UseAuditing();
             app.UseConfiguredEndpoints();

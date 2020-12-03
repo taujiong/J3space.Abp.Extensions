@@ -11,23 +11,45 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
+using Volo.Abp.Account;
+using Volo.Abp.AspNetCore.MultiTenancy;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.Autofac;
+using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.FeatureManagement;
+using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
+using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.PermissionManagement;
+using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.HttpApi;
+using Volo.Abp.PermissionManagement.Identity;
+using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 
 namespace J3space.Gateway
 {
     [DependsOn(
+        typeof(AbpAccountApplicationModule),
+        typeof(AbpAspNetCoreMultiTenancyModule),
         typeof(AbpAutofacModule),
+        typeof(AbpEntityFrameworkCoreMySQLModule),
+        typeof(AbpFeatureManagementApplicationModule),
+        typeof(AbpFeatureManagementEntityFrameworkCoreModule),
         typeof(AbpFeatureManagementHttpApiModule),
+        typeof(AbpIdentityEntityFrameworkCoreModule),
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpIdentityServerHttpApiModule),
-        typeof(AbpSettingManagementHttpApiModule),
+        typeof(AbpPermissionManagementApplicationModule),
+        typeof(AbpPermissionManagementDomainIdentityModule),
+        typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpPermissionManagementHttpApiModule),
+        typeof(AbpSettingManagementApplicationModule),
+        typeof(AbpSettingManagementEntityFrameworkCoreModule),
+        typeof(AbpSettingManagementHttpApiModule),
         typeof(AbpTenantManagementHttpApiModule),
         typeof(BloggingHttpApiModule)
     )]
@@ -37,7 +59,24 @@ namespace J3space.Gateway
         {
             var configuration = context.Services.GetConfiguration();
 
-            Configure<AbpMultiTenancyOptions>(options => { options.IsEnabled = false; });
+            Configure<AbpAntiForgeryOptions>(options => { options.AutoValidate = false; });
+
+            Configure<AbpDbContextOptions>(options => { options.UseMySQL(); });
+
+            Configure<AbpMultiTenancyOptions>(options =>
+            {
+                options.IsEnabled = bool.Parse(configuration["MultiTenancy"]);
+            });
+
+            context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = configuration["AuthServer:Authority"];
+                    options.RequireHttpsMetadata = bool.Parse(configuration["AuthServer:RequireHttpsMetadata"]);
+                    options.Audience = configuration["AuthServer:Audience"];
+                });
+
+            context.Services.AddOcelot();
 
             context.Services.AddSwaggerGen(options =>
             {
@@ -83,8 +122,6 @@ namespace J3space.Gateway
                     }
                 });
             });
-
-            context.Services.AddOcelot();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -95,12 +132,14 @@ namespace J3space.Gateway
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
-            app.UseAbpClaimsMap();
 
             if (bool.Parse(configuration["MultiTenancy"]))
             {
-                // app.UseMultiTenancy();
+                app.UseMultiTenancy();
             }
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -116,16 +155,15 @@ namespace J3space.Gateway
             });
 
             app.MapWhen(
-                ctx => ctx.Request.Path.ToString().StartsWith("/api/abp/") ||
-                       ctx.Request.Path.ToString().StartsWith("/Abp/"),
-                app2 =>
-                {
-                    app2.UseRouting();
-                    app2.UseConfiguredEndpoints();
-                }
+                ctx =>
+                    ctx.Request.Path.ToString().StartsWith("/api/blogging/")
+                    || ctx.Request.Path.ToString().StartsWith("/api/identity/")
+                    || ctx.Request.Path.ToString().StartsWith("/api/ids/")
+                    || ctx.Request.Path.ToString().StartsWith("/api/multi-tenancy/"),
+                app2 => { app2.UseOcelot().Wait(); }
             );
 
-            app.UseOcelot().Wait();
+            app.UseConfiguredEndpoints();
         }
     }
 }
