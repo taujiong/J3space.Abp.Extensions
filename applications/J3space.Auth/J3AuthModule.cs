@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Linq;
 using J3space.Abp.IdentityServer.Web;
-using J3space.Auth.EfCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.AspNetCore.MultiTenancy;
@@ -15,24 +13,18 @@ using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
-using Volo.Abp.Data;
 using Volo.Abp.Emailing;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.MySQL;
-using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.PermissionManagement;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
-using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
-using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
-using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation.Urls;
 
 namespace J3space.Auth
@@ -44,18 +36,12 @@ namespace J3space.Auth
         typeof(AbpAspNetCoreMvcModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpEntityFrameworkCoreMySQLModule),
-        typeof(AbpIdentityApplicationModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
-        typeof(AbpIdentityHttpApiModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpIdentityServerWebModule),
-        typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
-        typeof(AbpPermissionManagementHttpApiModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
-        typeof(AbpTenantManagementApplicationModule),
-        typeof(AbpTenantManagementEntityFrameworkCoreModule),
-        typeof(AbpTenantManagementHttpApiModule)
+        typeof(AbpTenantManagementEntityFrameworkCoreModule)
     )]
     public class J3AuthModule : AbpModule
     {
@@ -86,8 +72,6 @@ namespace J3space.Auth
                 options.Applications["MVC"].RootUrl = configuration["App:RootUrl"];
             });
 
-            context.Services.AddAbpDbContext<AuthDbContext>(options => { options.AddDefaultRepositories(true); });
-
             context.Services.AddAuthentication()
                 .AddGitHub(options =>
                 {
@@ -102,18 +86,6 @@ namespace J3space.Auth
                     options.RequireHttpsMetadata = bool.Parse(configuration["AuthServer:RequireHttpsMetadata"]);
                     options.Audience = configuration["AuthServer:Audience"];
                 });
-
-            context.Services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "J3space Authorization Api",
-                    Description =
-                        "Contains identity, multi-tenant and permission management",
-                    Version = "v1"
-                });
-                options.DocInclusionPredicate((docName, description) => true);
-            });
 
             context.Services.AddCors(options =>
             {
@@ -159,45 +131,27 @@ namespace J3space.Auth
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAbpRequestLocalization();
+            app.UseCorrelationId();
+            app.UseVirtualFiles();
+            app.UseRouting();
+            app.UseCors(DefaultCorsPolicyName);
+
+            app.UseAuthentication();
+            // 用于 api 的身份认证
+            // 在正常的网页浏览时使用默认的认证方式进行用户登录态的判断。如果用户已经登录，则下面的中间件不执行关键逻辑
+            // 在 api 访问时，UseAuthentication 中间件一般无法获取到用户登录，此时执行下面的中间件进行基于 jwt 的验证方案（见第 99 行）
+            app.UseJwtTokenMiddleware();
+            app.UseIdentityServer();
+            app.UseAuthorization();
+
             if (bool.Parse(configuration["MultiTenancy"]))
             {
                 app.UseMultiTenancy();
             }
 
-            app.UseAbpRequestLocalization();
-            app.UseCorrelationId();
-            app.UseVirtualFiles();
-            app.UseRouting();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Authorization API");
-            });
-
-            app.UseCors(DefaultCorsPolicyName);
-            app.UseAuthentication();
-
-            // 用于 api 的身份认证
-            // 在正常的网页浏览时使用默认的认证方式进行用户登录态的判断。如果用户已经登录，则下面的中间件不执行关键逻辑
-            // 在 api 访问时，UseAuthentication 中间件一般无法获取到用户登录，此时执行下面的中间件进行基于 jwt 的验证方案（见第 99 行）
-            app.UseJwtTokenMiddleware();
-
-            app.UseIdentityServer();
-            app.UseAuthorization();
             app.UseAuditing();
             app.UseConfiguredEndpoints();
-        }
-
-        public override void OnPostApplicationInitialization(ApplicationInitializationContext context)
-        {
-            AsyncHelper.RunSync(async () =>
-            {
-                using var scope = context.ServiceProvider.CreateScope();
-                await scope.ServiceProvider
-                    .GetRequiredService<IDataSeeder>()
-                    .SeedAsync();
-            });
         }
     }
 }

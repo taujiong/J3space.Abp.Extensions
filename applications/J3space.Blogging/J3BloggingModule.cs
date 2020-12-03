@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using J3space.Blogging.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -7,9 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using Volo.Abp;
+using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -28,6 +26,7 @@ using Volo.Abp.Threading;
 namespace J3space.Blogging
 {
     [DependsOn(
+        typeof(AbpAspNetCoreMultiTenancyModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpAutofacModule),
         typeof(AbpBlobStoringFileSystemModule),
@@ -77,49 +76,6 @@ namespace J3space.Blogging
                     options.Audience = configuration["AuthServer:Audience"];
                 });
 
-            context.Services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "J3space Blogging Api",
-                    Description =
-                        "Management of blog system",
-                    Version = "v1"
-                });
-                options.DocInclusionPredicate((docName, description) => true);
-
-                options.AddSecurityDefinition("J3Auth", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.OAuth2,
-                    BearerFormat = JwtBearerDefaults.AuthenticationScheme,
-                    In = ParameterLocation.Header,
-                    Name = "Authorization",
-                    Flows = new OpenApiOAuthFlows
-                    {
-                        AuthorizationCode = new OpenApiOAuthFlow
-                        {
-                            AuthorizationUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/authorize"),
-                            TokenUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                {"J3Blogging", "Manage all the settings for the blogging server"}
-                            }
-                        }
-                    }
-                });
-
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "J3Auth"}
-                        },
-                        new[] {"J3Blogging"}
-                    }
-                });
-            });
-
             context.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -159,18 +115,10 @@ namespace J3space.Blogging
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
+            if (bool.Parse(configuration["MultiTenancy"]))
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Admin API");
-
-                options.OAuthConfigObject = new OAuthConfigObject
-                {
-                    ClientId = configuration["AuthServer:ClientId"],
-                    ClientSecret = configuration["AuthServer:ClientSecret"],
-                    AppName = configuration["AuthServer:Audience"]
-                };
-            });
+                app.UseMultiTenancy();
+            }
 
             app.UseAuditing();
             app.UseConfiguredEndpoints();
