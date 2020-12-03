@@ -177,6 +177,12 @@ namespace J3space.Auth
 
             app.UseCors(DefaultCorsPolicyName);
             app.UseAuthentication();
+
+            // 用于 api 的身份认证
+            // 在正常的网页浏览时使用默认的认证方式进行用户登录态的判断。如果用户已经登录，则下面的中间件不执行关键逻辑
+            // 在 api 访问时，UseAuthentication 中间件一般无法获取到用户登录，此时执行下面的中间件进行基于 jwt 的验证方案（见第 99 行）
+            app.UseJwtTokenMiddleware();
+
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseAuditing();
