@@ -89,7 +89,7 @@ namespace J3space.Guard
                 {
                     Title = "J3space Gateway Api",
                     Description =
-                        "Management of all the services",
+                        "Manage all the services of Abp and J3space",
                     Version = "v1"
                 });
                 options.DocInclusionPredicate((docName, description) => true);
@@ -108,9 +108,9 @@ namespace J3space.Guard
                             TokenUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"J3Admin", "Manage the features, identity server resources and settings"},
-                                {"J3Guard", "Manage the identity, tenancy and permission"},
-                                {"J3Blogging", "Manage all the settings for the blogging server"}
+                                {"J3Admin", "Manage the identity, identity server resources and tenancy of Abp system"},
+                                {"J3Guard", "Manage the features, permission and settings of Abp system"},
+                                {"J3Blogging", "Manage the blogging of J3space system"}
                             }
                         }
                     }
@@ -160,6 +160,7 @@ namespace J3space.Guard
             });
 
             app.MapWhen(
+                // TODO: 考虑扩展性
                 ctx =>
                     ctx.Request.Path.ToString().StartsWith("/api/blogging/")
                     || ctx.Request.Path.ToString().StartsWith("/api/identity/")
