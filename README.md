@@ -55,7 +55,7 @@ abp vnext 框架是 C# 平台优秀的开源项目，其模块化的设计，基
 
 1. 安装 docker，docker-compose 环境；安装 mkcert，用于本地 https 配置
 2. 修改本地 hosts 文件，将 j3space.dev 和 api.j3space.dev 指向 127.0.0.1
-3. cd ./env/dev/ssl && mkcert --install && mkcert j3space.dev && mkcert api.j3space.dev
+3. cd ./dockerize/dev/ssl && mkcert --install && mkcert j3space.dev && mkcert api.j3space.dev
 4. docker-compose up -d
 5. 运行 application 目录下的 J3space.Auth 项目，此时可在 https://j3space.dev 查看用户登录相关功能
 6. 克隆 [CodeLearner](https://github.com/taujiong/CodeLearner) 仓库

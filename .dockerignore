@@ -2,9 +2,7 @@ LICENSE
 **/*.md
 *.DotSettings.user
 .gitignore
-**/secrets.json
 .git/
-.github/
 .idea/
 images/
 **/obj/

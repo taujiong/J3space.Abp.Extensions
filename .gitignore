@@ -249,9 +249,6 @@ paket-files/
 .idea/
 *.sln.iml
 
-# secret
-**/secrets.json
 tempkey.rsa
-
-env/dev/mysql
-env/dev/ssl
+dockerize/**/mysql
+dockerize/**/ssl
