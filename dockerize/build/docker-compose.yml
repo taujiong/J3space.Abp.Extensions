@@ -1,0 +1,105 @@
+﻿version: "3.8"
+
+services:
+  web:
+    image: nginx
+    container_name: Nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./ssl:/ssl"
+    depends_on:
+      - guard
+
+  db:
+    image: mysql
+    container_name: MySQL
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./mysql:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: Pas5w0rd*
+
+  auth:
+    build:
+      context: ../../
+      dockerfile: applications/J3space.Auth/Dockerfile
+    image: taujiong/j3auth
+    container_name: J3Auth
+    volumes:
+      - "./j3auth/appsettings.json:/app/appsettings.json"
+      - "./ssl/j3auth.pfx:/j3auth.pfx"
+    expose:
+      - "443"
+    environment:
+      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=639ht2pzc2o0h6g
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/j3auth.pfx
+    depends_on:
+      - db
+
+  admin:
+    build:
+      context: ../../
+      dockerfile: applications/J3space.Admin/Dockerfile
+    image: taujiong/j3admin
+    container_name: J3Admin
+    volumes:
+      - "./j3admin/appsettings.json:/app/appsettings.json"
+      - "./ssl/j3admin.pfx:/j3admin.pfx"
+    expose:
+      - "443"
+    environment:
+      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=639ht2pzc2o0h6g
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/j3admin.pfx
+    depends_on:
+      - auth
+
+  blogging:
+    build:
+      context: ../../
+      dockerfile: applications/J3space.Blogging/Dockerfile
+    image: taujiong/j3blogging
+    container_name: J3Blogging
+    volumes:
+      - "./j3blogging/appsettings.json:/app/appsettings.json"
+      - "./j3blogging/blobs:/blobs"
+      - "./ssl/j3blogging.pfx:/j3blogging.pfx"
+    expose:
+      - "443"
+    environment:
+      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=639ht2pzc2o0h6g
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/j3blogging.pfx
+    depends_on:
+      - auth
+
+  guard:
+    build:
+      context: ../../
+      dockerfile: applications/J3space.Guard/Dockerfile
+    image: taujiong/j3blogging
+    container_name: J3Guard
+    volumes:
+      - "./j3blogging/appsettings.json:/app/appsettings.json"
+      - "./j3blogging/ocelot.json:/app/ocelot.json"
+      - "./ssl/j3guard.pfx:/j3guard.pfx"
+    expose:
+      - "443"
+    environment:
+      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=639ht2pzc2o0h6g
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/j3guard.pfx
+    depends_on:
+      - admin
+      - blogging
+
+networks:
+  default:
+    name: j3space
