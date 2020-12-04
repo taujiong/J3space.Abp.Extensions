@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using IdentityServer4.Configuration;
 using J3space.Abp.IdentityServer.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
@@ -54,6 +55,8 @@ namespace J3space.Auth
             Configure<AbpAuditingOptions>(options => { options.ApplicationName = "J3Auth"; });
 
             Configure<AbpDbContextOptions>(options => { options.UseMySQL(); });
+
+            Configure<IdentityServerOptions>(options => { options.IssuerUri = configuration["AuthServer:IssuerUri"]; });
 
             Configure<AbpLocalizationOptions>(options =>
             {
@@ -116,8 +119,7 @@ namespace J3space.Auth
              * 当在 GlobalProvider 设置值，程序会在 ConfigurationProvider 发现该字段的未加密内容
              * 由于 appsettings.json 中保存的是未加密的值，所以进行解密操作时会报错
              */
-            // TODO: 寻找更优的获取方式
-            var password = "password_should_be_here";
+            var password = configuration["AuthServer:EmailPassword"];
             settingManager.SetGlobalAsync(smtpPasswordName, password);
 
             if (env.IsDevelopment())

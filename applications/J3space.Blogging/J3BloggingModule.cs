@@ -74,6 +74,7 @@ namespace J3space.Blogging
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = bool.Parse(configuration["AuthServer:RequireHttpsMetadata"]);
                     options.Audience = configuration["AuthServer:Audience"];
+                    options.TokenValidationParameters.ValidIssuer = configuration["AuthServer:Authority"];
                 });
 
             context.Services.AddCors(options =>
