@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using J3space.Abp.IdentityServer;
+using J3space.Admin.EfCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
@@ -101,6 +102,8 @@ namespace J3space.Admin
                         .AllowCredentials();
                 });
             });
+
+            context.Services.AddAbpDbContext<AdminDbContext>(options => { options.AddDefaultRepositories(); });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -136,6 +139,10 @@ namespace J3space.Admin
             AsyncHelper.RunSync(async () =>
             {
                 using var scope = context.ServiceProvider.CreateScope();
+                await scope.ServiceProvider
+                    .GetRequiredService<AdminDbContext>()
+                    .Database
+                    .EnsureCreatedAsync();
                 await scope.ServiceProvider
                     .GetRequiredService<IDataSeeder>()
                     .SeedAsync();

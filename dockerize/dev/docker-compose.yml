@@ -3,7 +3,7 @@
 services:
   nginx:
     image: nginx
-    container_name: Nginx
+    container_name: Nginx_Dev
     ports:
       - "80:80"
       - "443:443"
@@ -14,7 +14,7 @@ services:
 
   db:
     image: mysql
-    container_name: MySQL
+    container_name: MySQL_Dev
     restart: always
     ports:
       - "3306:3306"

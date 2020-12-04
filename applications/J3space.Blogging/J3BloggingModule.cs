@@ -95,6 +95,8 @@ namespace J3space.Blogging
                         .AllowCredentials();
                 });
             });
+
+            context.Services.AddAbpDbContext<BloggingDbContext>(options => { options.AddDefaultRepositories(); });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -130,6 +132,10 @@ namespace J3space.Blogging
             AsyncHelper.RunSync(async () =>
             {
                 using var scope = context.ServiceProvider.CreateScope();
+                await scope.ServiceProvider
+                    .GetRequiredService<BloggingDbContext>()
+                    .Database
+                    .EnsureCreatedAsync();
                 await scope.ServiceProvider
                     .GetRequiredService<IDataSeeder>()
                     .SeedAsync();

@@ -12,6 +12,7 @@ services:
       - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
       - "./ssl:/ssl"
     depends_on:
+      - auth
       - guard
 
   db:
@@ -33,7 +34,7 @@ services:
     container_name: J3Auth
     volumes:
       - "./j3auth/appsettings.json:/app/appsettings.json"
-      - "./ssl/j3auth.pfx:/j3auth.pfx"
+      - "./ssl/trilliontang.work.pfx:/j3auth.pfx"
     expose:
       - "443"
     environment:
@@ -51,7 +52,7 @@ services:
     container_name: J3Admin
     volumes:
       - "./j3admin/appsettings.json:/app/appsettings.json"
-      - "./ssl/j3admin.pfx:/j3admin.pfx"
+      - "./ssl/trilliontang.work.pfx:/j3admin.pfx"
     expose:
       - "443"
     environment:
@@ -70,7 +71,7 @@ services:
     volumes:
       - "./j3blogging/appsettings.json:/app/appsettings.json"
       - "./j3blogging/blobs:/blobs"
-      - "./ssl/j3blogging.pfx:/j3blogging.pfx"
+      - "./ssl/trilliontang.work.pfx:/j3blogging.pfx"
     expose:
       - "443"
     environment:
@@ -84,12 +85,12 @@ services:
     build:
       context: ../../
       dockerfile: applications/J3space.Guard/Dockerfile
-    image: taujiong/j3blogging
+    image: taujiong/guard
     container_name: J3Guard
     volumes:
-      - "./j3blogging/appsettings.json:/app/appsettings.json"
-      - "./j3blogging/ocelot.json:/app/ocelot.json"
-      - "./ssl/j3guard.pfx:/j3guard.pfx"
+      - "./j3guard/appsettings.json:/app/appsettings.json"
+      - "./j3guard/ocelot.json:/app/ocelot.json"
+      - "./ssl/trilliontang.work.pfx:/j3guard.pfx"
     expose:
       - "443"
     environment:
