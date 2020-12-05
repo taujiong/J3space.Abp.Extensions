@@ -52,13 +52,10 @@ services:
     container_name: J3Admin
     volumes:
       - "./j3admin/appsettings.json:/app/appsettings.json"
-      - "./ssl/trilliontang.work.pfx:/j3admin.pfx"
     expose:
-      - "443"
+      - "80"
     environment:
-      - ASPNETCORE_URLS=https://+:443
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=639ht2pzc2o0h6g
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/j3admin.pfx
+      - ASPNETCORE_URLS=http://+:80
     depends_on:
       - auth
 
@@ -71,13 +68,10 @@ services:
     volumes:
       - "./j3blogging/appsettings.json:/app/appsettings.json"
       - "./j3blogging/blobs:/blobs"
-      - "./ssl/trilliontang.work.pfx:/j3blogging.pfx"
     expose:
-      - "443"
+      - "80"
     environment:
-      - ASPNETCORE_URLS=https://+:443
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=639ht2pzc2o0h6g
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/j3blogging.pfx
+      - ASPNETCORE_URLS=http://+:80
     depends_on:
       - auth
 

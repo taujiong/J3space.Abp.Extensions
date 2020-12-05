@@ -2,11 +2,11 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/blogging/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "blogging",
-          "Port": 443
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/blogging/{everything}",
@@ -19,11 +19,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/identity/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "admin",
-          "Port": 443
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/identity/{everything}",
@@ -36,11 +36,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/ids/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "admin",
-          "Port": 443
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/ids/{everything}",
@@ -53,11 +53,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/multi-tenancy/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "admin",
-          "Port": 443
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/multi-tenancy/{everything}",
