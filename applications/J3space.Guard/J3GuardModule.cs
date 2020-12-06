@@ -77,7 +77,7 @@ namespace J3space.Guard
                 .AddJwtBearer(options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = bool.Parse(configuration["AuthServer:RequireHttpsMetadata"]);
+                    options.RequireHttpsMetadata = false;
                     options.Audience = configuration["AuthServer:Audience"];
                     options.TokenValidationParameters.ValidIssuer = configuration["AuthServer:Authority"];
                 });
@@ -105,8 +105,8 @@ namespace J3space.Guard
                     {
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/authorize"),
-                            TokenUrl = new Uri($"{configuration["AuthServer:Authority"]}/connect/token"),
+                            AuthorizationUrl = new Uri($"{configuration["AuthServer:PublicHost"]}/connect/authorize"),
+                            TokenUrl = new Uri($"{configuration["AuthServer:PublicHost"]}/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
                                 {"J3Admin", "Manage the identity, identity server resources and tenancy of Abp system"},

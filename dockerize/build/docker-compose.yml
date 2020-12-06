@@ -34,13 +34,10 @@ services:
     container_name: J3Auth
     volumes:
       - "./j3auth/appsettings.json:/app/appsettings.json"
-      - "./ssl/trilliontang.work.pfx:/j3auth.pfx"
     expose:
-      - "443"
+      - "80"
     environment:
-      - ASPNETCORE_URLS=https://+:443
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=639ht2pzc2o0h6g
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/j3auth.pfx
+      - ASPNETCORE_URLS=http://+80
     depends_on:
       - db
 
@@ -84,13 +81,10 @@ services:
     volumes:
       - "./j3guard/appsettings.json:/app/appsettings.json"
       - "./j3guard/ocelot.json:/app/ocelot.json"
-      - "./ssl/trilliontang.work.pfx:/j3guard.pfx"
     expose:
-      - "443"
+      - "80"
     environment:
-      - ASPNETCORE_URLS=https://+:443
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=639ht2pzc2o0h6g
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/j3guard.pfx
+      - ASPNETCORE_URLS=http://+:80
     depends_on:
       - admin
       - blogging

@@ -79,7 +79,7 @@ namespace J3space.Admin
                 .AddJwtBearer(options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = bool.Parse(configuration["AuthServer:RequireHttpsMetadata"]);
+                    options.RequireHttpsMetadata = false;
                     options.Audience = configuration["AuthServer:Audience"];
                     options.TokenValidationParameters.ValidIssuer = configuration["AuthServer:Authority"];
                 });

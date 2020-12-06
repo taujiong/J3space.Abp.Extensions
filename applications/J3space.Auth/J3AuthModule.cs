@@ -4,6 +4,7 @@ using IdentityServer4.Configuration;
 using J3space.Abp.IdentityServer.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -126,6 +127,13 @@ namespace J3space.Auth
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // 程序运行在 http 时会设置 Cookie 的 SameSite=None
+            // 在 Chrome 这类浏览器上进行登录操作时无法将身份认证的 Cookie 保存到浏览器，导致登录不成功
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Lax
+            });
 
             app.UseAbpRequestLocalization();
             app.UseCorrelationId();
