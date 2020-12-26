@@ -8,14 +8,12 @@ namespace J3space.Abp.Account.Web.Models
 {
     public class ExternalProviderHelper
     {
-        private readonly AbpAccountOptions _accountOptions;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         public IEnumerable<ExternalProviderModel> VisibleExternalProviders { get; set; }
 
-        public ExternalProviderHelper(IAuthenticationSchemeProvider schemeProvider, AbpAccountOptions accountOptions)
+        public ExternalProviderHelper(IAuthenticationSchemeProvider schemeProvider)
         {
             _schemeProvider = schemeProvider;
-            _accountOptions = accountOptions;
         }
 
         public async Task GetVisibleExternalProviders()
@@ -23,9 +21,7 @@ namespace J3space.Abp.Account.Web.Models
             var schemes = await _schemeProvider.GetAllSchemesAsync();
 
             VisibleExternalProviders = schemes
-                .Where(x => !string.IsNullOrEmpty(x.DisplayName) || x.Name.Equals(
-                    _accountOptions.WindowsAuthenticationSchemeName,
-                    StringComparison.OrdinalIgnoreCase))
+                .Where(x => !string.IsNullOrEmpty(x.DisplayName))
                 .Select(x => new ExternalProviderModel
                 {
                     DisplayName = x.DisplayName,

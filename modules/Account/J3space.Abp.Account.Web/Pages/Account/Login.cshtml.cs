@@ -18,10 +18,9 @@ namespace J3space.Abp.Account.Web.Pages.Account
     public class LoginModel : AccountPageModel
     {
         public LoginModel(
-            IAuthenticationSchemeProvider schemeProvider,
-            IOptions<AbpAccountOptions> accountOptions)
+            IAuthenticationSchemeProvider schemeProvider)
         {
-            ExternalProviderHelper = new ExternalProviderHelper(schemeProvider, accountOptions.Value);
+            ExternalProviderHelper = new ExternalProviderHelper(schemeProvider);
         }
 
         [HiddenInput]

@@ -18,11 +18,10 @@ namespace J3space.Abp.Account.Web.Pages.Account
     {
         public RegisterModel(
             IAuthenticationSchemeProvider schemeProvider,
-            IOptions<AbpAccountOptions> accountOptions,
             IAccountAppService accountAppService)
         {
             AccountAppService = accountAppService;
-            ExternalProviderHelper = new ExternalProviderHelper(schemeProvider, accountOptions.Value);
+            ExternalProviderHelper = new ExternalProviderHelper(schemeProvider);
         }
 
         [HiddenInput]
