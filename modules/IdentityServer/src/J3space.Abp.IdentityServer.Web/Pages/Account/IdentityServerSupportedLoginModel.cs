@@ -18,9 +18,6 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
     [ExposeServices(typeof(LoginModel))]
     public class IdentityServerSupportedLoginModel : LoginModel
     {
-        private IIdentityServerInteractionService Interaction { get; }
-        private IClientStore ClientStore { get; }
-
         public IdentityServerSupportedLoginModel(
             IAuthenticationSchemeProvider schemeProvider,
             IIdentityServerInteractionService interaction,
@@ -30,6 +27,9 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
             Interaction = interaction;
             ClientStore = clientStore;
         }
+
+        private IIdentityServerInteractionService Interaction { get; }
+        private IClientStore ClientStore { get; }
 
         public override async Task<IActionResult> OnGetAsync()
         {
@@ -62,9 +62,9 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
 
             EnableLocalLogin = await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin);
 
-            if (context?.ClientId != null)
+            if (context?.Client?.ClientId != null)
             {
-                var client = await ClientStore.FindEnabledClientByIdAsync(context.ClientId);
+                var client = await ClientStore.FindEnabledClientByIdAsync(context.Client.ClientId);
                 if (client != null)
                 {
                     EnableLocalLogin = client.EnableLocalLogin;
@@ -91,7 +91,10 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
                 return Redirect("~/");
             }
 
-            Interaction.GrantConsentAsync(context, ConsentResponse.Denied).Wait();
+            Interaction.GrantConsentAsync(context, new ConsentResponse
+            {
+                Error = AuthorizationError.LoginRequired
+            }).Wait();
 
             return Redirect(ReturnUrl);
         }

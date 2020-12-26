@@ -8,6 +8,7 @@ using Volo.Abp.AutoMapper;
 using Volo.Abp.IdentityServer.Clients;
 using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
 using Client = Volo.Abp.IdentityServer.Clients.Client;
+using ClientClaim = Volo.Abp.IdentityServer.Clients.ClientClaim;
 using IdentityResource = Volo.Abp.IdentityServer.IdentityResources.IdentityResource;
 
 namespace J3space.Abp.IdentityServer
@@ -56,6 +57,8 @@ namespace J3space.Abp.IdentityServer
                 .Ignore(des => des.Properties)
                 .Ignore(des => des.ExtraProperties)
                 .Ignore(des => des.ConcurrencyStamp)
+                .Ignore(des => des.RequireRequestObject)
+                .Ignore(des => des.AllowedIdentityTokenSigningAlgorithms)
                 .IgnoreFullAuditedObjectProperties();
 
             #endregion
@@ -82,7 +85,7 @@ namespace J3space.Abp.IdentityServer
                 .ForMember(des => des.UserClaims,
                     opt => opt.MapFrom(src => src.UserClaims.Select(x => x.Type)))
                 .ForMember(des => des.Scopes,
-                    opt => opt.MapFrom(src => src.Scopes.Select(x => x.Name)));
+                    opt => opt.MapFrom(src => src.Scopes.Select(x => x.Scope)));
 
             CreateMap<ApiResourceCreateUpdateDto, ApiResource>()
                 .Ignore(des => des.Secrets)
@@ -92,6 +95,7 @@ namespace J3space.Abp.IdentityServer
                 .Ignore(des => des.Properties)
                 .Ignore(des => des.ExtraProperties)
                 .Ignore(des => des.ConcurrencyStamp)
+                .Ignore(des => des.AllowedAccessTokenSigningAlgorithms)
                 .IgnoreFullAuditedObjectProperties();
 
             #endregion

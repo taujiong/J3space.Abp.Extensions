@@ -124,7 +124,7 @@ namespace J3space.Admin
             string frontChannelLogoutUri = null,
             IEnumerable<string> permissions = null)
         {
-            var client = await _clientRepository.FindByCliendIdAsync(name);
+            var client = await _clientRepository.FindByClientIdAsync(name);
             if (client == null)
             {
                 client = await _clientRepository.InsertAsync(

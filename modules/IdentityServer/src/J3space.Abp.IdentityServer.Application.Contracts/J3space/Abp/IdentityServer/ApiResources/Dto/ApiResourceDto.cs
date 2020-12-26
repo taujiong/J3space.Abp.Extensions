@@ -10,6 +10,7 @@ namespace J3space.Abp.IdentityServer.ApiResources.Dto
         public string DisplayName { get; set; }
         public string Description { get; set; }
         public bool Enabled { get; set; }
+        public bool ShowInDiscoveryDocument { get; set; }
         public List<string> Scopes { get; set; }
         public List<string> UserClaims { get; set; }
     }

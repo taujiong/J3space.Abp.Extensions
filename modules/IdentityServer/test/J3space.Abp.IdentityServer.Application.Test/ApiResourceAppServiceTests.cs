@@ -29,7 +29,7 @@ namespace J3space.Abp.IdentityServer.Application.Test
             var result = await _apiResourceAppService.GetAsync(_testData.ApiResource1Id);
             result.ShouldNotBeNull();
             result.Name.ShouldBe("NewApiResource1");
-            result.Scopes.ShouldContain(nameof(ApiScope.Name));
+            result.Scopes.ShouldContain(nameof(result.Scopes));
         }
 
         [Fact]

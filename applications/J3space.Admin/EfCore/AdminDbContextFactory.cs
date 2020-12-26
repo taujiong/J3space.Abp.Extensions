@@ -9,10 +9,10 @@ namespace J3space.Admin.EfCore
     {
         public AdminDbContext CreateDbContext(string[] args)
         {
-            var configuration = BuildConfiguration();
+            var connectionString = BuildConfiguration().GetConnectionString("Default");
 
             var builder = new DbContextOptionsBuilder<AdminDbContext>()
-                .UseMySql(configuration.GetConnectionString("Default"));
+                .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
             return new AdminDbContext(builder.Options);
         }

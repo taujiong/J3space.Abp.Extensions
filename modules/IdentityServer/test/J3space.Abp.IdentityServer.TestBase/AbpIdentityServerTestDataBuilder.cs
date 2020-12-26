@@ -11,11 +11,11 @@ namespace J3space.Abp.IdentityServer.TestBase
 {
     public class AbpIdentityServerTestDataBuilder : ITransientDependency
     {
-        private readonly IGuidGenerator _guidGenerator;
         private readonly IApiResourceRepository _apiResourceRepository;
         private readonly IClientRepository _clientRepository;
-        private readonly IIdentityResourceRepository _identityResourceRepository;
+        private readonly IGuidGenerator _guidGenerator;
         private readonly IIdentityClaimTypeRepository _identityClaimTypeRepository;
+        private readonly IIdentityResourceRepository _identityResourceRepository;
         private readonly AbpIdentityServerTestData _testData;
 
         public AbpIdentityServerTestDataBuilder(
@@ -66,9 +66,9 @@ namespace J3space.Abp.IdentityServer.TestBase
             apiResource.Description = nameof(apiResource.Description);
             apiResource.DisplayName = nameof(apiResource.DisplayName);
 
-            apiResource.AddScope(nameof(ApiScope.Name));
+            apiResource.AddScope(nameof(apiResource.Scopes));
             apiResource.AddUserClaim(nameof(ApiResourceClaim.Type));
-            apiResource.AddSecret(nameof(ApiSecret.Value));
+            apiResource.AddSecret(nameof(apiResource.Secrets));
 
             await _apiResourceRepository.InsertAsync(apiResource);
             await _apiResourceRepository.InsertAsync(new ApiResource(_guidGenerator.Create(), "NewApiResource2"));

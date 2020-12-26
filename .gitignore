@@ -250,5 +250,6 @@ paket-files/
 *.sln.iml
 
 tempkey.rsa
+tempkey.jwk
 dockerize/**/mysql
 dockerize/**/ssl
