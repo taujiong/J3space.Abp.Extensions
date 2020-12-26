@@ -23,6 +23,7 @@ using Volo.Abp.FeatureManagement;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement;
@@ -67,6 +68,13 @@ namespace J3space.Guard
             Configure<AbpAuditingOptions>(options => { options.ApplicationName = "J3Guard"; });
 
             Configure<AbpDbContextOptions>(options => { options.UseMySQL(); });
+
+            Configure<AbpLocalizationOptions>(options =>
+            {
+                options.Languages.Add(new LanguageInfo("en", "en", "English"));
+                options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+                options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
+            });
 
             Configure<AbpMultiTenancyOptions>(options =>
             {
@@ -135,6 +143,7 @@ namespace J3space.Guard
             var app = context.GetApplicationBuilder();
             var configuration = context.GetConfiguration();
 
+            app.UseAbpRequestLocalization();
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
