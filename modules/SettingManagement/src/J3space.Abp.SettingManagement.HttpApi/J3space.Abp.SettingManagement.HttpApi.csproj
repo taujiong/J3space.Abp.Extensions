@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <Description>An extension for Abp vnext SettingManagement module, adds CRUD methods for setting</Description>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <PackageId>J3space.Abp.SettingManagement.HttpApi</PackageId>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>

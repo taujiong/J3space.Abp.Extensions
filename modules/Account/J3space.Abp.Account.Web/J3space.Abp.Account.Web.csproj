@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <Description>A DIY version for Abp vnext Account module</Description>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>J3space.Abp.Account.Web</AssemblyName>
     <PackageId>J3space.Abp.Account.Web</PackageId>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
