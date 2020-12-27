@@ -9,7 +9,7 @@ namespace J3space.Blogging.EfCore
     {
         public BloggingDbContext CreateDbContext(string[] args)
         {
-            var connectionString = BuildConfiguration().GetConnectionString("Default");
+            var connectionString = BuildConfiguration().GetConnectionString("J3Blogging");
 
             var builder = new DbContextOptionsBuilder<BloggingDbContext>()
                 .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));

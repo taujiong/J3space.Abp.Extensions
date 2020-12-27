@@ -8,11 +8,13 @@ using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Guids;
 using Volo.Abp.IdentityServer.ApiResources;
+using Volo.Abp.IdentityServer.ApiScopes;
 using Volo.Abp.IdentityServer.Clients;
 using Volo.Abp.IdentityServer.IdentityResources;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.Uow;
 using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
+using ApiScope = Volo.Abp.IdentityServer.ApiScopes.ApiScope;
 using Client = Volo.Abp.IdentityServer.Clients.Client;
 
 namespace J3space.Admin
@@ -21,6 +23,7 @@ namespace J3space.Admin
     {
         private readonly IApiResourceRepository _apiResourceRepository;
         private readonly IClientRepository _clientRepository;
+        private readonly IApiScopeRepository _apiScopeRepository;
         private readonly IConfiguration _configuration;
         private readonly IGuidGenerator _guidGenerator;
         private readonly IIdentityResourceDataSeeder _identityResourceDataSeeder;
@@ -28,6 +31,7 @@ namespace J3space.Admin
 
         public IdentityServerDataSeeder(
             IClientRepository clientRepository,
+            IApiScopeRepository apiScopeRepository,
             IApiResourceRepository apiResourceRepository,
             IIdentityResourceDataSeeder identityResourceDataSeeder,
             IGuidGenerator guidGenerator,
@@ -35,6 +39,7 @@ namespace J3space.Admin
             IConfiguration configuration)
         {
             _clientRepository = clientRepository;
+            _apiScopeRepository = apiScopeRepository;
             _apiResourceRepository = apiResourceRepository;
             _identityResourceDataSeeder = identityResourceDataSeeder;
             _guidGenerator = guidGenerator;
@@ -46,9 +51,34 @@ namespace J3space.Admin
         public virtual async Task SeedAsync(DataSeedContext context)
         {
             await _identityResourceDataSeeder.CreateStandardResourcesAsync();
+            await CreateApiScopesAsync();
             await CreateApiResourcesAsync();
             await CreateClientsAsync();
         }
+
+        private async Task CreateApiScopesAsync()
+        {
+            await CreateApiScopeAsync("J3Admin");
+            await CreateApiScopeAsync("J3Guard");
+            await CreateApiScopeAsync("J3Blogging");
+        }
+
+        private async Task CreateApiScopeAsync(string name)
+        {
+            var apiScope = await _apiScopeRepository.GetByNameAsync(name);
+            if (apiScope == null)
+            {
+                apiScope = await _apiScopeRepository.InsertAsync(
+                    new ApiScope(
+                        _guidGenerator.Create(),
+                        name,
+                        name + " API"
+                    ),
+                    true
+                );
+            }
+        }
+
 
         private async Task CreateApiResourcesAsync()
         {
