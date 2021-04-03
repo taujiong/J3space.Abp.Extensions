@@ -1,0 +1,28 @@
+@page
+@model J3space.Abp.Account.Web.Pages.Account.LoggedOutModel
+
+@if (Model.SignOutIframeUrl != null)
+{
+  <a class="button"
+     href="@Model.PostLogoutRedirectUri"
+     id="redirectButton">
+    @Model.ClientName
+  </a>
+}
+
+@if (Model.SignOutIframeUrl != null)
+{
+  <iframe src="@Model.SignOutIframeUrl"
+          style="display: none;width: 0;height: 0">
+  </iframe>
+}
+
+<script >
+document.addEventListener('DOMContentLoaded', function (event) {
+    setTimeout(function () {
+        window.location = document
+            .getElementById('redirectButton')
+            .getAttribute('href');
+    }, 3000);
+});
+</script>
