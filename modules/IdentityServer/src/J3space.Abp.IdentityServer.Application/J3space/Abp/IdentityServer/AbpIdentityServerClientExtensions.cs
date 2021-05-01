@@ -9,6 +9,10 @@ namespace J3space.Abp.IdentityServer
     {
         public static void SetDefaultValues(this Client client, ClientType clientType)
         {
+            // fix "code_challenge is missing" problem
+            // TODO: How to support pkce?
+            client.RequirePkce = false;
+
             switch (clientType)
             {
                 case ClientType.Empty:
