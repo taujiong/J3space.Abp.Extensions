@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "J3space.Gateway": {
+    "J3space.Guard": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": false,

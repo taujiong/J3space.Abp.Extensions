@@ -96,7 +96,7 @@ namespace J3space.Guard
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "J3space Gateway Api",
+                    Title = "J3space Guard Api",
                     Description =
                         "Manage all the services of Abp and J3space",
                     Version = "v1"
@@ -159,7 +159,7 @@ namespace J3space.Guard
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Gateway API");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "J3space Guard API");
 
                 options.OAuthConfigObject = new OAuthConfigObject
                 {
