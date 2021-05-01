@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using J3space.Blogging.EntityFrameworkCore;
+﻿using J3space.Blogging.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Volo.Abp;
@@ -77,25 +74,6 @@ namespace J3space.Blogging
                     options.TokenValidationParameters.ValidIssuer = configuration["AuthServer:Authority"];
                 });
 
-            context.Services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                {
-                    builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            });
-
             context.Services.AddAbpDbContext<BloggingDbContext>(options => { options.AddDefaultRepositories(); });
         }
 
@@ -114,7 +92,6 @@ namespace J3space.Blogging
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 

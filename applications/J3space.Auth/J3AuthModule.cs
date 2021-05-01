@@ -71,10 +71,7 @@ namespace J3space.Auth
                 options.IsEnabled = bool.Parse(configuration["MultiTenancy"]);
             });
 
-            Configure<AppUrlOptions>(options =>
-            {
-                options.Applications["MVC"].RootUrl = configuration["App:RootUrl"];
-            });
+            Configure<AppUrlOptions>(options => { options.Applications["MVC"].RootUrl = configuration["App:Root"]; });
 
             context.Services.AddAuthentication()
                 .AddGitHub(options =>
@@ -89,13 +86,12 @@ namespace J3space.Auth
             {
                 options.AddPolicy(DefaultCorsPolicyName, builder =>
                 {
+                    var origins = configuration
+                        .GetSection("CorsOrigins").GetChildren()
+                        .Select(o => o.Value.RemovePostFix("/"))
+                        .ToArray();
                     builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
+                        .WithOrigins(origins)
                         .WithAbpExposedHeaders()
                         .SetIsOriginAllowedToAllowWildcardSubdomains()
                         .AllowAnyHeader()
@@ -113,7 +109,7 @@ namespace J3space.Auth
 
             // 确保 Abp.Mailing.Smtp.Password 的 setting 值被加密
             var settingManager = context.ServiceProvider.GetService<SettingManager>();
-            var smtpPasswordName = EmailSettingNames.Smtp.Password;
+            const string smtpPasswordName = EmailSettingNames.Smtp.Password;
 
             /* 需要加密的内容不能放在 appsettings.json 的 Settings 下面
              * 因为在加密过程中会依次查询该 SettingProvider 次序之前（优先级更低）的设置项是否存在该字段的值并进行比较

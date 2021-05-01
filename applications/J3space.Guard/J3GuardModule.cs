@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using J3space.Abp.IdentityServer;
 using J3space.Abp.SettingManagement;
 using J3space.Blogging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Ocelot.DependencyInjection;
@@ -59,6 +61,8 @@ namespace J3space.Guard
     )]
     public class J3GuardModule : AbpModule
     {
+        private const string DefaultCorsPolicyName = "Default";
+
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var configuration = context.Services.GetConfiguration();
@@ -136,6 +140,25 @@ namespace J3space.Guard
                     }
                 });
             });
+
+
+            context.Services.AddCors(options =>
+            {
+                options.AddPolicy(DefaultCorsPolicyName, builder =>
+                {
+                    var origins = configuration
+                        .GetSection("CorsOrigins").GetChildren()
+                        .Select(o => o.Value.RemovePostFix("/"))
+                        .ToArray();
+                    builder
+                        .WithOrigins(origins)
+                        .WithAbpExposedHeaders()
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -168,6 +191,8 @@ namespace J3space.Guard
                     AppName = configuration["AuthServer:Audience"]
                 };
             });
+
+            app.UseCors(DefaultCorsPolicyName);
 
             app.MapWhen(
                 // TODO: 考虑扩展性

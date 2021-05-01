@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using J3space.Abp.IdentityServer;
+﻿using J3space.Abp.IdentityServer;
 using J3space.Admin.EfCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Volo.Abp;
@@ -51,8 +48,6 @@ namespace J3space.Admin
     )]
     public class J3AdminModule : AbpModule
     {
-        private const string DefaultCorsPolicyName = "Default";
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var configuration = context.Services.GetConfiguration();
@@ -84,25 +79,6 @@ namespace J3space.Admin
                     options.TokenValidationParameters.ValidIssuer = configuration["AuthServer:Authority"];
                 });
 
-            context.Services.AddCors(options =>
-            {
-                options.AddPolicy(DefaultCorsPolicyName, builder =>
-                {
-                    builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            });
-
             context.Services.AddAbpDbContext<AdminDbContext>(options => { options.AddDefaultRepositories(); });
         }
 
@@ -121,7 +97,6 @@ namespace J3space.Admin
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(DefaultCorsPolicyName);
             app.UseAuthentication();
             app.UseAuthorization();
 
