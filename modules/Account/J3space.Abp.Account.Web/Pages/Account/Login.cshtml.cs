@@ -6,7 +6,6 @@ using J3space.Abp.Account.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Volo.Abp.Account.Settings;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.AspNetCore;
@@ -64,7 +63,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
             catch (AbpValidationException e)
             {
-                var message = GetMessageFromException(e);
+                var message = GetLocalizeExceptionMessage(e);
                 MyAlerts.Warning(message, L["OperationFailed"]);
                 return await OnGetAsync();
             }

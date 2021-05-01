@@ -145,7 +145,7 @@ namespace J3space.Guard
 
             app.UseAbpRequestLocalization();
             app.UseCorrelationId();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
 
             if (bool.Parse(configuration["MultiTenancy"]))

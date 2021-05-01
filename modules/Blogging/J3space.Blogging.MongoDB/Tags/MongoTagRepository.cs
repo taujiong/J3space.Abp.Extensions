@@ -18,19 +18,22 @@ namespace J3space.Blogging.Tags
         {
         }
 
-        public async Task<List<Tag>> GetListAsync()
+        public async Task<List<Tag>> GetListAsync(CancellationToken cancellationToken = default)
         {
-            return await GetMongoQueryable().ToListAsync();
+            return await (await GetMongoQueryableAsync(cancellationToken))
+                .ToListAsync(GetCancellationToken(cancellationToken));
         }
 
-        public async Task<List<Tag>> GetListAsync(IEnumerable<Guid> ids)
+        public async Task<List<Tag>> GetListAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         {
-            return await GetMongoQueryable().Where(t => ids.Contains(t.Id)).ToListAsync();
+            return await (await GetMongoQueryableAsync(cancellationToken))
+                .Where(t => ids.Contains(t.Id))
+                .ToListAsync(GetCancellationToken(cancellationToken));
         }
 
         public async Task DecreaseUsageCountOfTagsAsync(List<Guid> ids, CancellationToken cancellationToken = default)
         {
-            var tags = await GetMongoQueryable()
+            var tags = await (await GetMongoQueryableAsync(cancellationToken))
                 .Where(t => ids.Contains(t.Id))
                 .ToListAsync(GetCancellationToken(cancellationToken));
 
@@ -41,9 +44,10 @@ namespace J3space.Blogging.Tags
             }
         }
 
-        public async Task<Tag> FindByNameAsync(string tagName)
+        public async Task<Tag> FindByNameAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            return await GetMongoQueryable().FirstOrDefaultAsync(t => t.Name == tagName);
+            return await (await GetMongoQueryableAsync(cancellationToken))
+                .FirstOrDefaultAsync(t => t.Name == tagName, GetCancellationToken(cancellationToken));
         }
     }
 }

@@ -16,19 +16,21 @@ namespace J3space.Blogging.Tags
         {
         }
 
-        public async Task<List<Tag>> GetListAsync()
+        public async Task<List<Tag>> GetListAsync(CancellationToken cancellationToken = default)
         {
-            return await DbSet.ToListAsync();
+            return await (await GetDbSetAsync()).ToListAsync(GetCancellationToken(cancellationToken));
         }
 
-        public async Task<List<Tag>> GetListAsync(IEnumerable<Guid> ids)
+        public async Task<List<Tag>> GetListAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         {
-            return await DbSet.Where(t => ids.Contains(t.Id)).ToListAsync();
+            return await (await GetDbSetAsync())
+                .Where(t => ids.Contains(t.Id))
+                .ToListAsync(GetCancellationToken(cancellationToken));
         }
 
         public async Task DecreaseUsageCountOfTagsAsync(List<Guid> ids, CancellationToken cancellationToken = default)
         {
-            var tags = await DbSet
+            var tags = await (await GetDbSetAsync())
                 .Where(t => ids.Contains(t.Id))
                 .ToListAsync(GetCancellationToken(cancellationToken));
 
@@ -42,9 +44,10 @@ namespace J3space.Blogging.Tags
             }
         }
 
-        public async Task<Tag> FindByNameAsync(string tagName)
+        public async Task<Tag> FindByNameAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            return await DbSet.FirstOrDefaultAsync(t => t.Name == tagName);
+            return await (await GetDbSetAsync())
+                .FirstOrDefaultAsync(t => t.Name == tagName, GetCancellationToken(cancellationToken));
         }
     }
 }

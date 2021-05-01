@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Settings;
@@ -45,7 +44,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
             catch (UserFriendlyException e)
             {
-                var message = GetMessageFromException(e);
+                var message = GetLocalizeExceptionMessage(e);
                 MyAlerts.Danger(message, L["OperationFailed"]);
                 ExternalProviderHelper.VisibleExternalProviders = new List<ExternalProviderModel>();
                 return Page();
@@ -88,12 +87,12 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
             catch (UserFriendlyException e)
             {
-                var message = GetMessageFromException(e);
+                var message = GetLocalizeExceptionMessage(e);
                 MyAlerts.Danger(message, L["OperationFailed"]);
             }
             catch (BusinessException e)
             {
-                var message = GetMessageFromException(e);
+                var message = GetLocalizeExceptionMessage(e);
                 MyAlerts.Warning(message, L["OperationFailed"]);
             }
 

@@ -137,7 +137,7 @@ namespace J3space.Auth
 
             app.UseAbpRequestLocalization();
             app.UseCorrelationId();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors(DefaultCorsPolicyName);
 

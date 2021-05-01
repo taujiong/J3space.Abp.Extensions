@@ -112,7 +112,7 @@ namespace J3space.Blogging
 
             app.UseAbpRequestLocalization();
             app.UseCorrelationId();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors();
             app.UseAuthentication();

@@ -79,7 +79,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             }
             catch (Exception e)
             {
-                var message = GetMessageFromException(e);
+                var message = GetLocalizeExceptionMessage(e);
                 MyAlerts.Warning(message, L["OperationFailed"]);
                 return await OnGetAsync();
             }
