@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+﻿FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 
 COPY applications/J3space.Auth/*.csproj applications/J3space.Auth/
@@ -16,7 +16,7 @@ COPY modules/Account/J3space.Abp.Account.Web/ modules/Account/J3space.Abp.Accoun
 WORKDIR applications/J3space.Auth
 RUN dotnet publish -c Release -o /out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
 WORKDIR /app
 COPY --from=build /out .
 ENTRYPOINT ["dotnet", "J3space.Auth.dll"]

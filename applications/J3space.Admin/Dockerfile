@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+﻿FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 
 COPY applications/J3space.Admin/*.csproj applications/J3space.Admin/
@@ -17,7 +17,7 @@ COPY modules/IdentityServer/src/J3space.Abp.IdentityServer.HttpApi/ modules/Iden
 WORKDIR applications/J3space.Admin
 RUN dotnet publish -c Release -o /out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
 WORKDIR /app
 COPY --from=build /out .
 ENTRYPOINT ["dotnet", "J3space.Admin.dll"]

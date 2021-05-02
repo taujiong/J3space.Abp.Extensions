@@ -3,8 +3,9 @@
     "J3space.Guard": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "applicationUrl": "https://localhost:5004",
+      "launchUrl": "https://api.j3space.dev",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

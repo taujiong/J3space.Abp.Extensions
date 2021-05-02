@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+﻿FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 
 COPY applications/J3space.Blogging/*.csproj applications/J3space.Blogging/
@@ -22,7 +22,7 @@ COPY modules/Blogging/J3space.Blogging.HttpApi/ modules/Blogging/J3space.Bloggin
 WORKDIR applications/J3space.Blogging
 RUN dotnet publish -c Release -o /out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
 WORKDIR /app
 COPY --from=build /out .
 ENTRYPOINT ["dotnet", "J3space.Blogging.dll"]

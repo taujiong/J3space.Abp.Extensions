@@ -76,7 +76,7 @@ services:
     build:
       context: ../../
       dockerfile: applications/J3space.Guard/Dockerfile
-    image: taujiong/guard
+    image: taujiong/j3guard
     container_name: J3Guard
     volumes:
       - "./j3guard/appsettings.json:/app/appsettings.json"

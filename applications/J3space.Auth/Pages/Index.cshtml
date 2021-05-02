@@ -1,10 +1,12 @@
 ﻿@page
+@using Microsoft.Extensions.Configuration
 @using Microsoft.Extensions.Localization
 @using Volo.Abp.Account.Localization
 @using Volo.Abp.Users
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@inject ICurrentUser CurrentUser
-@inject IStringLocalizer<AccountResource> L
+@inject ICurrentUser _currentUser
+@inject IStringLocalizer<AccountResource> _l
+@inject IConfiguration _configuration
 
 @{
   Layout = "_Layout";
@@ -37,23 +39,29 @@
         </time>
       </div>
 
-      @if (!CurrentUser.IsAuthenticated)
+      @if (!_currentUser.IsAuthenticated)
       {
         <a asp-page="/Account/Login"
            class="button is-light mt-2">
-          @L["Login"]
+          @_l["Login"]
         </a>
       }
       else
       {
         <h1 class="has-text-grey-lighter is-size-4">
           <span id="greeting"></span>
-          <span id="name">@CurrentUser.UserName</span>
+          <span id="name">@_currentUser.UserName</span>
         </h1>
-        <a asp-page="/Account/Logout"
-           class="button is-light mt-5">
-          @L["Logout"]
-        </a>
+        @foreach (var appInfo in _configuration.GetSection("AppUrls").GetChildren())
+        {
+          if (!"Root".Equals(appInfo.Key))
+          {
+            <a href="@appInfo.Value"
+               class="button is-light mt-2">
+              @appInfo.Key
+            </a>
+          }
+        }
       }
     </div>
   </div>

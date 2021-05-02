@@ -71,7 +71,15 @@ namespace J3space.Auth
                 options.IsEnabled = bool.Parse(configuration["MultiTenancy"]);
             });
 
-            Configure<AppUrlOptions>(options => { options.Applications["MVC"].RootUrl = configuration["App:Root"]; });
+            Configure<AppUrlOptions>(options =>
+            {
+                var appUrls = configuration.GetSection("AppUrls");
+                foreach (var urls in appUrls.GetChildren())
+                {
+                    options.Applications[urls.Key].RootUrl = urls.Value;
+                    options.RedirectAllowedUrls.Add(urls.Value);
+                }
+            });
 
             context.Services.AddAuthentication()
                 .AddGitHub(options =>
