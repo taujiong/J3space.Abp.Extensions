@@ -8,7 +8,7 @@ namespace J3space.Abp.SettingManagement.TestBase
         {
             context.Add(new SettingDefinition("SettingWithoutDefaultValue"));
             context.Add(new SettingDefinition("SettingWithDefaultValue", "default_value_1"));
-            context.Add(new SettingDefinition("SettingWithProperty", defaultValue: "default_value_2")
+            context.Add(new SettingDefinition("SettingWithProperty", "default_value_2")
                 .WithProperty("MainGroup", "main")
                 .WithProperty("SubGroup", "sub"));
         }

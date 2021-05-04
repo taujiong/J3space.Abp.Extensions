@@ -18,7 +18,7 @@ namespace J3space.Blogging
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.AddAutoMapperObjectMapper<BloggingApplicationModule>();
-            Configure<AbpAutoMapperOptions>(options => { options.AddMaps<BloggingApplicationModule>(validate: true); });
+            Configure<AbpAutoMapperOptions>(options => { options.AddMaps<BloggingApplicationModule>(true); });
         }
     }
 }

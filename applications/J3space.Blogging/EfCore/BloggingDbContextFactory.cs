@@ -21,7 +21,7 @@ namespace J3space.Blogging.EfCore
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false);
+                .AddJsonFile("appsettings.json", false);
 
             return builder.Build();
         }

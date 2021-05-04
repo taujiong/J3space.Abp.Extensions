@@ -25,7 +25,7 @@ namespace J3space.Auth
 
             try
             {
-                Log.Information("Starting J3Auth.");
+                Log.Information("Starting J3Auth");
                 CreateHostBuilder(args).Build().Run();
                 return 0;
             }

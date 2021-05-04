@@ -1,4 +1,5 @@
-﻿using J3space.Abp.IdentityServer;
+﻿using System.IO;
+using J3space.Abp.IdentityServer;
 using J3space.Admin.EfCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -113,6 +114,9 @@ namespace J3space.Admin
         {
             AsyncHelper.RunSync(async () =>
             {
+                var flagPath = Path.Combine(Directory.GetCurrentDirectory(), "installed");
+                if (File.Exists(flagPath)) return;
+
                 using var scope = context.ServiceProvider.CreateScope();
                 await scope.ServiceProvider
                     .GetRequiredService<AdminDbContext>()
@@ -121,6 +125,7 @@ namespace J3space.Admin
                 await scope.ServiceProvider
                     .GetRequiredService<IDataSeeder>()
                     .SeedAsync();
+                await File.WriteAllTextAsync(flagPath, string.Empty);
             });
         }
     }

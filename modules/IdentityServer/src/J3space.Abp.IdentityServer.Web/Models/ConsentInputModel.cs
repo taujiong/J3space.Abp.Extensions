@@ -16,15 +16,14 @@ namespace J3space.Abp.IdentityServer.Web.Models
 
         public bool RememberConsent { get; set; }
 
-        public List<string> GetAllowedScopeNames()
+        public IEnumerable<string> GetAllowedScopeNames()
         {
             var identityScopes = IdentityScopes ?? new List<ScopeViewModel>();
             var apiScopes = ApiScopes ?? new List<ScopeViewModel>();
             return identityScopes
                 .Union(apiScopes)
                 .Where(s => s.Checked)
-                .Select(s => s.Name)
-                .ToList();
+                .Select(s => s.Name);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace J3space.Abp.IdentityServer.Application.Test
         [Fact]
         public async Task Should_Create_Update_Success()
         {
-            var input = new ApiResourceCreateUpdateDto()
+            var input = new ApiResourceCreateUpdateDto
             {
                 Name = "test",
                 Scopes = new List<string> {"openid", "Age", "NewIdentityResource1"},

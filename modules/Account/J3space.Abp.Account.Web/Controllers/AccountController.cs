@@ -33,10 +33,10 @@ namespace J3space.Abp.Account.Web.Controllers
             IdentitySecurityLogManager = identitySecurityLogManager;
         }
 
-        protected Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; }
-        protected IdentityUserManager UserManager { get; }
-        protected ISettingProvider SettingProvider { get; }
-        protected IdentitySecurityLogManager IdentitySecurityLogManager { get; }
+        private Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; }
+        private IdentityUserManager UserManager { get; }
+        private ISettingProvider SettingProvider { get; }
+        private IdentitySecurityLogManager IdentitySecurityLogManager { get; }
 
         [HttpPost]
         [Route("login")]
@@ -52,7 +52,7 @@ namespace J3space.Abp.Account.Web.Controllers
                 true
             );
 
-            await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext()
+            await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext
             {
                 Identity = IdentitySecurityLogIdentityConsts.Identity,
                 Action = signInResult.ToIdentitySecurityLogAction(),
@@ -66,7 +66,7 @@ namespace J3space.Abp.Account.Web.Controllers
         [Route("logout")]
         public virtual async Task Logout()
         {
-            await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext()
+            await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext
             {
                 Identity = IdentitySecurityLogIdentityConsts.Identity,
                 Action = IdentitySecurityLogActionConsts.Logout

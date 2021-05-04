@@ -8,12 +8,7 @@ namespace J3space.Blogging
     {
         public static IQueryable<Post> IncludeDetails(this IQueryable<Post> queryable, bool include = true)
         {
-            if (!include)
-            {
-                return queryable;
-            }
-
-            return queryable.Include(p => p.Tags);
+            return !include ? queryable : queryable.Include(p => p.Tags);
         }
     }
 }

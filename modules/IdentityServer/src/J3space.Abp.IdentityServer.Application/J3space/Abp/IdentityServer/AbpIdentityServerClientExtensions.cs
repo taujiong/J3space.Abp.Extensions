@@ -59,14 +59,14 @@ namespace J3space.Abp.IdentityServer
                     client.RequireClientSecret = true;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(ClientType));
+                    throw new ArgumentOutOfRangeException(nameof(clientType));
             }
+        }
 
-            void ConfigureClientDefaultUrls(Client myClient)
-            {
-                if (string.IsNullOrEmpty(myClient.ClientUri)) return;
-                myClient.AddCorsOrigin(myClient.ClientUri);
-            }
+        private static void ConfigureClientDefaultUrls(Client myClient)
+        {
+            if (string.IsNullOrEmpty(myClient.ClientUri)) return;
+            myClient.AddCorsOrigin(myClient.ClientUri);
         }
     }
 }

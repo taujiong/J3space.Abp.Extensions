@@ -25,7 +25,7 @@ namespace J3space.Admin
 
             try
             {
-                Log.Information("Starting J3Admin.");
+                Log.Information("Starting J3Admin");
                 CreateHostBuilder(args).Build().Run();
                 return 0;
             }

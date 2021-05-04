@@ -8,15 +8,15 @@ namespace J3space.Abp.Account.Web.Pages.Account
     {
         [HiddenInput]
         [BindProperty(SupportsGet = true)]
-        public string ReturnUrl { get; set; }
+        protected string ReturnUrl { get; set; }
 
         [HiddenInput]
         [BindProperty(SupportsGet = true)]
-        public string ReturnUrlHash { get; set; }
+        protected string ReturnUrlHash { get; set; }
 
         public virtual async Task<IActionResult> OnGetAsync()
         {
-            await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext()
+            await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext
             {
                 Identity = IdentitySecurityLogIdentityConsts.Identity,
                 Action = IdentitySecurityLogActionConsts.Logout

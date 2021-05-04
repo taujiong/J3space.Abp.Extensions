@@ -26,7 +26,7 @@ namespace J3space.Guard
 
             try
             {
-                Log.Information("Starting J3Guard.");
+                Log.Information("Starting J3Guard");
                 CreateHostBuilder(args).Build().Run();
                 return 0;
             }
@@ -44,7 +44,7 @@ namespace J3space.Guard
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
-                .ConfigureAppConfiguration((hostingContext, config) =>
+                .ConfigureAppConfiguration((_, config) =>
                 {
                     config.AddJsonFile("ocelot.json",
                         true,

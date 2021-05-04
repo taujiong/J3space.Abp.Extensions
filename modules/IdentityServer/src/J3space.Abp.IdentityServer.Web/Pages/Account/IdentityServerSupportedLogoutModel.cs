@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityServer4.Services;
 using J3space.Abp.Account.Web.Pages.Account;
@@ -20,12 +21,6 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
 
         public override async Task<IActionResult> OnGetAsync()
         {
-            await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext()
-            {
-                Identity = IdentitySecurityLogIdentityConsts.Identity,
-                Action = IdentitySecurityLogActionConsts.Logout
-            });
-
             await SignInManager.SignOutAsync();
 
             var logoutId = Request.Query["logoutId"].ToString();
@@ -33,17 +28,45 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
             if (!string.IsNullOrEmpty(logoutId))
             {
                 var logoutContext = await Interaction.GetLogoutContextAsync(logoutId);
-                ReturnUrl = logoutContext?.PostLogoutRedirectUri;
+
+                await SaveSecurityLogAsync(logoutContext?.ClientId);
+
+                HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity());
+                var vm = new LoggedOutModel
+                {
+                    PostLogoutRedirectUri = logoutContext?.PostLogoutRedirectUri,
+                    ClientName = logoutContext?.ClientName,
+                    SignOutIframeUrl = logoutContext?.SignOutIFrameUrl
+                };
+
+                Logger.LogInformation("Redirecting to LoggedOut Page...");
+
+                return RedirectToPage("./LoggedOut", vm);
             }
 
-            if (ReturnUrl != null)
+            await SaveSecurityLogAsync();
+
+            if (ReturnUrl == null)
             {
-                return RedirectSafely(ReturnUrl, ReturnUrlHash);
+                Logger.LogInformation(
+                    "{ClassName} couldn't find postLogoutUri... Redirecting to the index page",
+                    nameof(IdentityServerSupportedLogoutModel));
             }
 
-            Logger.LogInformation(
-                $"{nameof(IdentityServerSupportedLogoutModel)} couldn't find postLogoutUri... Redirecting to the index page");
             return RedirectSafely(ReturnUrl, ReturnUrlHash);
+        }
+
+        protected virtual async Task SaveSecurityLogAsync(string clientId = null)
+        {
+            if (CurrentUser.IsAuthenticated)
+            {
+                await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext
+                {
+                    Identity = IdentitySecurityLogIdentityConsts.Identity,
+                    Action = IdentitySecurityLogActionConsts.Logout,
+                    ClientId = clientId
+                });
+            }
         }
     }
 }

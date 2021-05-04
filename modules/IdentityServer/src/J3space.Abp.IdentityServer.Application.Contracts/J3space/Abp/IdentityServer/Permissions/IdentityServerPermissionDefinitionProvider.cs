@@ -34,11 +34,11 @@ namespace J3space.Abp.IdentityServer.Permissions
             var identityResourcesPermission = identityServerGroup.AddPermission(
                 IdentityServerPermissions.IdentityResource.Default,
                 L("Permission:IdentityResourceManagement"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Create,
+            identityResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Create,
                 L("Permission:Create"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Update,
+            identityResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Update,
                 L("Permission:Edit"));
-            apiResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Delete,
+            identityResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Delete,
                 L("Permission:Delete"));
         }
 

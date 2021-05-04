@@ -253,3 +253,4 @@ tempkey.rsa
 tempkey.jwk
 dockerize/**/mysql
 dockerize/**/ssl
+/applications/J3space.Admin/installed

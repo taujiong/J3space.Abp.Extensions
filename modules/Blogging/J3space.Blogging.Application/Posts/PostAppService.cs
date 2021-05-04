@@ -125,7 +125,7 @@ namespace J3space.Blogging.Posts
             return ObjectMapper.Map<List<Tag>, List<TagDto>>(tags);
         }
 
-        private List<string> SplitTags(string tags)
+        private static List<string> SplitTags(string tags)
         {
             if (tags.IsNullOrWhiteSpace())
             {

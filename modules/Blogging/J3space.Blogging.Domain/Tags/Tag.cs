@@ -7,11 +7,6 @@ namespace J3space.Blogging.Tags
 {
     public class Tag : BasicAggregateRoot<Guid>
     {
-        // TODO: 保证 Name 的唯一性
-        protected Tag()
-        {
-        }
-
         public Tag(Guid id, [NotNull] string name, int usageCount = 0)
         {
             Id = id;

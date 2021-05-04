@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
 using Volo.Abp.Autofac;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.Modularity;
@@ -51,14 +52,12 @@ namespace J3space.Abp.SettingManagement.TestBase
             SeedTestData(context);
         }
 
-        private static void SeedTestData(ApplicationInitializationContext context)
+        private static void SeedTestData(IServiceProviderAccessor context)
         {
-            using (var scope = context.ServiceProvider.CreateScope())
-            {
-                AsyncHelper.RunSync(() => scope.ServiceProvider
-                    .GetRequiredService<AbpSettingManagementTestDataBuilder>()
-                    .BuildAsync());
-            }
+            using var scope = context.ServiceProvider.CreateScope();
+            AsyncHelper.RunSync(() => scope.ServiceProvider
+                .GetRequiredService<AbpSettingManagementTestDataBuilder>()
+                .BuildAsync());
         }
     }
 }

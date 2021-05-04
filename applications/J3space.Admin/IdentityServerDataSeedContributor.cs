@@ -19,7 +19,7 @@ using Client = Volo.Abp.IdentityServer.Clients.Client;
 
 namespace J3space.Admin
 {
-    public class IdentityServerDataSeeder : IDataSeedContributor, ITransientDependency
+    public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
         private readonly IApiResourceRepository _apiResourceRepository;
         private readonly IClientRepository _clientRepository;
@@ -29,7 +29,7 @@ namespace J3space.Admin
         private readonly IIdentityResourceDataSeeder _identityResourceDataSeeder;
         private readonly IPermissionDataSeeder _permissionDataSeeder;
 
-        public IdentityServerDataSeeder(
+        public IdentityServerDataSeedContributor(
             IClientRepository clientRepository,
             IApiScopeRepository apiScopeRepository,
             IApiResourceRepository apiResourceRepository,
@@ -68,7 +68,7 @@ namespace J3space.Admin
             var apiScope = await _apiScopeRepository.GetByNameAsync(name);
             if (apiScope == null)
             {
-                apiScope = await _apiScopeRepository.InsertAsync(
+                await _apiScopeRepository.InsertAsync(
                     new ApiScope(
                         _guidGenerator.Create(),
                         name,

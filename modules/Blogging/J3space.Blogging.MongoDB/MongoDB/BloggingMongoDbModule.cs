@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using J3space.Blogging.Posts;
+using J3space.Blogging.Tags;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Modularity;
 using Volo.Abp.MongoDB;
 
@@ -14,9 +16,8 @@ namespace J3space.Blogging.MongoDB
         {
             context.Services.AddMongoDbContext<BloggingMongoDbContext>(options =>
             {
-                /* Add custom repositories here. Example:
-                 * options.AddRepository<Question, MongoQuestionRepository>();
-                 */
+                options.AddRepository<Post, MongoPostRepository>();
+                options.AddRepository<Tag, MongoTagRepository>();
             });
         }
     }

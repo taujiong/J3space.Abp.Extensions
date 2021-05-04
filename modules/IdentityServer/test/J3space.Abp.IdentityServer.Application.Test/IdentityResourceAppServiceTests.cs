@@ -50,7 +50,7 @@ namespace J3space.Abp.IdentityServer.Application.Test
         [Fact]
         public async Task Should_Create_Update_Success()
         {
-            var input = new IdentityResourceCreateUpdateDto()
+            var input = new IdentityResourceCreateUpdateDto
             {
                 Name = "test",
                 UserClaims = new List<string> {"Age"}

@@ -42,7 +42,7 @@ namespace J3space.Abp.IdentityServer
             CreateMap<ClientSecret, ClientSecretDto>()
                 .ReverseMap()
                 .ForPath(des => des.Value,
-                    opt => opt.MapFrom(src => HashExtensions.Sha256(src.Value)));
+                    opt => opt.MapFrom(src => src.Value.Sha256()));
             CreateMap<ClientProperty, ClientPropertyDto>().ReverseMap();
             CreateMap<ClientClaim, ClientClaimDto>().ReverseMap();
 

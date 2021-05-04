@@ -2,7 +2,7 @@
 {
     public static class SettingDefinitionPropertyConstants
     {
-        public static string MainGroup = "MainGroup";
-        public static string SubGroup = "SubGroup";
+        public const string MainGroup = "MainGroup";
+        public const string SubGroup = "SubGroup";
     }
 }

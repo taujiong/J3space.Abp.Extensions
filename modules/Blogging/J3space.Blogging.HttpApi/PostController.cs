@@ -22,7 +22,7 @@ namespace J3space.Blogging
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public Task<PostWithDetailDto> GetAsync(Guid id)
         {
             return _postAppService.GetAsync(id);
@@ -41,14 +41,14 @@ namespace J3space.Blogging
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public Task<PostWithDetailDto> UpdateAsync(Guid id, PostUpdateDto input)
         {
             return _postAppService.UpdateAsync(id, input);
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public Task DeleteAsync(Guid id)
         {
             return _postAppService.DeleteAsync(id);

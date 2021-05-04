@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using J3space.Blogging.Posts;
+using J3space.Blogging.Tags;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 
@@ -14,7 +16,8 @@ namespace J3space.Blogging.EntityFrameworkCore
         {
             context.Services.AddAbpDbContext<BloggingDbContext>(options =>
             {
-                context.Services.AddAbpDbContext<BloggingDbContext>();
+                options.AddRepository<Post, EfCorePostRepository>();
+                options.AddRepository<Tag, EfCoreTagRepository>();
             });
         }
     }

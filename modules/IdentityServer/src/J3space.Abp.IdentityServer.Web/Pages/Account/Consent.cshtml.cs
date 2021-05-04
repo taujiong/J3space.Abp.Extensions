@@ -68,7 +68,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
             {
                 UserName = HttpContext.User.Identity?.Name,
                 RememberConsent = true,
-                IdentityScopes = resources.IdentityResources.Select(x => CreateScopeViewModel(x, true)).ToList(),
+                IdentityScopes = resources.IdentityResources.Select(x => CreateScopeViewModel(x, true)).ToList()
             };
 
             var apiScopes = new List<ScopeViewModel>();
@@ -148,7 +148,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
 
         protected virtual ScopeViewModel CreateScopeViewModel(IdentityResource identity, bool check)
         {
-            return new ScopeViewModel
+            return new()
             {
                 Name = identity.Name,
                 DisplayName = identity.DisplayName,
@@ -181,7 +181,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
 
         protected virtual ScopeViewModel GetOfflineAccessScope(bool check)
         {
-            return new ScopeViewModel
+            return new()
             {
                 Name = IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess,
                 DisplayName = "Offline Access", //TODO: Localize

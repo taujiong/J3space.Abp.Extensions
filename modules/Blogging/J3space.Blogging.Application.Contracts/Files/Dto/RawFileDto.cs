@@ -2,16 +2,12 @@
 {
     public class RawFileDto
     {
-        public RawFileDto()
-        {
-        }
-
-        public byte[] Bytes { get; set; }
+        public byte[] Bytes { get; init; }
         public bool IsFileEmpty => Bytes == null || Bytes.Length == 0;
 
         public static RawFileDto EmptyResult()
         {
-            return new RawFileDto() {Bytes = new byte[0]};
+            return new() {Bytes = System.Array.Empty<byte>()};
         }
     }
 }

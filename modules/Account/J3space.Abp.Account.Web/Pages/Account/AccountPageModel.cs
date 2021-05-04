@@ -17,12 +17,12 @@ namespace J3space.Abp.Account.Web.Pages.Account
             LocalizationResourceType = typeof(AccountResource);
         }
 
-        public IAccountAppService AccountAppService { get; set; }
-        public Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; set; }
-        public IdentityUserManager UserManager { get; set; }
-        public IdentitySecurityLogManager IdentitySecurityLogManager { get; set; }
+        protected IAccountAppService AccountAppService { get; set; }
+        protected Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; set; }
+        protected IdentityUserManager UserManager { get; set; }
+        protected IdentitySecurityLogManager IdentitySecurityLogManager { get; set; }
         public AlertList MyAlerts { get; }
-        public IExceptionToErrorInfoConverter ExceptionToErrorInfoConverter { get; set; }
+        private IExceptionToErrorInfoConverter ExceptionToErrorInfoConverter { get; set; }
 
         protected virtual void CheckCurrentTenant(Guid? tenantId)
         {

@@ -1,11 +1,11 @@
 ﻿@using System.Globalization
 @using Volo.Abp.AspNetCore.Mvc.AntiForgery
 @using Volo.Abp.Localization
-@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IAbpAntiForgeryManager _abpAntiForgeryManager
 
 @{
   Layout = null;
-  AbpAntiForgeryManager.SetCookie();
+  _abpAntiForgeryManager.SetCookie();
 
   var pageTitle = ViewBag.Title == null
     ? "J3Auth"

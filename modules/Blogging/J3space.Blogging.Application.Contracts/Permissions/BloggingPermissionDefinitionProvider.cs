@@ -16,7 +16,7 @@ namespace J3space.Blogging.Permissions
             posts.AddChild(BloggingPermissions.Posts.Create, L("Permission:Create"));
 
             var blobs = bloggingGroup.AddPermission(BloggingPermissions.Blobs.Default, L("Permission:Blobs"));
-            posts.AddChild(BloggingPermissions.Blobs.Create, L("Permission:Create"));
+            blobs.AddChild(BloggingPermissions.Blobs.Create, L("Permission:Create"));
         }
 
         private static LocalizableString L(string name)

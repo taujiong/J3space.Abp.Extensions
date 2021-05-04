@@ -28,7 +28,7 @@ namespace J3space.Abp.IdentityServer
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public virtual Task<ApiResourceDto> GetAsync(Guid id)
         {
             return _appService.GetAsync(id);
@@ -41,14 +41,14 @@ namespace J3space.Abp.IdentityServer
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public virtual Task<ApiResourceDto> UpdateAsync(Guid id, ApiResourceCreateUpdateDto input)
         {
             return _appService.UpdateAsync(id, input);
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:guid}")]
         public virtual Task DeleteAsync(Guid id)
         {
             return _appService.DeleteAsync(id);

@@ -8,10 +8,7 @@
      id="redirectButton">
     @Model.ClientName
   </a>
-}
 
-@if (Model.SignOutIframeUrl != null)
-{
   <iframe src="@Model.SignOutIframeUrl"
           style="display: none;width: 0;height: 0">
   </iframe>

@@ -2,16 +2,16 @@
 @using Volo.Abp.AspNetCore.Mvc.AntiForgery
 @using Volo.Abp.Localization
 @using Volo.Abp.Ui.Branding
-@inject IAbpAntiForgeryManager AbpAntiForgeryManager
-@inject IBrandingProvider BrandingProvider
+@inject IAbpAntiForgeryManager _abpAntiForgeryManager
+@inject IBrandingProvider _brandingProvider
 
 @{
   Layout = null;
-  AbpAntiForgeryManager.SetCookie();
+  _abpAntiForgeryManager.SetCookie();
 
   var pageTitle = ViewBag.Title == null
-    ? BrandingProvider.AppName
-    : $"{ViewBag.Title} - {BrandingProvider.AppName}";
+    ? _brandingProvider.AppName
+    : $"{ViewBag.Title} - {_brandingProvider.AppName}";
   var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
 }
 

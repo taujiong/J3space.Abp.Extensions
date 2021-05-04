@@ -32,7 +32,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public LoginInputModel Input { get; set; }
 
-        public bool EnableLocalLogin { get; set; }
+        protected bool EnableLocalLogin { get; set; }
         public ExternalProviderHelper ExternalProviderHelper { get; }
 
         public virtual async Task<IActionResult> OnGetAsync()
@@ -118,8 +118,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         public virtual async Task<IActionResult> OnGetExternalLoginAsync(string provider)
         {
-            var redirectUrl = Url.Page("./Login", pageHandler: "ExternalLoginCallback",
-                values: new {ReturnUrl, ReturnUrlHash});
+            var redirectUrl = Url.Page("./Login", "ExternalLoginCallback",
+                new {ReturnUrl, ReturnUrlHash});
             var properties = SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             properties.Items["scheme"] = provider;
 
@@ -131,7 +131,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
         {
             if (remoteError != null)
             {
-                Logger.LogWarning($"External login callback error: {remoteError}");
+                Logger.LogWarning("External login callback error: {RemoteError}", remoteError);
                 return RedirectToPage("./Login");
             }
 

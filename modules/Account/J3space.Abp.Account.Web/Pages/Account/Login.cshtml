@@ -1,5 +1,5 @@
 @page
-@inject ISettingProvider SettingProvider
+@inject ISettingProvider _settingProvider
 @using Volo.Abp.Settings
 @using Volo.Abp.Account.Settings
 @using Volo.Abp.AspNetCore.Mvc.UI.Alerts
@@ -85,7 +85,7 @@
   }
 
   <div class="has-text-centered">
-    @if (await SettingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled))
+    @if (await _settingProvider.IsTrueAsync(AccountSettingNames.IsSelfRegistrationEnabled))
     {
       <a asp-page="/Account/Register"
          asp-route-returnUrl="@Model.ReturnUrl"

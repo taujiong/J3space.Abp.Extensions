@@ -76,7 +76,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
                         return RedirectToPage("./Login");
                     }
 
-                    await RegisterExternalUserAsync(externalLoginInfo, Input.EmailAddress);
+                    await RegisterExternalUserAsync(externalLoginInfo);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
             await SignInManager.SignInAsync(user, true);
         }
 
-        protected virtual async Task RegisterExternalUserAsync(ExternalLoginInfo externalLoginInfo, string emailAddress)
+        protected virtual async Task RegisterExternalUserAsync(ExternalLoginInfo externalLoginInfo)
         {
             var userDto = await AccountAppService.RegisterAsync(
                 new RegisterDto

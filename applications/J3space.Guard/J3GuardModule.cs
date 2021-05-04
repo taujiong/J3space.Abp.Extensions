@@ -105,7 +105,7 @@ namespace J3space.Guard
                         "Manage all the services of Abp and J3space",
                     Version = "v1"
                 });
-                options.DocInclusionPredicate((docName, description) => true);
+                options.DocInclusionPredicate((_, _) => true);
 
                 options.AddSecurityDefinition("J3Auth", new OpenApiSecurityScheme
                 {

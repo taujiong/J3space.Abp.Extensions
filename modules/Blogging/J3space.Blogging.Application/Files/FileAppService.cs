@@ -60,7 +60,7 @@ namespace J3space.Blogging.Files
             throw new AbpValidationException(message,
                 new List<ValidationResult>
                 {
-                    new ValidationResult(message, new[] {memberName})
+                    new(message, new[] {memberName})
                 });
         }
     }

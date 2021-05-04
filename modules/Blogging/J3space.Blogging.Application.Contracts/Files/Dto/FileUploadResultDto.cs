@@ -2,7 +2,7 @@
 {
     public class FileUploadResultDto
     {
-        public string Name { get; set; }
-        public string WebUrl { get; set; }
+        public string Name { get; init; }
+        public string WebUrl { get; init; }
     }
 }
