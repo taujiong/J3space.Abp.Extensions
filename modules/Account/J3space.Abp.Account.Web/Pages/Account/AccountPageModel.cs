@@ -17,28 +17,24 @@ namespace J3space.Abp.Account.Web.Pages.Account
             LocalizationResourceType = typeof(AccountResource);
         }
 
-        protected IAccountAppService AccountAppService { get; set; }
-        protected Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; set; }
-        protected IdentityUserManager UserManager { get; set; }
-        protected IdentitySecurityLogManager IdentitySecurityLogManager { get; set; }
+        public IAccountAppService AccountAppService { get; set; }
+        public Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; set; }
+        public IdentityUserManager UserManager { get; set; }
+        public IdentitySecurityLogManager IdentitySecurityLogManager { get; set; }
         public AlertList MyAlerts { get; }
-        private IExceptionToErrorInfoConverter ExceptionToErrorInfoConverter { get; set; }
+        public IExceptionToErrorInfoConverter ExceptionToErrorInfoConverter { get; set; }
 
         protected virtual void CheckCurrentTenant(Guid? tenantId)
         {
             if (CurrentTenant.Id != tenantId)
-            {
                 throw new ApplicationException(
                     $"Current tenant is different than given tenant. CurrentTenant.Id: {CurrentTenant.Id}, given tenantId: {tenantId}");
-            }
         }
 
         protected virtual string GetLocalizeExceptionMessage(Exception exception)
         {
             if (exception is ILocalizeErrorMessage or IHasErrorCode)
-            {
                 return ExceptionToErrorInfoConverter.Convert(exception, false).Message;
-            }
 
             return exception.Message;
         }

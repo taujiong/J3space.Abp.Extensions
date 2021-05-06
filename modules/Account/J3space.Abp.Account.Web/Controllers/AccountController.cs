@@ -33,10 +33,10 @@ namespace J3space.Abp.Account.Web.Controllers
             IdentitySecurityLogManager = identitySecurityLogManager;
         }
 
-        private Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; }
-        private IdentityUserManager UserManager { get; }
-        private ISettingProvider SettingProvider { get; }
-        private IdentitySecurityLogManager IdentitySecurityLogManager { get; }
+        protected Microsoft.AspNetCore.Identity.SignInManager<IdentityUser> SignInManager { get; }
+        protected IdentityUserManager UserManager { get; }
+        protected ISettingProvider SettingProvider { get; }
+        protected IdentitySecurityLogManager IdentitySecurityLogManager { get; }
 
         [HttpPost]
         [Route("login")]
@@ -84,35 +84,24 @@ namespace J3space.Abp.Account.Web.Controllers
             var identityUser = await UserManager.FindByNameAsync(login.UserNameOrEmailAddress);
 
             if (identityUser == null)
-            {
                 return StatusCode(StatusCodes.Status401Unauthorized, new
                 {
                     result = L["LoginFailed"],
                     detail = L["InvalidUserNameOrPassword"]
                 });
-            }
 
             return GetAbpLoginResult(await SignInManager.CheckPasswordSignInAsync(identityUser, login.Password, true));
         }
 
         protected virtual async Task ReplaceEmailToUsernameOfInputIfNeeds(LoginInputModel login)
         {
-            if (!ValidationHelper.IsValidEmailAddress(login.UserNameOrEmailAddress))
-            {
-                return;
-            }
+            if (!ValidationHelper.IsValidEmailAddress(login.UserNameOrEmailAddress)) return;
 
             var userByUsername = await UserManager.FindByNameAsync(login.UserNameOrEmailAddress);
-            if (userByUsername != null)
-            {
-                return;
-            }
+            if (userByUsername != null) return;
 
             var userByEmail = await UserManager.FindByEmailAsync(login.UserNameOrEmailAddress);
-            if (userByEmail == null)
-            {
-                return;
-            }
+            if (userByEmail == null) return;
 
             login.UserNameOrEmailAddress = userByEmail.UserName;
         }
@@ -120,31 +109,25 @@ namespace J3space.Abp.Account.Web.Controllers
         private IActionResult GetAbpLoginResult(SignInResult result)
         {
             if (result.IsLockedOut)
-            {
                 return StatusCode(StatusCodes.Status403Forbidden, new
                 {
                     result = L["LoginFailed"].Value,
                     detail = L["UserLockedOutMessage"].Value
                 });
-            }
 
             if (result.IsNotAllowed)
-            {
                 return StatusCode(StatusCodes.Status403Forbidden, new
                 {
                     result = L["LoginFailed"].Value,
                     detail = L["LoginIsNotAllowed"].Value
                 });
-            }
 
             if (!result.Succeeded)
-            {
                 return StatusCode(StatusCodes.Status401Unauthorized, new
                 {
                     result = L["LoginFailed"].Value,
                     detail = L["InvalidUserNameOrPassword"].Value
                 });
-            }
 
             return Ok();
         }
@@ -152,9 +135,7 @@ namespace J3space.Abp.Account.Web.Controllers
         protected virtual async Task CheckLocalLoginAsync()
         {
             if (!await SettingProvider.IsTrueAsync(AccountSettingNames.EnableLocalLogin))
-            {
                 throw new UserFriendlyException(L["LocalLoginDisabledMessage"]);
-            }
         }
     }
 }

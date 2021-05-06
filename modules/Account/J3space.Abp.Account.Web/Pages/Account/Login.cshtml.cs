@@ -32,7 +32,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         [BindProperty] public LoginInputModel Input { get; set; }
 
-        protected bool EnableLocalLogin { get; set; }
+        public bool EnableLocalLogin { get; set; }
         public ExternalProviderHelper ExternalProviderHelper { get; }
 
         public virtual async Task<IActionResult> OnGetAsync()
@@ -84,10 +84,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 UserName = Input.UserNameOrEmailAddress
             });
 
-            if (result.RequiresTwoFactor)
-            {
-                return await TwoFactorLoginResultAsync();
-            }
+            if (result.RequiresTwoFactor) return await TwoFactorLoginResultAsync();
 
             if (result.IsLockedOut)
             {
@@ -150,13 +147,11 @@ namespace J3space.Abp.Account.Web.Pages.Account
             );
 
             if (!result.Succeeded)
-            {
                 await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext
                 {
                     Identity = IdentitySecurityLogIdentityConsts.IdentityExternal,
                     Action = "Login" + result
                 });
-            }
 
             if (result.IsLockedOut)
             {
@@ -164,10 +159,7 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 return await OnGetAsync();
             }
 
-            if (result.Succeeded)
-            {
-                return RedirectSafely(returnUrl, returnUrlHash);
-            }
+            if (result.Succeeded) return RedirectSafely(returnUrl, returnUrlHash);
 
             return RedirectToPage("./Register", new
             {
@@ -181,28 +173,19 @@ namespace J3space.Abp.Account.Web.Pages.Account
 
         protected virtual async Task ReplaceEmailToUsernameOfInputIfNeeds()
         {
-            if (!ValidationHelper.IsValidEmailAddress(Input.UserNameOrEmailAddress))
-            {
-                return;
-            }
+            if (!ValidationHelper.IsValidEmailAddress(Input.UserNameOrEmailAddress)) return;
 
             var userByUsername = await UserManager.FindByNameAsync(Input.UserNameOrEmailAddress);
-            if (userByUsername != null)
-            {
-                return;
-            }
+            if (userByUsername != null) return;
 
             var userByEmail = await UserManager.FindByEmailAsync(Input.UserNameOrEmailAddress);
-            if (userByEmail == null)
-            {
-                return;
-            }
+            if (userByEmail == null) return;
 
             Input.UserNameOrEmailAddress = userByEmail.UserName;
         }
 
         /// <summary>
-        /// Override this method to add 2FA for your application.
+        ///     Override this method to add 2FA for your application.
         /// </summary>
         protected virtual Task<IActionResult> TwoFactorLoginResultAsync()
         {

@@ -8,11 +8,11 @@ namespace J3space.Abp.Account.Web.Pages.Account
     {
         [HiddenInput]
         [BindProperty(SupportsGet = true)]
-        protected string ReturnUrl { get; set; }
+        public string ReturnUrl { get; set; }
 
         [HiddenInput]
         [BindProperty(SupportsGet = true)]
-        protected string ReturnUrlHash { get; set; }
+        public string ReturnUrlHash { get; set; }
 
         public virtual async Task<IActionResult> OnGetAsync()
         {
