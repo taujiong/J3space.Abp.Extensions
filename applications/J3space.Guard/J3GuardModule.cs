@@ -61,8 +61,6 @@ namespace J3space.Guard
     )]
     public class J3GuardModule : AbpModule
     {
-        private const string DefaultCorsPolicyName = "Default";
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var configuration = context.Services.GetConfiguration();
@@ -144,7 +142,7 @@ namespace J3space.Guard
 
             context.Services.AddCors(options =>
             {
-                options.AddPolicy(DefaultCorsPolicyName, builder =>
+                options.AddDefaultPolicy(builder =>
                 {
                     var origins = configuration
                         .GetSection("CorsOrigins").GetChildren()
@@ -171,10 +169,7 @@ namespace J3space.Guard
             app.UseStaticFiles();
             app.UseRouting();
 
-            if (bool.Parse(configuration["MultiTenancy"]))
-            {
-                app.UseMultiTenancy();
-            }
+            if (bool.Parse(configuration["MultiTenancy"])) app.UseMultiTenancy();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -192,15 +187,15 @@ namespace J3space.Guard
                 };
             });
 
-            app.UseCors(DefaultCorsPolicyName);
+            app.UseCors();
 
             app.MapWhen(
-                // TODO: 考虑扩展性
                 ctx =>
-                    ctx.Request.Path.ToString().StartsWith("/api/blogging/")
-                    || ctx.Request.Path.ToString().StartsWith("/api/identity/")
-                    || ctx.Request.Path.ToString().StartsWith("/api/ids/")
-                    || ctx.Request.Path.ToString().StartsWith("/api/multi-tenancy/"),
+                    configuration.GetSection("UseOcelotUrls")
+                        .GetChildren()
+                        .Any(url =>
+                            ctx.Request.Path.ToString().StartsWith(url.Value)
+                        ),
                 app2 => { app2.UseOcelot().Wait(); }
             );
 

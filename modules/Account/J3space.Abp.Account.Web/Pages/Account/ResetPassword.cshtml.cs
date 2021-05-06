@@ -84,7 +84,6 @@ namespace J3space.Abp.Account.Web.Pages.Account
                 return await OnGetAsync();
             }
 
-            //TODO: Try to automatically login!
             return RedirectToPage("./ResetPasswordConfirmation", new
             {
                 returnUrl = ReturnUrl,
@@ -95,10 +94,8 @@ namespace J3space.Abp.Account.Web.Pages.Account
         protected override void ValidateModel()
         {
             if (!Equals(Password, ConfirmPassword))
-            {
                 ModelState.AddModelError("ConfirmPassword",
                     L["'{0}' and '{1}' do not match.", L["ConfirmPassword"], L["DisplayName:Password"]]);
-            }
 
             base.ValidateModel();
         }

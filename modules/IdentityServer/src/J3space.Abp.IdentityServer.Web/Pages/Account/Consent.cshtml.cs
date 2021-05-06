@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
@@ -44,24 +45,16 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
         public virtual async Task<IActionResult> OnGetAsync()
         {
             var request = await _interaction.GetAuthorizationContextAsync(ReturnUrl);
-            if (request == null)
-            {
-                throw new ApplicationException($"No consent request matching request: {ReturnUrl}");
-            }
+            if (request == null) throw new ApplicationException($"No consent request matching request: {ReturnUrl}");
 
             var client = await _clientStore.FindEnabledClientByIdAsync(request.Client.ClientId);
-            if (client == null)
-            {
-                throw new ApplicationException($"Invalid client id: {request.Client.ClientId}");
-            }
+            if (client == null) throw new ApplicationException($"Invalid client id: {request.Client.ClientId}");
 
             var resources =
                 await _resourceStore.FindEnabledResourcesByScopeAsync(request.ValidatedResources.RawScopeValues);
             if (resources == null || !resources.IdentityResources.Any() && !resources.ApiResources.Any())
-            {
                 throw new ApplicationException(
                     $"No scopes matching: {request.ValidatedResources.RawScopeValues.Aggregate((x, y) => x + ", " + y)}");
-            }
 
             ClientInfo = new ClientInfoModel(client);
             ConsentInput = new ConsentInputModel
@@ -80,10 +73,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
                 apiScopes.Add(scopeVm);
             }
 
-            if (resources.OfflineAccess)
-            {
-                apiScopes.Add(GetOfflineAccessScope(true));
-            }
+            if (resources.OfflineAccess) apiScopes.Add(GetOfflineAccessScope(true));
 
             ConsentInput.ApiScopes = apiScopes;
 
@@ -96,16 +86,11 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
 
             var result = await ProcessConsentAsync();
 
-            if (result.IsRedirect)
-            {
-                return Redirect(result.RedirectUri);
-            }
+            if (result.IsRedirect) return Redirect(result.RedirectUri);
 
             if (result.HasValidationError)
-            {
                 //ModelState.AddModelError("", result.ValidationError);
                 throw new ApplicationException("Error: " + result.ValidationError);
-            }
 
             throw new ApplicationException("Unknown Error!");
         }
@@ -117,31 +102,23 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
             ConsentResponse grantedConsent;
 
             if (ConsentInput.UserDecision == "no")
-            {
                 grantedConsent = new ConsentResponse
                 {
                     Error = AuthorizationError.AccessDenied
                 };
-            }
             else
-            {
                 grantedConsent = new ConsentResponse
                 {
                     RememberConsent = ConsentInput.RememberConsent,
                     ScopesValuesConsented = ConsentInput.GetAllowedScopeNames()
                 };
-            }
 
             var request = await _interaction.GetAuthorizationContextAsync(ReturnUrl);
-            if (request == null)
-            {
-                return result;
-            }
+            if (request == null) return result;
 
             await _interaction.GrantConsentAsync(request, grantedConsent);
 
-            result.RedirectUri = ReturnUrl; //TODO: ReturnUrlHash?
-
+            result.RedirectUri = GetRedirectUrl(ReturnUrl, ReturnUrlHash);
 
             return result;
         }
@@ -164,9 +141,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
         {
             var displayName = apiScope.DisplayName ?? apiScope.Name;
             if (!string.IsNullOrWhiteSpace(parsedScopeValue.ParsedParameter))
-            {
                 displayName += ":" + parsedScopeValue.ParsedParameter;
-            }
 
             return new ScopeViewModel
             {
@@ -183,7 +158,7 @@ namespace J3space.Abp.IdentityServer.Web.Pages.Account
         {
             return new()
             {
-                Name = IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess,
+                Name = IdentityServerConstants.StandardScopes.OfflineAccess,
                 DisplayName = "Offline Access", //TODO: Localize
                 Description = "Access to your applications and resources, even when you are offline",
                 Emphasize = true,

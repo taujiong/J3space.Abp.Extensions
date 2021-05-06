@@ -47,8 +47,6 @@ namespace J3space.Auth
     )]
     public class J3AuthModule : AbpModule
     {
-        private const string DefaultCorsPolicyName = "Default";
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var configuration = context.Services.GetConfiguration();
@@ -92,7 +90,7 @@ namespace J3space.Auth
 
             context.Services.AddCors(options =>
             {
-                options.AddPolicy(DefaultCorsPolicyName, builder =>
+                options.AddDefaultPolicy(builder =>
                 {
                     var origins = configuration
                         .GetSection("CorsOrigins").GetChildren()
@@ -127,10 +125,7 @@ namespace J3space.Auth
             var password = configuration["AuthServer:EmailPassword"];
             settingManager.SetGlobalAsync(smtpPasswordName, password);
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             // 程序运行在 http 时会设置 Cookie 的 SameSite=None
             // 在 Chrome 这类浏览器上进行登录操作时无法将身份认证的 Cookie 保存到浏览器，导致登录不成功
@@ -143,16 +138,13 @@ namespace J3space.Auth
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(DefaultCorsPolicyName);
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
 
-            if (bool.Parse(configuration["MultiTenancy"]))
-            {
-                app.UseMultiTenancy();
-            }
+            if (bool.Parse(configuration["MultiTenancy"])) app.UseMultiTenancy();
 
             app.UseAuditing();
             app.UseConfiguredEndpoints();
