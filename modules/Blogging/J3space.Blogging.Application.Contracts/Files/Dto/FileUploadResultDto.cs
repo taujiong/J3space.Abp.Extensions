@@ -2,7 +2,8 @@
 {
     public class FileUploadResultDto
     {
-        public string Name { get; init; }
+        public string RawName { get; set; }
+        public string UniqueName { get; init; }
         public string WebUrl { get; init; }
     }
 }

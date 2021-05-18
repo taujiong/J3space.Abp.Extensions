@@ -41,7 +41,8 @@ namespace J3space.Blogging.Files
                     $"File exceeds the maximum upload size ({BloggingFileConstant.MaxFileSizeAsMegabytes} MB)!");
             }
 
-            var uniqueFileName = Path.GetFileNameWithoutExtension(input.Name)
+            var fileName = Path.GetFileNameWithoutExtension(input.Name);
+            var uniqueFileName = fileName
                                  + "_"
                                  + GuidGenerator.Create().ToString("N")
                                  + Path.GetExtension(input.Name);
@@ -50,7 +51,8 @@ namespace J3space.Blogging.Files
 
             return new FileUploadResultDto
             {
-                Name = uniqueFileName,
+                RawName = fileName,
+                UniqueName = uniqueFileName,
                 WebUrl = "/api/blogging/files/www/" + uniqueFileName
             };
         }
