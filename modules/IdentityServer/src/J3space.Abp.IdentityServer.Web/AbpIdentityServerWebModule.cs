@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.Configuration;
+using IdentityServer4.Services;
 using J3space.Abp.Account.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +39,8 @@ namespace J3space.Abp.IdentityServer.Web
                     "J3space.Abp.IdentityServer.Web"
                 );
             });
+
+            context.Services.AddSingleton<ICorsPolicyService, AbpCorsPolicyService>();
 
             context.Services
                 .AddAuthentication(o =>

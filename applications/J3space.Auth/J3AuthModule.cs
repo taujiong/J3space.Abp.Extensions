@@ -47,6 +47,8 @@ namespace J3space.Auth
     )]
     public class J3AuthModule : AbpModule
     {
+        private const string DefaultCorsPolicyName = "Default";
+
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var configuration = context.Services.GetConfiguration();
@@ -55,7 +57,11 @@ namespace J3space.Auth
 
             Configure<AbpDbContextOptions>(options => { options.UseMySQL(); });
 
-            Configure<IdentityServerOptions>(options => { options.IssuerUri = configuration["AuthServer:IssuerUri"]; });
+            Configure<IdentityServerOptions>(options =>
+            {
+                options.IssuerUri = configuration["AuthServer:IssuerUri"];
+                options.Cors.CorsPolicyName = DefaultCorsPolicyName;
+            });
 
             Configure<AbpLocalizationOptions>(options =>
             {
@@ -90,7 +96,7 @@ namespace J3space.Auth
 
             context.Services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder =>
+                options.AddPolicy(DefaultCorsPolicyName, builder =>
                 {
                     var origins = configuration
                         .GetSection("CorsOrigins").GetChildren()
@@ -137,12 +143,12 @@ namespace J3space.Auth
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseCors(DefaultCorsPolicyName);
 
             app.UseAuthentication();
             if (bool.Parse(configuration["MultiTenancy"])) app.UseMultiTenancy();
             app.UseIdentityServer();
             app.UseAuthorization();
-            app.UseCors();
 
             app.UseAuditing();
             app.UseConfiguredEndpoints();
