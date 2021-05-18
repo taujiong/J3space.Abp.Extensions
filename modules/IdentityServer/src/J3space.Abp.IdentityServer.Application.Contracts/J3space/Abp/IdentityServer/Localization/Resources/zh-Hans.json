@@ -2,6 +2,7 @@
   "culture": "zh-Hans",
   "texts": {
     "Permission:ApiResourceManagement": "Api 资源管理",
+    "Permission:ApiScopeManagement": "Api Scope 管理",
     "Permission:ChangePermissions": "更改权限",
     "Permission:ClientManagement": "客户端管理",
     "Permission:Create": "创建",

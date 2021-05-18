@@ -40,6 +40,16 @@ namespace J3space.Abp.IdentityServer.Permissions
                 L("Permission:Edit"));
             identityResourcesPermission.AddChild(IdentityServerPermissions.IdentityResource.Delete,
                 L("Permission:Delete"));
+
+            var apiScopesPermission = identityServerGroup.AddPermission(
+                IdentityServerPermissions.ApiScope.Default,
+                L("Permission:ApiScopeManagement"));
+            apiScopesPermission.AddChild(IdentityServerPermissions.ApiScope.Create,
+                L("Permission:Create"));
+            apiScopesPermission.AddChild(IdentityServerPermissions.ApiScope.Update,
+                L("Permission:Edit"));
+            apiScopesPermission.AddChild(IdentityServerPermissions.ApiScope.Delete,
+                L("Permission:Delete"));
         }
 
         private static LocalizableString L(string name)

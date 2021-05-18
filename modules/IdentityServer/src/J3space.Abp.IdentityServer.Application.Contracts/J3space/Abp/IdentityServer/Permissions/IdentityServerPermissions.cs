@@ -35,5 +35,13 @@ namespace J3space.Abp.IdentityServer.Permissions
             public const string Update = Default + ".Update";
             public const string Delete = Default + ".Delete";
         }
+
+        public static class ApiScope
+        {
+            public const string Default = GroupName + ".ApiScope";
+            public const string Create = Default + ".Create";
+            public const string Update = Default + ".Update";
+            public const string Delete = Default + ".Delete";
+        }
     }
 }

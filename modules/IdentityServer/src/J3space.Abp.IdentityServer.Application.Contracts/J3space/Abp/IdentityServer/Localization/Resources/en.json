@@ -2,6 +2,7 @@
   "culture": "en",
   "texts": {
     "Permission:ApiResourceManagement": "Api Resource Management",
+    "Permission:ApiScopeManagement": "Api Scope Management",
     "Permission:ChangePermissions": "Change permissions",
     "Permission:ClientManagement": "Client Management",
     "Permission:Create": "Create",

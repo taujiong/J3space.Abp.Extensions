@@ -2,6 +2,7 @@
   "culture": "zh-Hant",
   "texts": {
     "Permission:ApiResourceManagement": "Api 資源管理",
+    "Permission:ApiScopeManagement": "Api Scope 管理",
     "Permission:ChangePermissions": "更改權限",
     "Permission:ClientManagement": "客戶端管理",
     "Permission:Create": "創建",
