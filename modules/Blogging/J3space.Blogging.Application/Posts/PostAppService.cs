@@ -41,10 +41,7 @@ namespace J3space.Blogging.Posts
                 input.Sorting ?? nameof(Post.LastModificationTime) + " desc");
             var postDtos = new List<PostDto>(ObjectMapper.Map<List<Post>, List<PostDto>>(posts));
 
-            foreach (var postDto in postDtos)
-            {
-                postDto.Tags = await GetTagsFromPost(postDto.Id);
-            }
+            foreach (var postDto in postDtos) postDto.Tags = await GetTagsFromPost(postDto.Id);
 
             var totalCount = await _postRepository.GetCountAsync();
             return new PagedResultDto<PostDto>
@@ -97,22 +94,20 @@ namespace J3space.Blogging.Posts
             await _postRepository.DeleteAsync(id);
         }
 
-        public async Task<List<PostDto>> GetPostsByTag(string tagName)
+        public async Task<ListResultDto<PostDto>> GetPostsByTag(string tagName)
         {
             var posts = await _postRepository.GetListAsync();
             var postDtos = new List<PostDto>(ObjectMapper.Map<List<Post>, List<PostDto>>(posts));
 
-            foreach (var postDto in postDtos)
-            {
-                postDto.Tags = await GetTagsFromPost(postDto.Id);
-            }
+            foreach (var postDto in postDtos) postDto.Tags = await GetTagsFromPost(postDto.Id);
 
             var tag = tagName.IsNullOrWhiteSpace() ? null : await _tagRepository.FindByNameAsync(tagName);
             if (tag != null)
             {
-                return postDtos
+                var result = postDtos
                     .Where(p => p.Tags.Any(t => t.Id == tag.Id))
                     .ToList();
+                return new ListResultDto<PostDto>(result);
             }
 
             return null;
@@ -127,10 +122,7 @@ namespace J3space.Blogging.Posts
 
         private static List<string> SplitTags(string tags)
         {
-            if (tags.IsNullOrWhiteSpace())
-            {
-                return new List<string>();
-            }
+            if (tags.IsNullOrWhiteSpace()) return new List<string>();
 
             return new List<string>(tags.Split(",").Select(t => t.Trim()));
         }

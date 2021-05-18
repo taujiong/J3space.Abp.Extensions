@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using J3space.Blogging.Posts.Dto;
 using Volo.Abp.Application.Dtos;
@@ -16,6 +15,6 @@ namespace J3space.Blogging.Posts
         PostUpdateDto
     >
     {
-        public Task<List<PostDto>> GetPostsByTag(string tagName);
+        public Task<ListResultDto<PostDto>> GetPostsByTag(string tagName);
     }
 }

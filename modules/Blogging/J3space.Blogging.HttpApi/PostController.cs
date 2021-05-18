@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using J3space.Blogging.Posts;
 using J3space.Blogging.Posts.Dto;
@@ -56,7 +55,7 @@ namespace J3space.Blogging
 
         [HttpGet]
         [Route("by-tag/{tagName}")]
-        public Task<List<PostDto>> GetPostsByTag(string tagName)
+        public Task<ListResultDto<PostDto>> GetPostsByTag(string tagName)
         {
             return _postAppService.GetPostsByTag(tagName);
         }
