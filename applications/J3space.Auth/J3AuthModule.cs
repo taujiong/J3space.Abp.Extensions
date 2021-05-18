@@ -125,8 +125,6 @@ namespace J3space.Auth
             var password = configuration["AuthServer:EmailPassword"];
             settingManager.SetGlobalAsync(smtpPasswordName, password);
 
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-
             // 程序运行在 http 时会设置 Cookie 的 SameSite=None
             // 在 Chrome 这类浏览器上进行登录操作时无法将身份认证的 Cookie 保存到浏览器，导致登录不成功
             app.UseCookiePolicy(new CookiePolicyOptions
@@ -135,16 +133,16 @@ namespace J3space.Auth
             });
 
             app.UseAbpRequestLocalization();
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors();
 
             app.UseAuthentication();
+            if (bool.Parse(configuration["MultiTenancy"])) app.UseMultiTenancy();
             app.UseIdentityServer();
             app.UseAuthorization();
-
-            if (bool.Parse(configuration["MultiTenancy"])) app.UseMultiTenancy();
+            app.UseCors();
 
             app.UseAuditing();
             app.UseConfiguredEndpoints();

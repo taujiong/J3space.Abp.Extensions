@@ -24,8 +24,9 @@ namespace J3space.Abp.IdentityServer.Web
 
             PreConfigure<IMvcBuilder>(mvcBuilder =>
             {
-                mvcBuilder.AddApplicationPartIfNotExists(typeof(AbpIdentityServerWebModule)
-                    .Assembly);
+                mvcBuilder.AddApplicationPartIfNotExists(
+                    typeof(AbpIdentityServerWebModule).Assembly
+                );
             });
         }
 
@@ -34,7 +35,8 @@ namespace J3space.Abp.IdentityServer.Web
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
                 options.FileSets.AddEmbedded<AbpIdentityServerWebModule>(
-                    "J3space.Abp.IdentityServer.Web");
+                    "J3space.Abp.IdentityServer.Web"
+                );
             });
 
             context.Services
