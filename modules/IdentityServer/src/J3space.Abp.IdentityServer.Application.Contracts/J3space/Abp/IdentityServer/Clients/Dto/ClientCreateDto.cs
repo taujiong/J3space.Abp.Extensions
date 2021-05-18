@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.IdentityServer.Clients;
 using Volo.Abp.Validation;
@@ -21,6 +22,14 @@ namespace J3space.Abp.IdentityServer.Clients.Dto
 
         public string LogoUri { get; set; }
 
-        public ClientType ClientType { get; set; } = ClientType.Empty;
+        public bool RequireConsent { get; set; }
+
+        public List<string> AllowedScopes { get; set; }
+
+        public List<string> RedirectUrls { get; set; }
+
+        public List<string> PostLogoutUrls { get; set; }
+
+        public List<ClientSecretDto> ClientSecrets { get; set; }
     }
 }

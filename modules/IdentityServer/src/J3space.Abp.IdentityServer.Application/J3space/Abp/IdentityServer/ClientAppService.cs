@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IdentityServer4.Models;
 using J3space.Abp.IdentityServer.Clients;
 using J3space.Abp.IdentityServer.Clients.Dto;
 using J3space.Abp.IdentityServer.Permissions;
@@ -9,6 +10,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.IdentityServer.Clients;
+using Client = Volo.Abp.IdentityServer.Clients.Client;
 
 namespace J3space.Abp.IdentityServer
 {
@@ -47,19 +49,23 @@ namespace J3space.Abp.IdentityServer
         {
             var clientExist = await _clientRepository.CheckClientIdExistAsync(input.ClientId);
             if (clientExist)
-            {
                 throw new UserFriendlyException(L["EntityExisted", nameof(Client), nameof(Client.ClientId),
                     input.ClientId]);
-            }
 
             var client = new Client(GuidGenerator.Create(), input.ClientId)
             {
                 ClientName = input.ClientName,
                 ClientUri = input.ClientUri,
                 LogoUri = input.LogoUri,
-                Description = input.Description
+                Description = input.Description,
+                RequireConsent = input.RequireConsent
             };
-            client.SetDefaultValues(input.ClientType);
+
+            input.AllowedScopes.ForEach(s => client.AddScope(s));
+            input.RedirectUrls.ForEach(url => client.AddRedirectUri(url));
+            input.PostLogoutUrls.ForEach(url => client.AddPostLogoutRedirectUri(url));
+            input.ClientSecrets.ForEach(s =>
+                client.AddSecret(s.Value.Sha256(), s.Expiration, description: s.Description));
 
             await _clientRepository.InsertAsync(client, true);
 
@@ -73,16 +79,10 @@ namespace J3space.Abp.IdentityServer
 
             var clientExist = await _clientRepository.CheckClientIdExistAsync(input.ClientId, id);
             if (clientExist)
-            {
                 throw new UserFriendlyException(L["EntityExisted", nameof(Client), nameof(Client.ClientId),
                     input.ClientId]);
-            }
 
             client = ObjectMapper.Map(input, client);
-
-            client.RemoveAllIdentityProviderRestrictions();
-            input.IdentityProviderRestrictions
-                .ForEach(x => client.AddIdentityProviderRestriction(x));
 
             client.RemoveAllPostLogoutRedirectUris();
             input.PostLogoutRedirectUris
@@ -103,6 +103,16 @@ namespace J3space.Abp.IdentityServer
             client.RemoveAllScopes();
             input.AllowedScopes
                 .ForEach(x => client.AddScope(x));
+
+            client.ClientSecrets.Clear();
+            input.ClientSecrets.ForEach(s =>
+                client.AddSecret(s.Value.Sha256(), s.Expiration, description: s.Description));
+
+            client.RemoveAllClaims();
+            input.Claims.ForEach(c => client.AddClaim(c.Value, c.Type));
+
+            client.RemoveAllProperties();
+            input.Properties.ForEach(p => client.AddProperty(p.Key, p.Value));
 
             client = await _clientRepository.UpdateAsync(client);
             return ObjectMapper.Map<Client, ClientDto>(client);

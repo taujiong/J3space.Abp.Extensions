@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IdentityServer4.Models;
 using J3space.Abp.IdentityServer.ApiResources;
 using J3space.Abp.IdentityServer.ApiResources.Dto;
 using J3space.Abp.IdentityServer.Permissions;
@@ -9,6 +10,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.IdentityServer.ApiResources;
+using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
 
 namespace J3space.Abp.IdentityServer
 {
@@ -48,16 +50,17 @@ namespace J3space.Abp.IdentityServer
         {
             var existed = await _resourceRepository.CheckNameExistAsync(input.Name);
             if (existed)
-            {
                 throw new UserFriendlyException(L["EntityExisted", nameof(ApiResource),
                     nameof(ApiResource.Name),
                     input.Name]);
-            }
 
             var apiResource = new ApiResource(GuidGenerator.Create(), input.Name);
             apiResource = ObjectMapper.Map(input, apiResource);
             input.UserClaims.ForEach(x => apiResource.AddUserClaim(x));
             input.Scopes.ForEach(x => apiResource.AddScope(x));
+            input.Properties.ForEach(p => apiResource.AddProperty(p.Key, p.Value));
+            input.Secrets.ForEach(
+                s => apiResource.AddSecret(s.Value.Sha256(), s.Expiration, description: s.Description));
 
             apiResource = await _resourceRepository.InsertAsync(apiResource, true);
 
@@ -71,20 +74,26 @@ namespace J3space.Abp.IdentityServer
 
             var existed = await _resourceRepository.CheckNameExistAsync(input.Name, id);
             if (existed)
-            {
                 throw new UserFriendlyException(L["EntityExisted", nameof(ApiResource),
                     nameof(ApiResource.Name),
                     input.Name]);
-            }
 
             apiResource = ObjectMapper.Map(input, apiResource);
 
             apiResource.UserClaims.Clear();
             input.UserClaims
                 .ForEach(x => apiResource.AddUserClaim(x));
+
             apiResource.Scopes.Clear();
             input.Scopes
                 .ForEach(x => apiResource.AddScope(x));
+
+            apiResource.RemoveAllProperties();
+            input.Properties.ForEach(p => apiResource.AddProperty(p.Key, p.Value));
+
+            apiResource.RemoveAllSecrets();
+            input.Secrets.ForEach(
+                s => apiResource.AddSecret(s.Value.Sha256(), s.Expiration, description: s.Description));
 
             apiResource = await _resourceRepository.UpdateAsync(apiResource);
 

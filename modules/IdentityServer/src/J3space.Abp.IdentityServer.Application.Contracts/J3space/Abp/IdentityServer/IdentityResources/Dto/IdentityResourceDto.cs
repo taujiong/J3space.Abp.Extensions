@@ -4,7 +4,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace J3space.Abp.IdentityServer.IdentityResources.Dto
 {
-    public class IdentityResourceDto : FullAuditedEntityDto<Guid>
+    public class IdentityResourceDto : ExtensibleFullAuditedEntityDto<Guid>
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
@@ -14,5 +14,6 @@ namespace J3space.Abp.IdentityServer.IdentityResources.Dto
         public bool Emphasize { get; set; }
         public bool ShowInDiscoveryDocument { get; set; }
         public List<string> UserClaims { get; set; }
+        public List<IdentityResourcePropertyDto> Properties { get; set; }
     }
 }

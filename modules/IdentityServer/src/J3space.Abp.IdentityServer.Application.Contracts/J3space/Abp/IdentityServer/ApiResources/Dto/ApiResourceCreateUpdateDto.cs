@@ -20,7 +20,10 @@ namespace J3space.Abp.IdentityServer.ApiResources.Dto
         public bool Enabled { get; set; }
 
         public bool ShowInDiscoveryDocument { get; set; }
+
+        public List<ApiResourceSecretDto> Secrets { get; set; }
         public List<string> Scopes { get; set; }
         public List<string> UserClaims { get; set; }
+        public List<ApiResourcePropertyDto> Properties { get; set; }
     }
 }

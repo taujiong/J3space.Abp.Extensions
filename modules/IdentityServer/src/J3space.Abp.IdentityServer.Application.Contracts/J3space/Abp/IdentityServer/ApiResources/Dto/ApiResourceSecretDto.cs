@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 
-namespace J3space.Abp.IdentityServer.Clients.Dto
+namespace J3space.Abp.IdentityServer.ApiResources.Dto
 {
-    public class ClientSecretDto
+    public class ApiResourceSecretDto
     {
         public string Value { get; set; }
         public string Description { get; set; }

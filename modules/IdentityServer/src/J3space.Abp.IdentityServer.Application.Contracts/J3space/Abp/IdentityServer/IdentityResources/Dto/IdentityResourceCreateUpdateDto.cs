@@ -25,5 +25,6 @@ namespace J3space.Abp.IdentityServer.IdentityResources.Dto
         public bool Emphasize { get; set; }
         public bool ShowInDiscoveryDocument { get; set; }
         public List<string> UserClaims { get; set; }
+        public List<IdentityResourcePropertyDto> Properties { get; set; }
     }
 }

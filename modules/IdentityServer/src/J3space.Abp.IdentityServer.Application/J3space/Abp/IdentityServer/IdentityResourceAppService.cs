@@ -31,8 +31,7 @@ namespace J3space.Abp.IdentityServer
 
             return new PagedResultDto<IdentityResourceDto>(
                 totalCount,
-                ObjectMapper.Map<List<IdentityResource>, List<IdentityResourceDto>>(
-                    list)
+                ObjectMapper.Map<List<IdentityResource>, List<IdentityResourceDto>>(list)
             );
         }
 
@@ -48,15 +47,14 @@ namespace J3space.Abp.IdentityServer
         {
             var existed = await _resourceRepository.CheckNameExistAsync(input.Name);
             if (existed)
-            {
                 throw new UserFriendlyException(L["EntityExisted", nameof(IdentityResource),
                     nameof(IdentityResource.Name),
                     input.Name]);
-            }
 
             var identityResource = new IdentityResource(GuidGenerator.Create(), input.Name);
             identityResource = ObjectMapper.Map(input, identityResource);
             input.UserClaims.ForEach(x => identityResource.AddUserClaim(x));
+            input.Properties.ForEach(p => identityResource.AddProperty(p.Key, p.Value));
 
             identityResource = await _resourceRepository.InsertAsync(identityResource, true);
 
@@ -71,16 +69,17 @@ namespace J3space.Abp.IdentityServer
 
             var existed = await _resourceRepository.CheckNameExistAsync(input.Name, id);
             if (existed)
-            {
                 throw new UserFriendlyException(L["EntityExisted", nameof(IdentityResource),
                     nameof(IdentityResource.Name),
                     input.Name]);
-            }
 
             identityResource = ObjectMapper.Map(input, identityResource);
-            identityResource.UserClaims.Clear();
+            identityResource.RemoveAllUserClaims();
             input.UserClaims
                 .ForEach(x => identityResource.AddUserClaim(x));
+
+            identityResource.RemoveAllProperties();
+            input.Properties.ForEach(p => identityResource.AddProperty(p.Key, p.Value));
 
             identityResource = await _resourceRepository.UpdateAsync(identityResource);
 

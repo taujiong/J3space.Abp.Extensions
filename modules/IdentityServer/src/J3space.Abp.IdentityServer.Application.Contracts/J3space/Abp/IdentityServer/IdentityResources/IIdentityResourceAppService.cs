@@ -8,15 +8,10 @@ namespace J3space.Abp.IdentityServer.IdentityResources
 {
     public interface IIdentityResourceAppService : IApplicationService
     {
-        public Task<PagedResultDto<IdentityResourceDto>> GetListAsync(
-            PagedAndSortedResultRequestDto input);
-
+        public Task<PagedResultDto<IdentityResourceDto>> GetListAsync(PagedAndSortedResultRequestDto input);
         public Task<IdentityResourceDto> GetAsync(Guid id);
         public Task<IdentityResourceDto> CreateAsync(IdentityResourceCreateUpdateDto input);
-
-        public Task<IdentityResourceDto>
-            UpdateAsync(Guid id, IdentityResourceCreateUpdateDto input);
-
+        public Task<IdentityResourceDto> UpdateAsync(Guid id, IdentityResourceCreateUpdateDto input);
         public Task DeleteAsync(Guid id);
     }
 }
