@@ -12,10 +12,7 @@ namespace J3space.Abp.SettingManagement.Permissions
                 SettingManagementPermissions.GroupName,
                 L($"Permission:{SettingManagementPermissions.GroupName}"));
 
-            var settingPermission = settingManagementGroup.AddPermission(
-                SettingManagementPermissions.Setting.Default,
-                L($"Permission:{SettingManagementPermissions.Setting.Default}"));
-            settingPermission.AddChild(
+            settingManagementGroup.AddPermission(
                 SettingManagementPermissions.Setting.Manage,
                 L($"Permission:{SettingManagementPermissions.Setting.Manage}"));
         }

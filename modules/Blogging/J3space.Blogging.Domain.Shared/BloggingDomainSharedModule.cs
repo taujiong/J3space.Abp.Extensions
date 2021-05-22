@@ -2,14 +2,12 @@
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
-using Volo.Abp.Validation;
-using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
 namespace J3space.Blogging
 {
     [DependsOn(
-        typeof(AbpValidationModule)
+        typeof(AbpLocalizationModule)
     )]
     public class BloggingDomainSharedModule : AbpModule
     {
@@ -17,14 +15,13 @@ namespace J3space.Blogging
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                options.FileSets.AddEmbedded<BloggingDomainSharedModule>();
+                options.FileSets.AddEmbedded<BloggingDomainSharedModule>("J3space.Blogging");
             });
 
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
                     .Add<BloggingResource>("en")
-                    .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/Blogging");
             });
 
