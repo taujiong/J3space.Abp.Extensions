@@ -1,4 +1,4 @@
-# J3space.Abp.Extensions
+# J3space.Abp.Extensions(deprecated)
 
 [WIP] abp vnext 框架的补充
 
@@ -65,3 +65,5 @@ abp vnext 框架是 C# 平台优秀的开源项目，其模块化的设计，基
 10. 运行 application 目录下的 J3space.Blogging 项目
 11. 运行 application 目录下的 J3space.Guard 项目，此时可访问 https://api.j3space.dev 查看 swagger 页面，此 swagger 页面包含了所有应用的 api 接口
 12. 通过 Postman 等工具可以查看 IdentityServer 的授权功能
+
+This project is deprecated, since right now I focus on microservice and frontend, therefore framework targeted on single language is not suitable fro me.
